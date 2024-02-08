@@ -1,0 +1,119 @@
+# Plugin bang hội
+# Support:
+# discord Cortez_Romeo
+# facebook https://www.facebook.com/thuong.trinh.nguyen.321/
+
+# Đặt license key đã mua tại dihoastore.net tại đây (Hướng dẫn cài: https://bit.ly/3gJtsbp)
+license-key: "XXXX-XXXX-XXXX-XXXX"
+
+# Tùy chỉnh các thông số mặc định
+bang-hoi-options:
+  # Số tiền cần để tạo
+  tao-bang-hoi: 1000
+  # Thời gian cần để chấp nhận
+  thoi-gian-moi: 30
+  # Số lượng thành viên mặc định khi vừa tạo bang hội
+  max-thanh-vien-mac-dinh: 5
+  # Cấm đặt các tên sau (Bao gồm tên gốc và tên custom)
+  ten-cam:
+  - admin
+  - staff
+  - helper
+  - moderator
+  - administrator
+  - staffs
+  - admins
+  - moderators
+  - administrators
+  - helpers
+  - owner
+  - owners
+  # - your nickname maybe?
+  # Ký tự cấm (& vẫn xài được để đặt tên custom cho bang hội)
+  ky-tu-cam:
+  - '&'
+  # Số ký tự tối thiểu có thể đặt cho tên bang hội (Không tính phần mã màu)
+  so-ky-tu-toi-thieu: 3
+  # Số ký tự tối đa có thể đặt cho tên tên bang hội (Không tính phần mã màu)
+  so-ky-tu-toi-da: 20
+
+# Tùy chỉnh các thông số của sự kiện bang hội war
+bang-hoi-war:
+  # Hiện thông báo bang hội war khi người chơi vào
+  join-notification: true
+  # Người chơi cần trong world này để áp dụng cộng điểm
+  world: banghoiwar
+  # Thời gian diễn ra sự kiện (Tính bằng giây)
+  thoi-gian-su-kien: 600
+  # Khung giờ trong ngày
+  khung-gio:
+    - '10:30:00'
+    - '15:30:00'
+    - '21:30:00'
+    - '23:30:00'
+  # Số người chơi cần để bắt đầu sự kiện
+  so-nguoi-choi-toi-thieu: 25
+  bossbar:
+    title: '&c❖ &#e5fa02&lBANG HỘI WAR &c❖ &7- &r%timeformat%'
+    color: YELLOW
+    style: SOLID
+  # Âm thanh khi bắt đầu
+  sound:
+    name: EVENT_RAID_HORN
+    volume: 50
+  # Số điểm cộng khi giết
+  cong-diem:
+    mobs:
+      ZOMBIE: 1
+      SKELETON: 1
+      WITHER_SKELETON: 1
+      #SPIDER: 1
+      # add được thêm mob
+    player: 3
+
+# placeholderapi hiện cho phần top điểm bang hội
+# %banghoi_top_<number>%
+placeholderAPI:
+  top: '&#d1d1d1#%number% &r%name% &e&l━ &#f25eff%value% Điểm'
+
+# Phần thời gian hiển thị
+time-format:
+  wwddhhmmss: '&a%w% &ftuần &a%d% &fngày &a%h% &fgiờ &a%m% &fphút &a%s% &fgiây'
+  ddhhmmss: '&a%d% &fngày &a%h% &fgiờ &a%m% &fphút &a%s% &fgiây'
+  hhmmss: '&a%h% &fgiờ &a%m% &fphút &a%s% &fgiây'
+  mmss: '&a%m% &fphút &a%s% &fgiây'
+  ss: '&a%s% &fgiây'
+
+upgradeSlot:
+  slot-xu:
+    # <slot>: <số xu>
+    6: 10
+    7: 20
+    8: 30
+    9: 40
+    10: 50
+    11: 60
+    12: 70
+    13: 80
+    14: 90
+    15: 100
+    # Trả về else nếu khác
+    else: 200
+  slot-warpoint:
+    # <slot>: <số xu>
+    6: 30
+    7: 60
+    8: 90
+    9: 120
+    10: 150
+    # Trả về else nếu khác
+    else: 151
+
+# Warpoint
+skill:
+  1CritDamage: 80
+  2BoostScore: 20
+  3Dodge:
+    1: 50
+    2: 50
+  4Vampire: 100

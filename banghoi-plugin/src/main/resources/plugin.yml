@@ -1,0 +1,20 @@
+name: BangHoi
+author: Cortez_Romeo
+version: '${project.version}'
+main: com.cortezromeo.banghoi.BangHoi
+api-version: 1.13
+depend:
+  - Vault
+  - PlayerPoints
+softdepend:
+  - PlaceholderAPI
+commands:
+  banghoi:
+    aliases:
+      - clan
+      - clans
+      - guild
+      - guilds
+  banghoiadmin:
+    aliases:
+      - banghoiad
