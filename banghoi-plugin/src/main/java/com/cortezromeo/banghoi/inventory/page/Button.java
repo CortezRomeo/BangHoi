@@ -17,9 +17,6 @@ public class Button {
     private ItemStack itemStack;
     private Consumer<InventoryClickEvent> action;
 
-    /**
-     * @param itemStack The Item
-     */
     public Button(ItemStack itemStack) {
         this(itemStack, event -> {
         });
