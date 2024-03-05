@@ -57,7 +57,7 @@ public final class BangHoi extends JavaPlugin {
         initFile();
 
         log("&f--------------------------------");
-        log("");
+        log("Test commit #2");
         log("  _                         _           _ ");
         log(" | |                       | |         (_)");
         log(" | |__   __ _ _ __   __ _  | |__   ___  _ ");
