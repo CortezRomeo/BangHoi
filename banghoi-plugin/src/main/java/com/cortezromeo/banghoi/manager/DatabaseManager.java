@@ -6,8 +6,6 @@ import com.cortezromeo.banghoi.storage.banghoidata.BangHoiDataStorage;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerDataStorage;
 import com.cortezromeo.banghoi.util.FilenameUtil;
-import com.cortezromeo.banghoi.util.MessageUtil;
-import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.util.*;
@@ -40,7 +38,8 @@ public class DatabaseManager {
     }
 
     public static void loadPlayerData(String player) {
-        playerDatabase.put(player, PlayerDataStorage.getplayerData(player));
+        if (!playerDatabase.containsKey(player))
+            playerDatabase.put(player, PlayerDataStorage.getplayerData(player));
     }
 
     public static void loadBangHoiData(String bangHoi) {
@@ -68,13 +67,15 @@ public class DatabaseManager {
 
     public static void loadAllDatabase() {
 
-        MessageUtil.debugMessage("Loading bang hoi database...");
+        DebugManager.debug("LOADING DATABASE", "Loading bang hoi database...");
         File bangHoiFolder = new File(BangHoi.plugin.getDataFolder() + "/banghoiData");
         File[] listOfFilesBangHoi = bangHoiFolder.listFiles();
 
         if (listOfFilesBangHoi == null)
             return;
 
+        int bangHoiDatabaseAmount = 0;
+        int playerDatabaseAmount = 0;
         for (File file : listOfFilesBangHoi) {
             if (file.isFile()) {
 
@@ -101,17 +102,28 @@ public class DatabaseManager {
                     }
                 }
 
+                for (String thanhVien : bangHoiData.getThanhVien()) {
+                    playerDatabaseAmount++;
+                    PlayerData thanhVienData = getPlayerData(thanhVien);
+
+                    if (thanhVienData.getBangHoi() == null)
+                        bangHoiData.removeThanhVien(thanhVien);
+                }
+
+                bangHoiDatabaseAmount++;
+                saveBangHoiData(bangHoiName);
                 bangHoi_diem.put(bangHoiName, getBangHoiData(bangHoiName).getBangHoiScore());
                 bangHoi_customName.put(bangHoiName, getBangHoiData(bangHoiName).getTenCustom());
             }
         }
+        DebugManager.debug("LOADING DATABASE", "Loaded/Fixed " + bangHoiDatabaseAmount + " (" + playerDatabaseAmount + " members) amount of bang hoi");
 
-        MessageUtil.debugMessage("Loading player database...");
-
+        DebugManager.debug("LOADING DATABASE", "Loading player database...");
         File playerFolder = new File(BangHoi.plugin.getDataFolder() + "/playerData");
         File[] listOfFilesPlayer = playerFolder.listFiles();
         if (listOfFilesPlayer == null) return;
 
+        playerDatabaseAmount = 0;
         for (int i = 0; i < listOfFilesPlayer.length; i++) {
             try {
 
@@ -142,8 +154,12 @@ public class DatabaseManager {
                     DatabaseManager.savePlayerData(playerName);
                 }
 
+                playerDatabaseAmount++;
+                savePlayerData(playerName);
             }
         }
+        DebugManager.debug("LOADING DATABASE", "Loaded/Fixed " + playerDatabaseAmount + " amount of players");
+
     }
 
     private static void resetPlayerData(PlayerData playerData) {
@@ -166,6 +182,8 @@ public class DatabaseManager {
         Set<String> bangHoiData = bangHoiDatabase.keySet();
         for (String bangHoi : bangHoiData)
             saveBangHoiData(bangHoi);
+
+        DebugManager.debug("SAVING DATABASE", "Database has been saved!");
 
     }
 

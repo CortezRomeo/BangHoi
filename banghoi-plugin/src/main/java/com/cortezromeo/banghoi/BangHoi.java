@@ -9,6 +9,7 @@ import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.listener.*;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
+import com.cortezromeo.banghoi.manager.DebugManager;
 import com.cortezromeo.banghoi.manager.DiHoaManager;
 import com.cortezromeo.banghoi.manager.WarManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
@@ -57,28 +58,51 @@ public final class BangHoi extends JavaPlugin {
 
         log("&f--------------------------------");
         log("");
-        log("         &e&lBANG HỘI");
+        log("  _                         _           _ ");
+        log(" | |                       | |         (_)");
+        log(" | |__   __ _ _ __   __ _  | |__   ___  _ ");
+        log(" | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
+        log(" | |_) | (_| | | | | (_| | | | | | (_) | |");
+        log(" |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
+        log("                     __/ |                ");
+        log("                    |___/                 ");
         log("");
-        log("&fLoad license key...");
+        log("&fĐang xác minh license key...");
         log("");
         log("&f--------------------------------");
+
 
         if (DiHoaManager.KeyStatus(plugin.getConfig().getString("license-key"))) {
             if (DiHoaManager.action(plugin.getConfig().getString("license-key"), "enable")) {
                 log("&f--------------------------------");
                 log("");
-                log("         &a&lBANG HỘI");
+                log("&2  _                         _           _ ");
+                log("&2 | |                       | |         (_)");
+                log("&2 | |__   __ _ _ __   __ _  | |__   ___  _ ");
+                log("&2 | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
+                log("&2 | |_) | (_| | | | | (_| | | | | | (_) | |");
+                log("&2 |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
+                log("&2                     __/ |                ");
+                log("&2                    |___/                 ");
                 log("");
                 log("&fVersion: &b" + getDescription().getVersion());
                 log("&fAuthor: &bCortez_Romeo");
                 log("&eKhởi chạy plugin trên phiên bản: " + version);
                 log("&f--------------------------------");
-                log("&2Cảm ơn đã ủng hộ mua plugin!");
+                log("&2Cảm ơn bạn đã ủng hộ mua plugin!");
             }
         } else {
             log("&f--------------------------------");
             log("");
-            log("         &4&lBANG HỘI");
+            log("&4  _                         _           _ ");
+            log("&4 | |                       | |         (_)");
+            log("&4 | |__   __ _ _ __   __ _  | |__   ___  _ ");
+            log("&4 | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
+            log("&4 | |_) | (_| | | | | (_| | | | | | (_) | |");
+            log("&4 |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
+            log("&4                     __/ |                ");
+            log("&4                    |___/                 ");
+            log("");
             log("       &eThiếu license key!");
             log("");
             log("&cVUI LÒNG GHI LICENSE KEY ĐÃ MUA TẠI DIHOASTORE.NET vào config.yml");
@@ -87,6 +111,7 @@ public final class BangHoi extends JavaPlugin {
             Bukkit.getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
 
         initDatabase();
         initCommand();
@@ -99,8 +124,8 @@ public final class BangHoi extends JavaPlugin {
 
             @Override
             public void run() {
-                for (Map.Entry<String, BangHoiData> banghoiData : DatabaseManager.bangHoiDatabase.entrySet()) {
-                    DatabaseManager.saveBangHoiData(banghoiData.getKey());
+                for (Map.Entry<String, BangHoiData> bangHoiData : DatabaseManager.bangHoiDatabase.entrySet()) {
+                    DatabaseManager.saveBangHoiData(bangHoiData.getKey());
                 }
                 for (Map.Entry<String, PlayerData> playerData : DatabaseManager.playerDatabase.entrySet()) {
                     DatabaseManager.savePlayerData(playerData.getKey());
@@ -201,7 +226,14 @@ public final class BangHoi extends JavaPlugin {
 
         log("&f--------------------------------");
         log("");
-        log("         &4&lBANG HỘI");
+        log("&c  _                         _           _ ");
+        log("&c | |                       | |         (_)");
+        log("&c | |__   __ _ _ __   __ _  | |__   ___  _ ");
+        log("&c | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
+        log("&c | |_) | (_| | | | | (_| | | | | | (_) | |");
+        log("&c |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
+        log("&c                     __/ |                ");
+        log("&c                    |___/                 ");
         log("");
         log("&fVersion: &b" + getDescription().getVersion());
         log("&fAuthor: &bCortez_Romeo");

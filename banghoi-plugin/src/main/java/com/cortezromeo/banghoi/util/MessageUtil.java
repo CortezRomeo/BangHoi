@@ -40,8 +40,4 @@ public class MessageUtil {
             player.sendMessage(BangHoi.nms.addColor(PlaceholderAPI.setPlaceholders(player, message)));
     }
 
-    public static void debugMessage(String message) {
-        log("&e[BANGHOI DEBUG] " + message);
-    }
-
 }

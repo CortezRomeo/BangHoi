@@ -7,7 +7,7 @@
     <groupId>com.cortezromeo.banghoi</groupId>
     <artifactId>BangHoi</artifactId>
     <packaging>pom</packaging>
-    <version>1.6</version>
+    <version>1.8b</version>
 
     <modules>
         <module>banghoi-plugin</module>

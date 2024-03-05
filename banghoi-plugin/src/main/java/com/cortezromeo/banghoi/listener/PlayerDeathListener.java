@@ -30,6 +30,10 @@ public class PlayerDeathListener implements Listener {
 			return;
 
 		Player killer = e.getEntity().getKiller();
+
+		if (killer == null)
+			return;
+
 		Player p = e.getEntity().getPlayer();
 		FileConfiguration mse = MessageFile.get();
 		String prefix = mse.getString("PREFIX");

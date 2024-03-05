@@ -5,6 +5,7 @@ import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.manager.BangHoiManager;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
+import com.cortezromeo.banghoi.manager.DebugManager;
 import com.cortezromeo.banghoi.manager.WarManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
@@ -64,7 +65,9 @@ public class BangHoiAdminCommand implements CommandExecutor {
 				BangHoi.plugin.reloadConfig();
 				InventoryFile.reload();
 				MessageFile.reload();
+				DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
 				sender.sendMessage("Reload thành công!");
+				DebugManager.debug("RELOADING PLUGIN", "Plugin has been reloaded");
 				return false;
 			}
 		}

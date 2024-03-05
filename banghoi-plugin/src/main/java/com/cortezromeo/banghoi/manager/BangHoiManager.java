@@ -148,6 +148,13 @@ public class BangHoiManager {
         MessageUtil.sendMessage(p, mse.getString("taoBangHoi").replace("%name%", bangHoiName));
 
         DatabaseManager.bangHoiInvitingPlayers.remove(p.getName());
+
+        DebugManager.debug("CREATING BANG HOI", bangHoiName + " has been created");
+        DebugManager.debug("CREATING BANG HOI", "leader: " + p.getName());
+        Date currentDate = new Date(dateLong);
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        String strDate = dateFormat.format(currentDate);
+        DebugManager.debug("CREATING BANG HOI", "date: " + dateLong + " (" + strDate + ")");
     }
 
     public static void warnBangHoi(String bangHoiName) {
@@ -218,6 +225,8 @@ public class BangHoiManager {
 
         MessageUtil.sendMessage(p, mse.getString("roiBangHoi").replace("%name%", getBangHoiName(bangHoi)));
         bangHoiAlert(bangHoi, mse.getString("thongBaoRieng.playerRoiBangHoi").replace("%player%", p.getName()));
+
+        DebugManager.debug("PLAYER LEAVING BANG HOI", p.getName() + " left " + bangHoi);
     }
 
     public static void disbandBangHoi(Player p) {
@@ -267,7 +276,6 @@ public class BangHoiManager {
             MessageUtil.sendMessage(p, mse.getString("leaderBangHoiGiaiTan").replace("%name%", bangHoiName));
         else
             p.sendMessage("Gặp lỗi trong quá trình giải tán, liên hệ admin để xử lý");
-
     }
 
     public static void setBangHoiIcon(Player p, String material) {
@@ -335,6 +343,7 @@ public class BangHoiManager {
         File bangHoiFile = new File(BangHoi.plugin.getDataFolder() + "/bangHoiData/" + bangHoiName + ".yml");
         if (bangHoiFile.delete())
             MessageUtil.log("Đã xóa bang hội " + bangHoiName);
+        DebugManager.debug("DELETING BANG HOI", bangHoiName + " has been deleted");
     }
 
     public static void inviteBangHoi(Player p, Player target) {
@@ -471,6 +480,7 @@ public class BangHoiManager {
                 }
         }
 
+        DebugManager.debug("PLAYER JOINING BANG HOI", p.getName() + " joined " + bangHoi);
     }
 
     public static void denyBangHoi(Player p) {
@@ -507,6 +517,10 @@ public class BangHoiManager {
         }
 
         PlayerData targetData = DatabaseManager.getPlayerData(target);
+        if (targetData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("duLieuKhongTonTai").replace("%player%", target));
+            return;
+        }
 
         if (playerData.getChucVu() != null)
             if (!playerData.getChucVu().equals("Leader")) {
@@ -559,6 +573,10 @@ public class BangHoiManager {
         }
 
         PlayerData targetData = DatabaseManager.getPlayerData(target);
+        if (targetData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("duLieuKhongTonTai").replace("%player%", target));
+            return;
+        }
 
         if (playerData.getChucVu() != null)
             if (!playerData.getChucVu().equals("Leader")) {

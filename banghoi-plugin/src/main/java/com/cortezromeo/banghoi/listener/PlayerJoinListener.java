@@ -3,7 +3,6 @@ package com.cortezromeo.banghoi.listener;
 import com.cortezromeo.banghoi.BangHoi;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.manager.WarManager;
-import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -25,9 +24,9 @@ public class PlayerJoinListener implements Listener {
 	public void onJoin(PlayerJoinEvent e) {
 
 		Player p = e.getPlayer();
-		if (DatabaseManager.getPlayerData(p.getName()) == null)
-			Bukkit.getScheduler().runTaskAsynchronously(BangHoi.plugin,
-					() -> DatabaseManager.loadPlayerData(p.getName()));
+
+		Bukkit.getScheduler().runTaskAsynchronously(BangHoi.plugin,
+				() -> DatabaseManager.loadPlayerData(p.getName()));
 
 		if (WarManager.getBossBar(p) != null) {
 			BossBar b = WarManager.getBossBar(p);
