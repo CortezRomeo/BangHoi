@@ -276,6 +276,7 @@ public class BangHoiManager {
             MessageUtil.sendMessage(p, mse.getString("leaderBangHoiGiaiTan").replace("%name%", bangHoiName));
         else
             p.sendMessage("Gặp lỗi trong quá trình giải tán, liên hệ admin để xử lý");
+
     }
 
     public static void setBangHoiIcon(Player p, String material) {
