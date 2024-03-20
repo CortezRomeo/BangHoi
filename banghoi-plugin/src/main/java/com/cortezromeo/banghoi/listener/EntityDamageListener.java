@@ -45,6 +45,9 @@ public class EntityDamageListener implements Listener {
 				if (player instanceof Player) {
 					Player victim2 = (Player) player;
 
+					if (!DatabaseManager.playerDatabase.containsKey(victim2.getName()))
+						return;
+
 					PlayerData victim2Data = DatabaseManager.getPlayerData(victim2.getName());
 					PlayerData shooterData = DatabaseManager.getPlayerData(shooter.getName());
 					
@@ -90,6 +93,9 @@ public class EntityDamageListener implements Listener {
 
 		Player victim = (Player) v;
 		Player damager = (Player) d;
+
+		if (!DatabaseManager.playerDatabase.containsKey(victim.getName()))
+			return;
 
         PlayerData victimData = DatabaseManager.getPlayerData(victim.getName());
 		PlayerData damagerData = DatabaseManager.getPlayerData(damager.getName());

@@ -35,6 +35,10 @@ public class PlayerDeathListener implements Listener {
 			return;
 
 		Player p = e.getEntity().getPlayer();
+
+		if (!DatabaseManager.playerDatabase.containsKey(p.getName()))
+			return;
+
 		FileConfiguration mse = MessageFile.get();
 		String prefix = mse.getString("PREFIX");
 

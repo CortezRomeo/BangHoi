@@ -25,7 +25,6 @@ public class BangHoiManager {
 
     private static FileConfiguration mse = MessageFile.get();
 
-
     public static String getBangHoiName(String bangHoi) {
 
         if (!DatabaseManager.bangHoiDatabase.containsKey(bangHoi))

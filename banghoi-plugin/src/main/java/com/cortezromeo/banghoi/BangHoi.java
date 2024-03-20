@@ -37,6 +37,7 @@ public final class BangHoi extends JavaPlugin {
     public static PlayerPointsAPI ppAPI;
     private boolean serverSoftwareSupport = true;
     private static boolean papiSupport = false;
+    private boolean developerMode = true;
 
     @Override
     public void onLoad() {
@@ -57,7 +58,7 @@ public final class BangHoi extends JavaPlugin {
         initFile();
 
         log("&f--------------------------------");
-        log("Test commit #2");
+        log("");
         log("  _                         _           _ ");
         log(" | |                       | |         (_)");
         log(" | |__   __ _ _ __   __ _  | |__   ___  _ ");
@@ -71,46 +72,48 @@ public final class BangHoi extends JavaPlugin {
         log("");
         log("&f--------------------------------");
 
-
-        if (DiHoaManager.KeyStatus(plugin.getConfig().getString("license-key"))) {
-            if (DiHoaManager.action(plugin.getConfig().getString("license-key"), "enable")) {
+        if (!developerMode) {
+            if (DiHoaManager.KeyStatus(plugin.getConfig().getString("license-key"))) {
+                if (DiHoaManager.action(plugin.getConfig().getString("license-key"), "enable")) {
+                    log("&f--------------------------------");
+                    log("");
+                    log("&2  _                         _           _ ");
+                    log("&2 | |                       | |         (_)");
+                    log("&2 | |__   __ _ _ __   __ _  | |__   ___  _ ");
+                    log("&2 | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
+                    log("&2 | |_) | (_| | | | | (_| | | | | | (_) | |");
+                    log("&2 |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
+                    log("&2                     __/ |                ");
+                    log("&2                    |___/                 ");
+                    log("");
+                    log("&fVersion: &b" + getDescription().getVersion());
+                    log("&fAuthor: &bCortez_Romeo");
+                    log("&eKhởi chạy plugin trên phiên bản: " + version);
+                    log("&f--------------------------------");
+                    log("&2Cảm ơn bạn đã ủng hộ mua plugin!");
+                }
+            } else {
                 log("&f--------------------------------");
                 log("");
-                log("&2  _                         _           _ ");
-                log("&2 | |                       | |         (_)");
-                log("&2 | |__   __ _ _ __   __ _  | |__   ___  _ ");
-                log("&2 | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
-                log("&2 | |_) | (_| | | | | (_| | | | | | (_) | |");
-                log("&2 |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
-                log("&2                     __/ |                ");
-                log("&2                    |___/                 ");
+                log("&4  _                         _           _ ");
+                log("&4 | |                       | |         (_)");
+                log("&4 | |__   __ _ _ __   __ _  | |__   ___  _ ");
+                log("&4 | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
+                log("&4 | |_) | (_| | | | | (_| | | | | | (_) | |");
+                log("&4 |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
+                log("&4                     __/ |                ");
+                log("&4                    |___/                 ");
                 log("");
-                log("&fVersion: &b" + getDescription().getVersion());
-                log("&fAuthor: &bCortez_Romeo");
-                log("&eKhởi chạy plugin trên phiên bản: " + version);
+                log("       &eThiếu license key!");
+                log("");
+                log("&cVUI LÒNG GHI LICENSE KEY ĐÃ MUA TẠI DIHOASTORE.NET vào config.yml");
+                log("");
                 log("&f--------------------------------");
-                log("&2Cảm ơn bạn đã ủng hộ mua plugin!");
+                Bukkit.getServer().getPluginManager().disablePlugin(this);
+                return;
             }
-        } else {
-            log("&f--------------------------------");
-            log("");
-            log("&4  _                         _           _ ");
-            log("&4 | |                       | |         (_)");
-            log("&4 | |__   __ _ _ __   __ _  | |__   ___  _ ");
-            log("&4 | '_ \\ / _` | '_ \\ / _` | | '_ \\ / _ \\| |");
-            log("&4 | |_) | (_| | | | | (_| | | | | | (_) | |");
-            log("&4 |_.__/ \\__,_|_| |_|\\__, | |_| |_|\\___/|_|");
-            log("&4                     __/ |                ");
-            log("&4                    |___/                 ");
-            log("");
-            log("       &eThiếu license key!");
-            log("");
-            log("&cVUI LÒNG GHI LICENSE KEY ĐÃ MUA TẠI DIHOASTORE.NET vào config.yml");
-            log("");
-            log("&f--------------------------------");
-            Bukkit.getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
+        } else
+            log("&a&lBANG HOI DEVELOPER MODE IS ON! ENABLING PLUGIN");
         DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
 
         initDatabase();
