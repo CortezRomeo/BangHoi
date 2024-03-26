@@ -25,7 +25,6 @@ public class ListBangHoiInventory {
 		Map<String, Integer> sortedBangHoi_diem = DatabaseManager.bangHoi_diem.entrySet().stream()
 				.sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-		Map<ItemStack, Integer> bangHoiItems = new HashMap<ItemStack, Integer>();
 
 		int i = 0;
 		for (Map.Entry<String, Integer> bangHoi : sortedBangHoi_diem.entrySet()) {

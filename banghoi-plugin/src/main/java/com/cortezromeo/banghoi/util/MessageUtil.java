@@ -4,6 +4,7 @@ import com.cortezromeo.banghoi.BangHoi;
 import com.cortezromeo.banghoi.file.MessageFile;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class MessageUtil {
@@ -25,6 +26,10 @@ public class MessageUtil {
 
     public static void log(String message) {
         Bukkit.getConsoleSender().sendMessage(BangHoi.nms.addColor(message));
+    }
+
+    public static void sendMessage(CommandSender sender, String message) {
+        sender.sendMessage(BangHoi.nms.addColor(message));
     }
 
     public static void sendMessage(Player player, String message) {

@@ -138,6 +138,14 @@ thongBaoRieng:
     sử dụng lệnh &e/banghoi upgrade&f để biết thêm chi tiết'
   nangCap-4Vampire: '&fĐã mở khóa kỹ năng hồi máu &7(Skill 4)&f, sử dụng lệnh &e/banghoi
     upgrade&f để biết thêm chi tiết'
+xuPhatBangHoi:
+  PREFIX: '&cXỬ PHẠT BANG HỘI &7>&r '
+  phatLanDau:
+    broadCast: '&fBang hội %bangHoiName%&f đã bị &c1 WARN&f.'
+    bangHoiAlert: '&fBang hội của bạn vừa bị &c&l1 WARN&f và đã bị reset điểm, thêm một warn nữa sẽ bị xóa bang hội!'
+  phatLanCuoi:
+    broadCast: '&fBang hội %bangHoiName%&f đã bị giải tán vì có &c2 WARN&f.'
+    bangHoiAlert: '&fBang hội đã bị giải tán vì có &c&l2 WARN&f.'
 bangHoiWar:
   PREFIX: '&#e5fa02&lBANG HỘI WAR &7>&r '
   gietNguoiCungBang: '&cKhông thể cộng điểm vì &e%player%&c là người trong bang hội

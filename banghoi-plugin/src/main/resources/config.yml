@@ -120,3 +120,6 @@ skill:
     1: 50
     2: 50
   4Vampire: 100
+
+# Vui lòng không thay đổi giá trị dưới này!
+file-version: 2.0

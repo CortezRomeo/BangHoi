@@ -78,7 +78,7 @@ public class PlayerDeathListener implements Listener {
 
 
 			DatabaseManager.getBangHoiData(killerData.getBangHoi())
-					.addScore(BangHoi.plugin.getConfig().getInt("bang-hoi-war.cong-diem.player") + bonusScore);
+					.addBangHoiScore(BangHoi.plugin.getConfig().getInt("bang-hoi-war.cong-diem.player") + bonusScore);
 
 /*			Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
 				LogManager.log(killer, p);

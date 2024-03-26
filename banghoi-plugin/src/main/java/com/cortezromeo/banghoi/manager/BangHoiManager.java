@@ -163,33 +163,29 @@ public class BangHoiManager {
         }
 
         BangHoiData data = DatabaseManager.getBangHoiData(bangHoiName);
+        String prefix = mse.getString("xuPhatBangHoi.PREFIX");
 
         if (data.getBangHoiWarn() == 0) {
-
-            MessageUtil.sendBroadCast("&cXỬ PHẠT BANG HỘI > &fBang hội " + getBangHoiName(bangHoiName) + "&f đã bị &c1 WARN&f.");
-            bangHoiAlert(bangHoiName,
-                    "&fBang hội của bạn vừa bị &c&l1 WARN&f và đã bị reset điểm, thêm một warn nữa sẽ bị xóa bang hội!");
+            MessageUtil.sendBroadCast(prefix + mse.getString("xuPhatBangHoi.phatLanDau.broadCast").replace("%bangHoiName%", getBangHoiName(bangHoiName)));
+            bangHoiAlert(bangHoiName, mse.getString("xuPhatBangHoi.phatLanDau.bangHoiAlert"));
             data.setBangHoiWarn(1);
             data.setBangHoiScore(0);
-
             DatabaseManager.saveBangHoiData(bangHoiName);
-
             return;
         }
 
         if (data.getBangHoiWarn() >= 1) {
-            MessageUtil.sendBroadCast("&cXỬ PHẠT BANG HỘI > &fBang hội " + getBangHoiName(bangHoiName) + "&f đã bị giải tán vì có &c2 WARN&f.");
-            bangHoiAlert(bangHoiName, "&fBang hội đã bị giải tán vì có &c&l2 WARN&f.");
+            MessageUtil.sendBroadCast(prefix + mse.getString("xuPhatBangHoi.phatLanCuoi.broadCast").replace("%bangHoiName%", getBangHoiName(bangHoiName)));
+            bangHoiAlert(bangHoiName, mse.getString("xuPhatBangHoi.phatLanCuoi.bangHoiAlert"));
             deleteBangHoi(bangHoiName);
         }
-
     }
 
     public static void addWarPoint(String bangHoi, int warPoint) {
         if (!DatabaseManager.bangHoiDatabase.containsKey(bangHoi))
             return;
 
-        DatabaseManager.getBangHoiData(bangHoi).addWarPoint(warPoint);
+        DatabaseManager.getBangHoiData(bangHoi).addBangHoiWarPoint(warPoint);
         BangHoiManager.bangHoiAlert(bangHoi,
                 MessageFile.get().getString("thongBaoRieng.congWarpoint").replace("%warpoint%", String.valueOf(warPoint)));
         DatabaseManager.saveBangHoiData(bangHoi);
@@ -271,10 +267,15 @@ public class BangHoiManager {
         DatabaseManager.bangHoi_customName.remove(bangHoiName);
 
         File bangHoiFile = new File(BangHoi.plugin.getDataFolder() + "/bangHoiData/" + bangHoiName + ".yml");
-        if (bangHoiFile.delete())
-            MessageUtil.sendMessage(p, mse.getString("leaderBangHoiGiaiTan").replace("%name%", bangHoiName));
-        else
-            p.sendMessage("Gặp lỗi trong quá trình giải tán, liên hệ admin để xử lý");
+
+        try {
+            if (bangHoiFile.delete())
+                MessageUtil.sendMessage(p, mse.getString("leaderBangHoiGiaiTan").replace("%name%", bangHoiName));
+            else
+                p.sendMessage("Gặp lỗi trong quá trình giải tán, liên hệ admin để xử lý");
+        } catch (Exception e) {
+            MessageUtil.throwErrorMessage(e.toString());
+        }
 
     }
 
@@ -317,10 +318,10 @@ public class BangHoiManager {
 
     }
 
-    public static void deleteBangHoi(String bangHoiName) {
+    public static boolean deleteBangHoi(String bangHoiName) {
 
         if (!DatabaseManager.bangHoiDatabase.containsKey(bangHoiName)) {
-            return;
+            return false;
         }
 
         BangHoiData BangHoiData = DatabaseManager.getBangHoiData(bangHoiName);
@@ -341,9 +342,15 @@ public class BangHoiManager {
         DatabaseManager.bangHoi_customName.remove(bangHoiName);
 
         File bangHoiFile = new File(BangHoi.plugin.getDataFolder() + "/bangHoiData/" + bangHoiName + ".yml");
-        if (bangHoiFile.delete())
-            MessageUtil.log("Đã xóa bang hội " + bangHoiName);
-        DebugManager.debug("DELETING BANG HOI", bangHoiName + " has been deleted");
+        try {
+            bangHoiFile.delete();
+            DebugManager.debug("DELETING BANG HOI", bangHoiName + " has been deleted");
+        } catch (Exception e) {
+            MessageUtil.throwErrorMessage(e.toString());
+            return false;
+        }
+
+        return true;
     }
 
     public static void inviteBangHoi(Player p, Player target) {

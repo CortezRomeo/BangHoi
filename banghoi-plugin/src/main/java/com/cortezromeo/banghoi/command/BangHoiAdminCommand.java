@@ -9,25 +9,34 @@ import com.cortezromeo.banghoi.manager.DebugManager;
 import com.cortezromeo.banghoi.manager.WarManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
-import com.cortezromeo.banghoi.util.MessageUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
-public class BangHoiAdminCommand implements CommandExecutor {
+import static com.cortezromeo.banghoi.util.MessageUtil.sendMessage;
+
+public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 	@SuppressWarnings("unused")
 	private BangHoi plugin;
 
 	private List<String> confirmCommand = new ArrayList<>();
+	private Set<String> types = new HashSet<>();
 
 	public BangHoiAdminCommand(BangHoi plugin) {
 		this.plugin = plugin;
-		plugin.getCommand("banghoiadmin").setExecutor((CommandExecutor) this);
+		plugin.getCommand("banghoiadmin").setExecutor(this);
+
+		types.add("diem");
+		types.add("warpoint");
+		types.add("skill");
 	}
 
 	@Override
@@ -38,135 +47,343 @@ public class BangHoiAdminCommand implements CommandExecutor {
 			Player p = (Player) sender;
 
 			if (!p.hasPermission("banghoi.admin")) {
-				MessageUtil.sendMessage(p, MessageFile.get().getString("noPermission"));
+				sendMessage(p, MessageFile.get().getString("noPermission"));
 				return false;
 			}
 		}
 
+		// reload
 		if (args.length == 1) {
-			if (args[0].equalsIgnoreCase("resetdiem")) {
-
-				if (!confirmCommand.contains(sender.getName())) {
-					confirmCommand.add(sender.getName());
-					sender.sendMessage("Nhập lại lệnh một lần nữa để xác nhận!");
-					return false;
-				}
-				confirmCommand.remove(sender.getName());
-
-				for (Entry<String, BangHoiData> data : DatabaseManager.bangHoiDatabase.entrySet()) {
-					data.getValue().setBangHoiScore(0);
-					DatabaseManager.bangHoi_diem.replace(data.getKey(), 0);
-				}
-				sender.sendMessage("Reset điểm bang hội thành công!");
-				return false;
-			}
-
 			if (args[0].equalsIgnoreCase("reload")) {
 				BangHoi.plugin.reloadConfig();
 				InventoryFile.reload();
 				MessageFile.reload();
 				DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
-				sender.sendMessage("Reload thành công!");
+				sendMessage(sender, "&aReloaded BangHoi");
 				DebugManager.debug("RELOADING PLUGIN", "Plugin has been reloaded");
 				return false;
 			}
 		}
 
+		// resetall, delete, warnbanghoi, warnbanghoibyplayername, banghoiwar
 		if (args.length == 2) {
+			if (args[0].equalsIgnoreCase("resetall")) {
+				if (!types.contains(args[1])) {
+					sendMessage(sender, "&cType &e" + args[1] + "&c không hợp lệ");
+					sendMessage(sender, "&fTypes hợp lệ: &ediem&f,&e warpoint&f,&e skill&f");
+					return false;
+				}
+
+				if (!confirmCommand.contains(sender.getName())) {
+					confirmCommand.add(sender.getName());
+					sendMessage(sender, "&eVui lòng nhập lại lệnh một lần nữa để xác nhận");
+					return false;
+				}
+				confirmCommand.remove(sender.getName());
+
+				String type = args[1];
+				sendMessage(sender, "&eTiến hành reset all " + type.toUpperCase());
+				for (Entry<String, BangHoiData> data : DatabaseManager.bangHoiDatabase.entrySet()) {
+					if (type.equalsIgnoreCase("diem") || type.equalsIgnoreCase("score")) {
+						data.getValue().setBangHoiScore(0);
+						DatabaseManager.bangHoi_diem.replace(data.getKey(), 0);
+					}
+					if (type.equalsIgnoreCase("warpoint"))
+						data.getValue().setBangHoiWarPoint(0);
+					if (type.equalsIgnoreCase("skill"))
+						for (int i = 1; i <= 4; i++)
+							data.getValue().setSkillLevel(i, 0);
+					DatabaseManager.saveBangHoiData(data.getKey());
+				}
+				sendMessage(sender, "&aReset all &e" + type.toUpperCase() + " &athành công!");
+				return false;
+			}
+
+			if (args[0].equalsIgnoreCase("delete")) {
+				String bangHoi = args[1];
+				if (!DatabaseManager.bangHoiDatabase.containsKey(args[1])) {
+					sendMessage(sender, "&cBang hội &e" + bangHoi + " &ckhông tồn tại");
+					return false;
+				}
+
+				if (!confirmCommand.contains(sender.getName())) {
+					confirmCommand.add(sender.getName());
+					sendMessage(sender, "&eVui lòng nhập lại lệnh một lần nữa để xác nhận");
+					return false;
+				}
+				confirmCommand.remove(sender.getName());
+
+				if (BangHoiManager.deleteBangHoi(bangHoi)) {
+					sendMessage(sender, "&aXóa bang hội &e" + bangHoi + "&a thành công!");
+				} else
+					sendMessage(sender, "&cGặp lỗi trong quá trình xóa bang hội, vui lòng check console log!");
+				return false;
+			}
+
 			if (args[0].equalsIgnoreCase("warnBangHoi")) {
+
+				if (!DatabaseManager.bangHoiDatabase.containsKey(args[1])) {
+					sendMessage(sender, "&cBang hội &e" + args[1] + " &ckhông tồn tại!");
+					return false;
+				}
+
 				BangHoiManager.warnBangHoi(args[1]);
 				return false;
 			}
+
 			if (args[0].equalsIgnoreCase("warnBangHoiByPlayerName")) {
 
 				if (!DatabaseManager.playerDatabase.containsKey(args[1])) {
-					sender.sendMessage("Dữ liệu của người chơi này không tồn tại");
+					sendMessage(sender, "&cDữ liệu của người chơi này không tồn tại");
 					return false;
 				}
 
 				PlayerData data = DatabaseManager.getPlayerData(args[1]);
 				if (data.getBangHoi() == null) {
-					sender.sendMessage("Người chơi này không có bang hội!");
+					sendMessage(sender, "&cNgười chơi này không có bang hội!");
 					return false;
 				}
-
 				BangHoiManager.warnBangHoi(data.getBangHoi());
-
 				return false;
 			}
 			if (args[0].equalsIgnoreCase("banghoiwar")) {
 				try {
-
 					int time = Integer.parseInt(args[1]);
-					sender.sendMessage("Đã bắt đầu sự kiện/thay đổi thời gian sự kiện bang hội war trong " + time + " giây!");
+					sendMessage(sender, "&aĐã bắt đầu sự kiện/thay đổi thời gian sự kiện bang hội war trong &e" + time + " giây&f!");
 					WarManager.runSK(sender, time);
-
 					return false;
 				} catch (Exception e) {
-					sender.sendMessage("Vui lòng nhập số!");
+					sendMessage(sender, "&cVui lòng nhập số hợp lệ!");
 					return false;
 				}
 			}
 		}
 
+		// reset
 		if (args.length == 3) {
-			if (args[0].equalsIgnoreCase("givewarpoint")) {
+			if (args[0].equalsIgnoreCase("reset")) {
 
-				String bangHoi = args[1];
+				String bangHoiName = args[1];
+				String type = args[2];
 
-				if (!DatabaseManager.bangHoiDatabase.containsKey(bangHoi)) {
-					sender.sendMessage("Bang hội không tồn tại!");
+				if (!DatabaseManager.bangHoiDatabase.containsKey(bangHoiName)) {
+					sendMessage(sender, "&cBang hội &e" + bangHoiName + " &ckhông tồn tại!");
 					return false;
 				}
 
+				if (!types.contains(type)) {
+					sendMessage(sender, "&cType &e" + type + "&c không hợp lệ");
+					sendMessage(sender, "&fTypes hợp lệ: &ediem&f,&e warpoint&f,&e skill&f");
+					return false;
+				}
+
+				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(bangHoiName);
+
+				if (type.equalsIgnoreCase("diem") || type.equalsIgnoreCase("score")) {
+					bangHoiData.setBangHoiScore(0);
+					DatabaseManager.bangHoi_diem.replace(bangHoiName, 0);
+				}
+				if (type.equalsIgnoreCase("warpoint"))
+					bangHoiData.setBangHoiWarPoint(0);
+				if (type.equalsIgnoreCase("skill"))
+					for (int i = 1; i <= 4; i++)
+						bangHoiData.setSkillLevel(i, 0);
+				DatabaseManager.saveBangHoiData(bangHoiName);
+
+				sendMessage(sender, "&aReset &e" + type.toUpperCase() + "&a của bang hội &e" + bangHoiName + "&a thành công!");
+				return false;
+			}
+		}
+
+		// set, add, give, remove
+		if (args.length == 4) {
+			if (args[0].equalsIgnoreCase("set")
+					|| args[0].equalsIgnoreCase("give")
+					|| args[0].equalsIgnoreCase("remove")) {
+
+				String bangHoiName = args[1];
+				String type = args[2];
+
+				if (!DatabaseManager.bangHoiDatabase.containsKey(bangHoiName)) {
+					sendMessage(sender, "&cBang hội &e" + bangHoiName + " &ckhông tồn tại!");
+					return false;
+				}
+
+				if (!types.contains(type)) {
+					sendMessage(sender, "&cType &e" + type + "&c không hợp lệ");
+					sendMessage(sender, "&fTypes hợp lệ: &ediem&f,&e warpoint&f,&e skill&f");
+					return false;
+				}
+
+				int value = 0;
 				try {
-					int warPoint = Integer.parseInt(args[2]);
-					DatabaseManager.bangHoiDatabase.get(bangHoi).addWarPoint(warPoint);
-					sender.sendMessage("Add thành công " + args[1] + " cho bang hội " + args[2] + " thành công");
+					value = Integer.parseInt(args[3]);
 				} catch (Exception e) {
-					sender.sendMessage("Vui lòng nhập số hợp lệ!");
+					sendMessage(sender, "&cVui lòng nhập số hợp lệ!");
+					return false;
+				}
+
+				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(bangHoiName);
+
+				if (args[0].equalsIgnoreCase("set")) {
+
+					if (type.equalsIgnoreCase("skill")) {
+						sendMessage(sender, "&eSử dụng sườn lệnh dưới đây để dùng cho set skill bang hội:");
+						sendMessage(sender, "/banghoiad set <banghoi> skill <level skill 1> <level skill 2> <level skill 3> <level skill 4>");
+						return false;
+					}
+
+					if (type.equalsIgnoreCase("diem") || type.equalsIgnoreCase("score")) {
+						bangHoiData.setBangHoiScore(value);
+						DatabaseManager.bangHoi_diem.put(bangHoiName, value);
+					}
+
+					if (type.equalsIgnoreCase("warpoint")) {
+						bangHoiData.setBangHoiWarPoint(value);
+					}
+					DatabaseManager.saveBangHoiData(bangHoiName);
+					sendMessage(sender, "&aĐã set &e" + type.toUpperCase() + " &acho bang hội &e" + bangHoiName + "&a thành công.");
+					sendMessage(sender, "&aValue: &e" + value);
+				}
+
+				if (args[0].equalsIgnoreCase("give")) {
+
+					if (type.equalsIgnoreCase("skill")) {
+						sendMessage(sender, "&cKhông thể sử dụng type này cho give!");
+						return false;
+					}
+
+					if (type.equalsIgnoreCase("diem") || type.equalsIgnoreCase("score")) {
+						bangHoiData.addBangHoiScore(value);
+						DatabaseManager.bangHoi_diem.put(bangHoiName, bangHoiData.getBangHoiScore() + value);
+					}
+
+					if (type.equalsIgnoreCase("warpoint")) {
+						bangHoiData.addBangHoiWarPoint(value);
+					}
+					DatabaseManager.saveBangHoiData(bangHoiName);
+					sendMessage(sender, "&aĐã cho &e" + type.toUpperCase() + " &avào bang hội &e" + bangHoiName + "&a thành công.");
+					sendMessage(sender, "&aValue: &e" + value);
+				}
+
+				if (args[0].equalsIgnoreCase("remove")) {
+
+					if (type.equalsIgnoreCase("skill")) {
+						sendMessage(sender, "&cKhông thể sử dụng type này cho remove!");
+						return false;
+					}
+
+					if (type.equalsIgnoreCase("diem") || type.equalsIgnoreCase("score")) {
+						bangHoiData.removeBangHoiScore(value);
+						DatabaseManager.bangHoi_diem.put(bangHoiName, bangHoiData.getBangHoiScore() - value);
+					}
+
+					if (type.equalsIgnoreCase("warpoint")) {
+						bangHoiData.removeBangHoiWarPoint(value);
+					}
+					DatabaseManager.saveBangHoiData(bangHoiName);
+					sendMessage(sender, "&aĐã cho &e" + type.toUpperCase() + " &avào bang hội &e" + bangHoiName + "&a thành công.");
+					sendMessage(sender, "&aValue: &e" + value);
 				}
 				return false;
 			}
 		}
 
-		if (args.length == 5) {
-			if (args[0].equalsIgnoreCase("skill")) {
-				if (!(sender instanceof Player)) {
-					return false;
-				}
+		if (args.length == 7) {
+			if (args[0].equalsIgnoreCase("set") && args[2].equalsIgnoreCase("skill")) {
 
-				if (DatabaseManager.playerDatabase.get(sender.getName()).getBangHoi() == null) {
+				String bangHoiName = args[1];
+
+				if (!DatabaseManager.bangHoiDatabase.containsKey(bangHoiName)) {
+					sendMessage(sender, "&cBang hội &e" + bangHoiName + " &ckhông tồn tại!");
 					return false;
 				}
-				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(DatabaseManager.getPlayerData(sender.getName()).getBangHoi());
 
 				try {
-					//bangHoiData.setWarPoint(500);
-					bangHoiData.setSkillLevel(1, Integer.parseInt(args[1]));
-					bangHoiData.setSkillLevel(2, Integer.parseInt(args[2]));
-					bangHoiData.setSkillLevel(3, Integer.parseInt(args[3]));
-					bangHoiData.setSkillLevel(4, Integer.parseInt(args[4]));
-
-					for (int i = 1; i <= 4; i++)
-						sender.sendMessage("Skill " + i + ": " + args[i]);
-					return false;
+					Integer.parseInt(args[3]);
+					Integer.parseInt(args[4]);
+					Integer.parseInt(args[5]);
+					Integer.parseInt(args[6]);
 				} catch (Exception e) {
-					sender.sendMessage("Sai input");
+					sendMessage(sender, "&cVui lòng nhập số hợp lệ!");
 					return false;
 				}
+
+				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(bangHoiName);
+				sendMessage(sender, "&aĐã set skill cho bang hội &e" + bangHoiName + " &athành:");
+				for (int i = 1; i <= 4; i++) {
+					sendMessage(sender, "&aSkill " + i + "&a: &e" + args[i + 2]);
+					bangHoiData.setSkillLevel(i, Integer.parseInt(args[i + 2]));
+				}
+				DatabaseManager.saveBangHoiData(bangHoiName);
+				return false;
 			}
 		}
 
-		sender.sendMessage("/banghoiad resetdiem - Reset diểm của toàn bang hội");
-		sender.sendMessage("/banghoiad skill <skill1> <skill2> <skill3> <skill4>");
-		sender.sendMessage("/banghoiad givewarpoint <banghoi> <warpoint>");
-		sender.sendMessage("/banghoiad warnBangHoi <banghoi>");
-		sender.sendMessage("/banghoiad warnBangHoiByPlayerName <playerName>");
-		sender.sendMessage("/banghoiad bangHoiWar <time (giây)>");
-		sender.sendMessage("/banghoiad reload");
+		sendMessage(sender, "&cBang Hội Admin");
+		sendMessage(sender, "&7" + BangHoi.plugin.getDescription().getVersion());
+		sendMessage(sender, "");
+		sendMessage(sender, "&e/banghoiad resetAll <type>");
+		sendMessage(sender, "&e/banghoiad reset <banghoi> <type>");
+		sendMessage(sender, "&e/banghoiad set <banghoi> <type> <value>");
+		sendMessage(sender, "&e/banghoiad set <banghoi> skill <level skill 1> <level skill 2> <level skill 3> <level skill 4>");
+		sendMessage(sender, "&e/banghoiad give <banghoi> <type> <value>");
+		sendMessage(sender, "&e/banghoiad remove <banghoi> <type> <value>");
+		sendMessage(sender, "&e/banghoiad delete <banghoi>");
+		sendMessage(sender, "&e/banghoiad warnBangHoi <banghoi>");
+		sendMessage(sender, "&e/banghoiad warnBangHoiByPlayerName <player>");
+		sendMessage(sender, "&e/banghoiad bangHoiWar <time (giây)>");
+		sendMessage(sender, "&e/banghoiad reload");
+		sendMessage(sender, "");
+		sendMessage(sender, "&fTypes hợp lệ: &ediem&f, &ewarpoint&f, &eskill");
 
 		return false;
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+
+		List<String> completions = new ArrayList<>();
+		List<String> commands = new ArrayList<>();
+
+		if (args.length == 1) {
+			commands.add("resetAll");
+			commands.add("reset");
+			commands.add("set");
+			commands.add("give");
+			commands.add("remove");
+			commands.add("delete");
+			commands.add("warnBangHoi");
+			commands.add("warnBangHoiByPlayerName");
+			commands.add("bangHoiWar");
+			commands.add("reload");
+
+			StringUtil.copyPartialMatches(args[0], commands, completions);
+		} else if (args.length == 2) {
+			if (args[0].equalsIgnoreCase("warnBangHoi")
+					|| args[0].equalsIgnoreCase("delete")
+					|| args[0].equalsIgnoreCase("set")
+					|| args[0].equalsIgnoreCase("give")
+					|| args[0].equalsIgnoreCase("remove")
+					|| args[0].equalsIgnoreCase("reset"))
+				if (!DatabaseManager.bangHoiDatabase.isEmpty())
+					commands.addAll(DatabaseManager.bangHoiDatabase.keySet());
+			if (args[0].equalsIgnoreCase("warnBangHoiByPlayerName")) {
+				if (!DatabaseManager.playerDatabase.isEmpty()) {
+					commands.addAll(DatabaseManager.playerDatabase.keySet());
+				}
+			}
+			StringUtil.copyPartialMatches(args[1], commands, completions);
+		} else if (args.length == 3) {
+			if (args[0].equalsIgnoreCase("set")
+					|| args[0].equalsIgnoreCase("give")
+					|| args[0].equalsIgnoreCase("remove"))
+				commands.addAll(types);
+			StringUtil.copyPartialMatches(args[2], commands, completions);
+		}
+
+		Collections.sort(completions);
+		return completions;
 	}
 
 }

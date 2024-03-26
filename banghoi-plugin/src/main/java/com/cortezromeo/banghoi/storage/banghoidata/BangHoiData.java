@@ -79,7 +79,7 @@ public class BangHoiData {
         return bangHoiScore;
     }
 
-    public void addScore(int diem) {
+    public void addBangHoiScore(int diem) {
 
         if (diem < 0 && this.bangHoiScore + diem < 0) {
             this.bangHoiScore = 0;
@@ -90,7 +90,7 @@ public class BangHoiData {
         this.bangHoiScore = this.bangHoiScore + diem;
     }
 
-    public void removeDiem(int diem) {
+    public void removeBangHoiScore(int diem) {
 
         if (this.bangHoiScore - diem < 0) {
             this.bangHoiScore = 0;
@@ -116,7 +116,7 @@ public class BangHoiData {
         return bangHoiWarPoint;
     }
 
-    public void addWarPoint(int warpoint) {
+    public void addBangHoiWarPoint(int warpoint) {
 
         if (warpoint < 0 && this.bangHoiWarPoint + warpoint < 0) {
             this.bangHoiWarPoint = 0;
@@ -126,7 +126,7 @@ public class BangHoiData {
         this.bangHoiWarPoint = this.bangHoiWarPoint + warpoint;
     }
 
-    public void removeWarPoint(int warpoint) {
+    public void removeBangHoiWarPoint(int warpoint) {
 
         if (this.bangHoiWarPoint - warpoint < 0) {
             this.bangHoiWarPoint = 0;
@@ -136,7 +136,7 @@ public class BangHoiData {
         this.bangHoiWarPoint = this.bangHoiWarPoint - warpoint;
     }
 
-    public void setWarPoint(int warpoint) {
+    public void setBangHoiWarPoint(int warpoint) {
 
         if (warpoint < 0) {
             this.bangHoiWarPoint = 0;

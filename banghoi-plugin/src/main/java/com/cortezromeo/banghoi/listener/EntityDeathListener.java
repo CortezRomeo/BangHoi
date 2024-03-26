@@ -66,7 +66,7 @@ public class EntityDeathListener implements Listener {
 									.replaceAll("%p1%", killer.getName())
 									.replaceAll("%entity%", e.getEntity().getName()));
 					DatabaseManager.getBangHoiData(killerData.getBangHoi())
-							.addScore(BangHoi.plugin.getConfig().getInt("bang-hoi-war.cong-diem.mobs." + str) + bonusScore);
+							.addBangHoiScore(BangHoi.plugin.getConfig().getInt("bang-hoi-war.cong-diem.mobs." + str) + bonusScore);
 
 					if (!WarManager.top.containsKey(killerData.getBangHoi()))
 						WarManager.top.put(killerData.getBangHoi(), 0);

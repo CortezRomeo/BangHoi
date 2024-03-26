@@ -21,7 +21,7 @@ public class PapiDepend extends PlaceholderExpansion {
 	}
 
 	public String getVersion() {
-		return "1.0";
+		return BangHoi.plugin.getDescription().getVersion();
 	}
 
 	public String onPlaceholderRequest(Player player, String identifier) {

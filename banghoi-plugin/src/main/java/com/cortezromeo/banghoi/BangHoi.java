@@ -150,7 +150,7 @@ public final class BangHoi extends JavaPlugin {
         reloadConfig();
 
         // message.yml
-        String messageFileName = getForCurrentVersion("message.yml", "messagev13.yml");
+        String messageFileName = "messagev13.yml";
         MessageFile.setup();
         MessageFile.saveDefault();
         File messageFile = new File(getDataFolder(), "message.yml");

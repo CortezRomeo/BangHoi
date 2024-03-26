@@ -77,43 +77,48 @@ public class DatabaseManager {
         int bangHoiDatabaseAmount = 0;
         int playerDatabaseAmount = 0;
         for (File file : listOfFilesBangHoi) {
-            if (file.isFile()) {
 
-                String bangHoiName = FilenameUtil.removeExtension(file.getName());
+            try {
+                if (file.isFile()) {
 
-                loadBangHoiData(bangHoiName);
-                BangHoiData bangHoiData = getBangHoiData(bangHoiName);
+                    String bangHoiName = FilenameUtil.removeExtension(file.getName());
 
-                // Fix old data
-                if (bangHoiData.getBangHoiIcon() != null && bangHoiData.getBangHoiIcon().equals("@null"))
-                    bangHoiData.setBangHoiIcon(null);
-                if (bangHoiData.getTenCustom() != null && bangHoiData.getTenCustom().equals("@null"))
-                    bangHoiData.setTenCustom(null);
-                bangHoiData.getThanhVien().remove("@null");
+                    loadBangHoiData(bangHoiName);
+                    BangHoiData bangHoiData = getBangHoiData(bangHoiName);
 
-                if (bangHoiData.getBangHoiName() == null || bangHoiData.getThanhVien().isEmpty()) {
-                    try {
-                        bangHoiDatabase.remove(bangHoiName);
-                        if (file.delete()) {
-                            continue;
+                    // Fix old data
+                    if (bangHoiData.getBangHoiIcon() != null && bangHoiData.getBangHoiIcon().equals("@null"))
+                        bangHoiData.setBangHoiIcon(null);
+                    if (bangHoiData.getTenCustom() != null && bangHoiData.getTenCustom().equals("@null"))
+                        bangHoiData.setTenCustom(null);
+                    bangHoiData.getThanhVien().remove("@null");
+
+                    if (bangHoiData.getBangHoiName() == null || bangHoiData.getThanhVien().isEmpty()) {
+                        try {
+                            bangHoiDatabase.remove(bangHoiName);
+                            if (file.delete()) {
+                                continue;
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
                     }
+
+                    for (String thanhVien : bangHoiData.getThanhVien()) {
+                        playerDatabaseAmount++;
+                        PlayerData thanhVienData = getPlayerData(thanhVien);
+
+                        if (thanhVienData.getBangHoi() == null)
+                            bangHoiData.removeThanhVien(thanhVien);
+                    }
+
+                    bangHoiDatabaseAmount++;
+                    saveBangHoiData(bangHoiName);
+                    bangHoi_diem.put(bangHoiName, getBangHoiData(bangHoiName).getBangHoiScore());
+                    bangHoi_customName.put(bangHoiName, getBangHoiData(bangHoiName).getTenCustom());
                 }
-
-                for (String thanhVien : bangHoiData.getThanhVien()) {
-                    playerDatabaseAmount++;
-                    PlayerData thanhVienData = getPlayerData(thanhVien);
-
-                    if (thanhVienData.getBangHoi() == null)
-                        bangHoiData.removeThanhVien(thanhVien);
-                }
-
-                bangHoiDatabaseAmount++;
-                saveBangHoiData(bangHoiName);
-                bangHoi_diem.put(bangHoiName, getBangHoiData(bangHoiName).getBangHoiScore());
-                bangHoi_customName.put(bangHoiName, getBangHoiData(bangHoiName).getTenCustom());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         DebugManager.debug("LOADING DATABASE", "Loaded/Fixed " + bangHoiDatabaseAmount + " (" + playerDatabaseAmount + " members) amount of bang hoi");
@@ -124,38 +129,36 @@ public class DatabaseManager {
         if (listOfFilesPlayer == null) return;
 
         playerDatabaseAmount = 0;
-        for (int i = 0; i < listOfFilesPlayer.length; i++) {
+        for (File file : listOfFilesPlayer) {
             try {
+                if (file.isFile()) {
 
+                    String playerName = FilenameUtil.removeExtension(file.getName());
+                    loadPlayerData(playerName);
+
+                    PlayerData playerData = DatabaseManager.getPlayerData(playerName);
+                    if (playerData.getBangHoi() == null) {
+                        continue;
+                    }
+
+                    // Fix old data
+                    if (playerData.getBangHoi() != null && playerData.getBangHoi().equals("@null"))
+                        playerData.setBangHoi(null);
+                    if (playerData.getChucVu() != null && playerData.getChucVu().equals("@null"))
+                        playerData.setChucVu(null);
+
+                    // player bang hoi != null || bang hoi == null
+                    if (!DatabaseManager.bangHoiDatabase.containsKey(playerData.getBangHoi())
+                            || !DatabaseManager.getBangHoiData(playerData.getBangHoi()).getThanhVien().contains(playerName)) {
+                        resetPlayerData(playerData);
+                        DatabaseManager.savePlayerData(playerName);
+                    }
+
+                    playerDatabaseAmount++;
+                    savePlayerData(playerName);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-            if (listOfFilesPlayer[i].isFile()) {
-
-                File playerFile = listOfFilesPlayer[i];
-                String playerName = FilenameUtil.removeExtension(playerFile.getName());
-                loadPlayerData(playerName);
-
-                PlayerData playerData = DatabaseManager.getPlayerData(playerName);
-                if (playerData.getBangHoi() == null) {
-                    continue;
-                }
-
-                // Fix old data
-                if (playerData.getBangHoi() != null && playerData.getBangHoi().equals("@null"))
-                    playerData.setBangHoi(null);
-                if (playerData.getChucVu() != null && playerData.getChucVu().equals("@null"))
-                    playerData.setChucVu(null);
-
-                // player bang hoi != null || bang hoi == null
-                if (!DatabaseManager.bangHoiDatabase.containsKey(playerData.getBangHoi())
-                        || !DatabaseManager.getBangHoiData(playerData.getBangHoi()).getThanhVien().contains(playerName)) {
-                    resetPlayerData(playerData);
-                    DatabaseManager.savePlayerData(playerName);
-                }
-
-                playerDatabaseAmount++;
-                savePlayerData(playerName);
             }
         }
         DebugManager.debug("LOADING DATABASE", "Loaded/Fixed " + playerDatabaseAmount + " amount of players");

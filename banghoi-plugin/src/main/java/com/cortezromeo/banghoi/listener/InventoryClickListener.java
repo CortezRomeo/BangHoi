@@ -170,7 +170,7 @@ public class InventoryClickListener implements Listener {
 					return;
 				}
 
-				bangHoiData.removeWarPoint(requiredWarpoint);
+				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
 				bangHoiData.addSoLuongToiDa(1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
@@ -237,7 +237,7 @@ public class InventoryClickListener implements Listener {
 					return;
 				}
 
-				bangHoiData.removeWarPoint(requiredWarpoint);
+				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
 				bangHoiData.setSkillLevel(1, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
@@ -281,7 +281,7 @@ public class InventoryClickListener implements Listener {
 					return;
 				}
 
-				bangHoiData.removeWarPoint(requiredWarpoint);
+				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
 				bangHoiData.setSkillLevel(2, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
@@ -325,7 +325,7 @@ public class InventoryClickListener implements Listener {
 					return;
 				}
 
-				bangHoiData.removeWarPoint(requiredWarpoint);
+				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
 				bangHoiData.addSkillLevel(3, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
@@ -373,7 +373,7 @@ public class InventoryClickListener implements Listener {
 					return;
 				}
 
-				bangHoiData.removeWarPoint(requiredWarpoint);
+				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
 				bangHoiData.setSkillLevel(4, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 

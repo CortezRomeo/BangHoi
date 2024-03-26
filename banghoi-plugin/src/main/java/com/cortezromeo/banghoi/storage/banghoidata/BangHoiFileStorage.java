@@ -45,7 +45,7 @@ public class BangHoiFileStorage implements BangHoiStorage {
         for (String key : storage.getStringList("data.thanh_vien"))
             data.addThanhVien(key);
         data.setBangHoiWarn(storage.getInt("data.warn"));
-        data.setWarPoint(storage.getInt("data.warpoint"));
+        data.setBangHoiWarPoint(storage.getInt("data.warpoint"));
 
         if (storage.getString("data.banghoiicon") != null)
             data.setBangHoiIcon(storage.getString("data.banghoiicon"));
