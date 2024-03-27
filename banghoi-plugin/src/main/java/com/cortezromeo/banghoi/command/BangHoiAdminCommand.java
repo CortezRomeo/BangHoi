@@ -9,8 +9,6 @@ import com.cortezromeo.banghoi.manager.DebugManager;
 import com.cortezromeo.banghoi.manager.WarManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -282,7 +280,7 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 						bangHoiData.removeBangHoiWarPoint(value);
 					}
 					DatabaseManager.saveBangHoiData(bangHoiName);
-					sendMessage(sender, "&aĐã cho &e" + type.toUpperCase() + " &avào bang hội &e" + bangHoiName + "&a thành công.");
+					sendMessage(sender, "&aĐã trừ &e" + type.toUpperCase() + " &avào bang hội &e" + bangHoiName + "&a thành công.");
 					sendMessage(sender, "&aValue: &e" + value);
 				}
 				return false;
@@ -365,7 +363,8 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 					|| args[0].equalsIgnoreCase("set")
 					|| args[0].equalsIgnoreCase("give")
 					|| args[0].equalsIgnoreCase("remove")
-					|| args[0].equalsIgnoreCase("reset"))
+					|| args[0].equalsIgnoreCase("reset")
+					|| args[0].equalsIgnoreCase("resetAll"))
 				if (!DatabaseManager.bangHoiDatabase.isEmpty())
 					commands.addAll(DatabaseManager.bangHoiDatabase.keySet());
 			if (args[0].equalsIgnoreCase("warnBangHoiByPlayerName")) {

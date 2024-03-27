@@ -8,9 +8,7 @@ import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.util.InventoryUtil;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;

@@ -78,8 +78,13 @@
         <!-- Spigot -->
         <repository>
             <id>spigotmc-repo</id>
-            <url>https://mvn.lumine.io/repository/maven-public/</url>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <!-- Spigot [dev] -->
+<!--        <repository>
+            <id>spigotmc-repo</id>
+            <url>https://mvn.lumine.io/repository/maven-public/</url>
+        </repository>-->
         <!-- Config Updater -->
         <repository>
             <id>maven-central</id>
@@ -106,10 +111,16 @@
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+<!--        <dependency>
+            <groupId>org.spigotmc</groupId>
             <artifactId>spigot-1.12.2</artifactId>
             <version>dev</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.tchristofferson</groupId>
             <artifactId>ConfigUpdater</artifactId>

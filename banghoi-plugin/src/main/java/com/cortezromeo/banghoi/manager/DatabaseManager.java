@@ -77,7 +77,6 @@ public class DatabaseManager {
         int bangHoiDatabaseAmount = 0;
         int playerDatabaseAmount = 0;
         for (File file : listOfFilesBangHoi) {
-
             try {
                 if (file.isFile()) {
 

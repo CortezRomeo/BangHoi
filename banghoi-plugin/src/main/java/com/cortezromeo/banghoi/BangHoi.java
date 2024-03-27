@@ -12,9 +12,7 @@ import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.manager.DebugManager;
 import com.cortezromeo.banghoi.manager.DiHoaManager;
 import com.cortezromeo.banghoi.manager.WarManager;
-import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiDataStorage;
-import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerDataStorage;
 import com.cortezromeo.banghoi.support.version.cross.CrossVersionSupport;
 import com.tchristofferson.configupdater.ConfigUpdater;
@@ -26,7 +24,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 import static com.cortezromeo.banghoi.util.MessageUtil.log;
 
@@ -69,6 +66,7 @@ public final class BangHoi extends JavaPlugin {
         log("                    |___/                 ");
         log("");
         log("&fĐang xác minh license key...");
+        log(DiHoaManager.getVersion());
         log("");
         log("&f--------------------------------");
 
@@ -124,15 +122,9 @@ public final class BangHoi extends JavaPlugin {
         WarManager.runTask(getConfig().getInt("bang-hoi-war.thoi-gian-su-kien"));
 
         new BukkitRunnable() {
-
             @Override
             public void run() {
-                for (Map.Entry<String, BangHoiData> bangHoiData : DatabaseManager.bangHoiDatabase.entrySet()) {
-                    DatabaseManager.saveBangHoiData(bangHoiData.getKey());
-                }
-                for (Map.Entry<String, PlayerData> playerData : DatabaseManager.playerDatabase.entrySet()) {
-                    DatabaseManager.savePlayerData(playerData.getKey());
-                }
+                DatabaseManager.saveAllDatabase();
             }
         }.runTaskTimerAsynchronously(this, 20 * 300, 20 * 900);
     }
