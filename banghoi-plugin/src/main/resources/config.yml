@@ -1,13 +1,28 @@
-# Plugin bang hội
-# Support:
-# discord Cortez_Romeo
-# facebook https://www.facebook.com/thuong.trinh.nguyen.321/
+#
+#      ______     ______     __   __     ______        __  __     ______     __
+#     /\  == \   /\  __ \   /\ "-.\ \   /\  ___\      /\ \_\ \   /\  __ \   /\ \
+#     \ \  __<   \ \  __ \  \ \ \-.  \  \ \ \__ \     \ \  __ \  \ \ \/\ \  \ \ \
+#      \ \_____\  \ \_\ \_\  \ \_\\"\_\  \ \_____\     \ \_\ \_\  \ \_____\  \ \_\
+#       \/_____/   \/_/\/_/   \/_/ \/_/   \/_____/      \/_/\/_/   \/_____/   \/_/
+#
+#  Author: Cortez_Romeo
+#  Mua plugin này tại https://dihoastore.net
+#
+# Góp ý báo lỗi tại
+# --- discord: Cortez_Romeo
+# --- facebook: https://www.facebook.com/thuong.trinh.nguyen.321/
 
 # Đặt license key đã mua tại dihoastore.net tại đây (Hướng dẫn cài: https://bit.ly/3gJtsbp)
 license-key: "XXXX-XXXX-XXXX-XXXX"
 
 # Dành cho việc fix lỗi, không cần bật nếu không cần đến
 debug: false
+
+# Tự động lưu dữ liệu
+auto-save:
+  # Tính theo giây, nên để là 900 giây (15 phút)
+  # Để là 0 nếu muốn tắt
+  time: 900
 
 # Tùy chỉnh các thông số mặc định
 bang-hoi-options:
@@ -78,48 +93,3 @@ bang-hoi-war:
 # %banghoi_top_<number>%
 placeholderAPI:
   top: '&#d1d1d1#%number% &r%name% &e&l━ &#f25eff%value% Điểm'
-
-# Phần thời gian hiển thị
-time-format:
-  wwddhhmmss: '&a%w% &ftuần &a%d% &fngày &a%h% &fgiờ &a%m% &fphút &a%s% &fgiây'
-  ddhhmmss: '&a%d% &fngày &a%h% &fgiờ &a%m% &fphút &a%s% &fgiây'
-  hhmmss: '&a%h% &fgiờ &a%m% &fphút &a%s% &fgiây'
-  mmss: '&a%m% &fphút &a%s% &fgiây'
-  ss: '&a%s% &fgiây'
-
-upgradeSlot:
-  slot-xu:
-    # <slot>: <số xu>
-    6: 10
-    7: 20
-    8: 30
-    9: 40
-    10: 50
-    11: 60
-    12: 70
-    13: 80
-    14: 90
-    15: 100
-    # Trả về else nếu khác
-    else: 200
-  slot-warpoint:
-    # <slot>: <số xu>
-    6: 30
-    7: 60
-    8: 90
-    9: 120
-    10: 150
-    # Trả về else nếu khác
-    else: 151
-
-# Warpoint
-skill:
-  1CritDamage: 80
-  2BoostScore: 20
-  3Dodge:
-    1: 50
-    2: 50
-  4Vampire: 100
-
-# Vui lòng không thay đổi giá trị dưới này!
-file-version: 2.0

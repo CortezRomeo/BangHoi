@@ -1,0 +1,66 @@
+#
+#      ______     ______     __   __     ______        __  __     ______     __
+#     /\  == \   /\  __ \   /\ "-.\ \   /\  ___\      /\ \_\ \   /\  __ \   /\ \
+#     \ \  __<   \ \  __ \  \ \ \-.  \  \ \ \__ \     \ \  __ \  \ \ \/\ \  \ \ \
+#      \ \_____\  \ \_\ \_\  \ \_\\"\_\  \ \_____\     \ \_\ \_\  \ \_____\  \ \_\
+#       \/_____/   \/_/\/_/   \/_/ \/_/   \/_____/      \/_/\/_/   \/_____/   \/_/
+#
+#  Author: Cortez_Romeo
+#  Mua plugin này tại https://dihoastore.net
+#
+# Góp ý báo lỗi tại
+# --- discord: Cortez_Romeo
+# --- facebook: https://www.facebook.com/thuong.trinh.nguyen.321/
+
+# Sẽ trả về else nếu slot bang hội không có trong danh sách
+maxMemberSlot:
+  playerPoints:
+    1: 2
+    2: 3
+    3: 4
+    4: 5
+    6: 10
+    7: 20
+    8: 30
+    9: 40
+    10: 50
+    11: 60
+    12: 70
+    13: 80
+    14: 90
+    15: 100
+    else: 200
+  warPoint:
+    1: 5
+    2: 10
+    3: 15
+    4: 20
+    5: 25
+    6: 30
+    7: 60
+    8: 90
+    9: 120
+    10: 150
+    else: 151
+skills:
+  critDamage:
+    warPoint: 80
+    damage: "%originalDamage% * 2"
+    # Tỉ lệ kích hoạt
+    chance: 25
+  boostScore:
+    warPoint: 20
+    bonus: 1
+  dodge:
+    warPoint:
+      1: 50
+      2: 50
+    chance: 15
+  vampire:
+    warPoint: 100
+    # placeholders:
+    # %playerMaxHealth%
+    # %playerHealth%
+    heal: "%playerMaxHealth% / 5"
+    # Tỉ lệ kích hoạt
+    chance: 20

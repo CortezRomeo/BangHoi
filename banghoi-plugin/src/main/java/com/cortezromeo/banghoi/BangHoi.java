@@ -7,6 +7,7 @@ import com.cortezromeo.banghoi.depend.PapiDepend;
 import com.cortezromeo.banghoi.depend.VaultDepend;
 import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
+import com.cortezromeo.banghoi.file.UpgradeFile;
 import com.cortezromeo.banghoi.listener.*;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.manager.DebugManager;
@@ -19,6 +20,7 @@ import com.tchristofferson.configupdater.ConfigUpdater;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -66,7 +68,6 @@ public final class BangHoi extends JavaPlugin {
         log("                    |___/                 ");
         log("");
         log("&fĐang xác minh license key...");
-        log(DiHoaManager.getVersion());
         log("");
         log("&f--------------------------------");
 
@@ -112,6 +113,7 @@ public final class BangHoi extends JavaPlugin {
             }
         } else
             log("&a&lBANG HOI DEVELOPER MODE IS ON! ENABLING PLUGIN");
+
         DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
 
         initDatabase();
@@ -121,24 +123,27 @@ public final class BangHoi extends JavaPlugin {
 
         WarManager.runTask(getConfig().getInt("bang-hoi-war.thoi-gian-su-kien"));
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                DatabaseManager.saveAllDatabase();
-            }
-        }.runTaskTimerAsynchronously(this, 20 * 300, 20 * 900);
+        if (getConfig().getLong("auto-save") != 0) {
+            long seconds = getConfig().getLong("auto-save.time");
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    DatabaseManager.saveAllDatabase();
+                }
+            }.runTaskTimerAsynchronously(this, 20 * seconds, 20 * seconds);
+        }
     }
 
     private void initFile() {
 
         // config.yml
         saveDefaultConfig();
-/*        File configFile = new File(getDataFolder(), "config.yml");
+        File configFile = new File(getDataFolder(), "config.yml");
         try {
-            ConfigUpdater.update(this, "config.yml", configFile);
+            ConfigUpdater.update(this, "config.yml", configFile, "bang-hoi-war.cong-diem.mobs");
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
         reloadConfig();
 
         // message.yml
@@ -154,13 +159,28 @@ public final class BangHoi extends JavaPlugin {
         MessageFile.reload();
 
         // inventory.yml
-        if (!new File(getDataFolder() + "/inventory.yml").exists()) {
-            InventoryFile.setup();
-            InventoryFile.setupLang();
-        } else
-            InventoryFile.fileExists();
+        String inventoryFileName = "inventory.yml";
+        InventoryFile.setup();
+        InventoryFile.saveDefault();
+        File inventoryFile = new File(getDataFolder(), inventoryFileName);
+        try {
+            ConfigUpdater.update(this, inventoryFileName, inventoryFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         InventoryFile.reload();
 
+        // upgrade.yml
+        String upgradeFileName = "upgrade.yml";
+        UpgradeFile.setup();
+        UpgradeFile.saveDefault();
+        File upgradeFIle = new File(getDataFolder(), upgradeFileName);
+        try {
+            ConfigUpdater.update(this, upgradeFileName, upgradeFIle);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        InventoryFile.reload();
     }
 
     private void initDatabase() {
@@ -198,22 +218,6 @@ public final class BangHoi extends JavaPlugin {
 
     public static boolean PAPISupport() {
         return papiSupport;
-    }
-
-    public static String getServerVersion() {
-        return version;
-    }
-
-    public static String getForCurrentVersion(String v12, String v13) {
-        switch (getServerVersion()) {
-            case "v1_9_R1":
-            case "v1_9_R2":
-            case "v1_10_R1":
-            case "v1_11_R1":
-            case "v1_12_R1":
-                return v12;
-        }
-        return v13;
     }
 
     @Override

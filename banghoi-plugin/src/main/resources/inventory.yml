@@ -1,0 +1,317 @@
+#
+#      ______     ______     __   __     ______        __  __     ______     __
+#     /\  == \   /\  __ \   /\ "-.\ \   /\  ___\      /\ \_\ \   /\  __ \   /\ \
+#     \ \  __<   \ \  __ \  \ \ \-.  \  \ \ \__ \     \ \  __ \  \ \ \/\ \  \ \ \
+#      \ \_____\  \ \_\ \_\  \ \_\\"\_\  \ \_____\     \ \_\ \_\  \ \_____\  \ \_\
+#       \/_____/   \/_/\/_/   \/_/ \/_/   \/_____/      \/_/\/_/   \/_____/   \/_/
+#
+#  Author: Cortez_Romeo
+#  Mua plugin này tại https://dihoastore.net
+#
+# Góp ý báo lỗi tại
+# --- discord: Cortez_Romeo
+# --- facebook: https://www.facebook.com/thuong.trinh.nguyen.321/
+#
+#  Lưu ý khi chỉnh file inventory.yml:
+#  * Có hỗ trợ hex color
+#  * Có 3 type chính, đó là:
+#    + material: value chỉnh thành MATERIAL của block
+#      > Theo các phiên bản bé hơn 1.13, bạn có thể điền số trong phần 'value:' và 'data:' của item đó
+#          Ví dụ: (value: 95 | data: 1) [https://minecraft-ids.grahamedgecombe.com/]
+#      > Theo các phiên bản lớn hơn 1.12.2, bạn có thể điền thẳng tên item đó (Phần 'data:' sẽ không còn cần thiết)
+#          Ví dụ: (value: BOOK) [https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html]
+#    + playerhead: dành cho item "bet-player:" để hiện thị đầu người hơi
+#    + customhead: Đọc phần ở dưới
+#      + Cách sử dụng custom-head:
+#          Bước 1: Truy cập vào một custom-head mà bạn cần ở web có link https://minecraft-heads.com/custom-heads/
+#          Bước 2: Kéo xuống dưới cùng bạn sẽ thấy có một mục là "Other", Copy phần "Value:" và
+#                  dán nó vào phần "value:" của item bạn cần
+#  * Số rows phải từ 1 đến 6 (Không dưới hoặc hơn)
+#
+# ĐỌC KỸ TRƯỚC KHI CHỈNH FILE
+
+borderItem:
+  name: ''
+  type: material
+  value: BLACK_STAINED_GLASS_PANE
+  data: 0
+  lore:
+    - ''
+nextPage:
+  type: customhead
+  value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTliZjMyOTJlMTI2YTEwNWI1NGViYTcxM2FhMWIxNTJkNTQxYTFkODkzODgyOWM1NjM2NGQxNzhlZDIyYmYifX19
+  data: 0
+  name: '&3&lTrang &a%trang%&f/&c%trangcuoi%'
+  lore:
+    - ''
+    - '&fTrang hiện tại: &b%trang%'
+    - '&fNhấn vào đây để sang trang &a%trangsau%'
+    - ''
+pageInfo:
+  type: material
+  value: BOOK
+  data: 0
+  name: '&bTôi đang ở đâu?'
+  lore:
+    - ''
+    - '&fBạn đang ở trang: &a%trang% &f/ &a%trangcuoi%'
+    - ''
+prevPage:
+  type: customhead
+  value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ2OWUwNmU1ZGFkZmQ4NGU1ZjNkMWMyMTA2M2YyNTUzYjJmYTk0NWVlMWQ0ZDcxNTJmZGM1NDI1YmMxMmE5In19fQ==
+  data: 0
+  name: '&3&lTrang &a%trang%&f/&c%trangcuoi%'
+  lore:
+    - ''
+    - '&fTrang hiện tại: &b%trang%'
+    - '&fNhấn vào đây để về trang &a%trangtruoc%'
+    - ''
+back:
+  type: customhead
+  value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ2OWUwNmU1ZGFkZmQ4NGU1ZjNkMWMyMTA2M2YyNTUzYjJmYTk0NWVlMWQ0ZDcxNTJmZGM1NDI1YmMxMmE5In19fQ
+  data: 0
+  name: '&cTrở về trang trước'
+  lore:
+    - '&eNhấn để trở về trang trước'
+gui:
+  listBangHoi:
+    rows: 6
+    title: '&0Bang hội'
+    items:
+      banghoi:
+        # Nếu bang hội không có icon, sẽ trả về giá trị này
+        type: customhead
+        value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjk2YWYzNmVhYWVkOGE3ZGJkMjcyN2ZkNGNkN2FmYmM2YzBhZmI4Yzc2MDYyOTRjOWNiNDAxMTQxYWFjMzc5In19fQ==
+        data: 0
+        name: '&#3ce8b7%ten%'
+        lore:
+          - '&#85a832%diem% điểm &e[top: %top%]'
+          - ''
+          - '&fNgày thành lập: &e%ngaythanhlap%'
+          - ''
+          - '&fLãnh đạo: &a%lanhdao%'
+          - '&fSố thành viên: &b%sothanhvien%&7/&3%thanhvientoida%'
+          - ''
+          - '&fWarpoint: &b%warpoint%'
+          - '&fBị warn: &c%warn%&7/&42'
+          - ''
+          - '&eNhấn để xem thành viên!'
+      nextPage:
+        slot: 52
+      pageInfo:
+        slot: 49
+      prevPage:
+        slot: 46
+  viewMembers:
+    rows: 4
+    title: '&0Xem thành viên'
+    items:
+      member:
+        type: customhead
+        value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTNhNDdiMTMxZGJjYmMzMGYzY2JlOTY0NzdmYTVlMzcyMjY4MmZhYjk5NWNkMmQyMmY3NWIxNWU5NDgyZmQyMyJ9fX0=
+        data: 0
+        name: '&6%name%'
+        lore:
+          - ''
+          - '&fTrạng thái: &r%trangthai%'
+          - '&fChức vụ: &r%chucvu%'
+          - '&fNgày tham gia: &e%ngaythamgia%'
+          - ''
+      nextPage:
+        slot: 34
+      pageInfo:
+        slot: 31
+      back:
+        slot: 32
+      prevPage:
+        slot: 28
+  upgrade:
+    rows: 3
+    title: '&0Nâng cấp bang hội'
+    items:
+      upgradeSlot:
+        type: material
+        value: CHEST_MINECART
+        data: 0
+        name: '&3Nâng cấp slot'
+        slot: 11
+        lore:
+          - ''
+          - '&fNâng cấp slot cho bang hội'
+          - ''
+          - '&eNhấn vào đây để tùy chọn'
+      warPointShop:
+        type: customhead
+        value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGQyOGNkOTVmOTk2NGQxNTZkNjcyMGM4NGY4Njk4NzJiY2M2MTMwN2M0YmZmYTIyNDcyODZmYjMwNzdiZGRhYSJ9fX0=
+        data: 0
+        name: '&3Shop tính năng'
+        slot: 15
+        lore:
+          - ''
+          - '&fMua các tính năng cho bang hội như'
+          - '&fbuff thêm điểm, hiệu ứng, ...'
+          - ''
+          - '&eNhấn vào đây để tùy chọn'
+  upgradeSlot:
+    rows: 3
+    title: '&0Nâng cấp slot'
+    items:
+      upgradeSlotXu:
+        type: customhead
+        value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjQ2MjhhY2U3YzNhZmM2MWE0NzZkYzE0NDg5M2FhYTY0MmJhOTc2ZDk1MmI1MWVjZTI2YWJhZmI4OTZiOCJ9fX0=
+        data: 0
+        name: '&3Nâng cấp &f[XÀI XU]'
+        slot: 11
+        lore:
+          - ''
+          - '&fSố thành viên tối đa hiện tại là:'
+          - '   &a%slot%'
+          - '&fSố xu cần để nâng cấp là:'
+          - '   &3%xu%'
+          - ''
+          - '&eNhấn vào đây để nâng cấp'
+      upgradeSlotWarpoint:
+        type: customhead
+        value: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjJmYzIzODY2NTIzY2FhYThhOTUzNDU2NjEyN2E2ZjgzODlhZjNlNzZiOGUzYzMzYzI0NzNjYmE2ODg5YzQifX19
+        data: 0
+        name: '&3Nâng cấp &f[XÀI WARPOINT]'
+        slot: 15
+        lore:
+          - '&eChỉ có lãnh đạo mới có thể sử dụng nút này'
+          - ''
+          - '&fSố thành viên tối đa hiện tại là:'
+          - '   &a%slot%'
+          - '&fSố warpoint cần để nâng cấp là:'
+          - '   &b%warpoint%'
+          - ''
+          - '&eNhấn vào đây để nâng cấp'
+      back:
+        slot: 22
+  warPointShop:
+    rows: 3
+    title: '&0Shop tính năng'
+    items:
+      1CritDamage:
+        type: material
+        value: IRON_SWORD
+        data: 0
+        name: '&cSát thương chí mạng &7[SKILL-1]'
+        slot: 10
+        lore:
+          locked:
+            - '&eChỉ có lãnh đạo mới có thể sử dụng nút này'
+            - ''
+            - '&f&nTrong thời gian bang hội war&f, tất'
+            - '&fcả thành viên trong bang hội sẽ có &e25%'
+            - '&ftỉ lệ gây chí mạng (Gấp đôi sát thương)'
+            - ''
+            - '&fYêu cầu: &b%skill1WarPoint% Warpoint'
+            - ''
+            - '&eNhấn vào đây để nâng cấp'
+          unlocked:
+            - '&a&lĐÃ MỞ KHÓA'
+            - ''
+            - '&f&nTrong thời gian bang hội war&f, tất'
+            - '&fcả thành viên trong bang hội sẽ có &e25%'
+            - '&ftỉ lệ gây chí mạng (Gấp đôi sát thương)'
+            - ''
+      2BoostScore:
+        type: material
+        value: DRAGON_BREATH
+        data: 0
+        name: '&dBonus điểm cộng &7[SKILL-2]'
+        slot: 12
+        lore:
+          locked:
+            - '&eChỉ có lãnh đạo mới có thể sử dụng nút này'
+            - ''
+            - '&fCộng thêm một điểm khi giết người trong bang hội war'
+            - ''
+            - '&fYêu cầu: &b%skill2WarPoint% Warpoint'
+            - ''
+            - '&eNhấn vào đây để nâng cấp'
+          unlocked:
+            - '&a&lĐÃ MỞ KHÓA'
+            - ''
+            - '&fCộng thêm một điểm khi giết người trong bang hội war'
+            - ''
+      3Dodge:
+        type: material
+        value: SHIELD
+        data: 0
+        name: '&bKháng đòn đánh &7[SKILL-3]'
+        slot: 14
+        lore:
+          level1:
+            locked:
+              - '&eChỉ có lãnh đạo mới có thể sử dụng nút này'
+              - ''
+              - '&7Level 1:'
+              - '&f&nTrong thời gian bang hội war&f, tất'
+              - '&fcả thành viên trong bang hội sẽ có &e15%'
+              - '&ftỉ lệ né đòn'
+              - ''
+              - '&7Level 2:'
+              - '&fTất cả thuộc tính của level 1, nhưng sẽ'
+              - '&fgây lại số sát thương tương ứng cho người'
+              - '&fgây sát thương'
+              - ''
+              - '&fYêu cầu: &b%skill3WarPoint-level1% Warpoint'
+              - ''
+              - '&eNhấn vào đây để mở khóa level 1'
+            unlocked:
+              - '&eChỉ có lãnh đạo mới có thể sử dụng nút này'
+              - ''
+              - '&a&l[ĐÃ MỞ KHÓA] Level 1:'
+              - '&f&nTrong thời gian bang hội war&f, tất'
+              - '&fcả thành viên trong bang hội sẽ có &e15%'
+              - '&ftỉ lệ né đòn'
+              - ''
+              - '&7Level 2:'
+              - '&fTất cả thuộc tính của level 1, nhưng sẽ'
+              - '&fgây lại số sát thương tương ứng cho người'
+              - '&fgây sát thương'
+              - ''
+              - '&fYêu cầu: &b%skill3WarPoint-level2% Warpoint'
+              - ''
+              - '&eNhấn vào đây để mở khóa level 2'
+          level2:
+            unlocked:
+              - '&a&lĐÃ MỞ KHÓA'
+              - ''
+              - '&a&l[ĐÃ MỞ KHÓA] Level 1:'
+              - '&f&nTrong thời gian bang hội war&f, tất'
+              - '&fcả thành viên trong bang hội sẽ có &e15%'
+              - '&ftỉ lệ né đòn'
+              - ''
+              - '&a&l[ĐÃ MỞ KHÓA] Level 2:'
+              - '&fTất cả thuộc tính của level 1, nhưng sẽ'
+              - '&fgây lại số sát thương tương ứng cho người'
+              - '&fgây sát thương'
+              - ''
+      4Vampire:
+        type: material
+        value: REDSTONE
+        data: 0
+        name: '&aHồi máu &7[SKILL-4]'
+        slot: 16
+        lore:
+          locked:
+            - '&eChỉ có lãnh đạo mới có thể sử dụng nút này'
+            - ''
+            - '&f&nTrong thời gian bang hội war&f, tất'
+            - '&fcả thành viên trong bang hội sẽ có &e15%'
+            - '&ftỉ lệ hồi lại &a20% lượng máu tối đa'
+            - ''
+            - '&fYêu cầu: &b%skill4WarPoint% Warpoint'
+            - ''
+            - '&eNhấn vào đây để nâng cấp'
+          unlocked:
+            - '&a&lĐÃ MỞ KHÓA'
+            - ''
+            - '&f&nTrong thời gian bang hội war&f, tất'
+            - '&fcả thành viên trong bang hội sẽ có &e15%'
+            - '&ftỉ lệ hồi lại &a20% lượng máu tối đa'
+            - ''
+      back:
+        slot: 22

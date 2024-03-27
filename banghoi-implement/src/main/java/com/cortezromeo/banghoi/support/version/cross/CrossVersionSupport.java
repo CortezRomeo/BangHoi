@@ -3,9 +3,11 @@ package com.cortezromeo.banghoi.support.version.cross;
 import com.cortezromeo.banghoi.api.server.VersionSupport;
 import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -60,6 +62,19 @@ public final class CrossVersionSupport extends VersionSupport {
                     getPlugin().getLogger().severe("----------------------------------------------------");
                     return new ItemStack(Material.BEDROCK);
                 });
+    }
+
+    @Override
+    public Sound playSound(String soundName) {
+        return XSound.matchXSound(soundName).map(XSound::parseSound).orElseGet(() -> {
+            getPlugin().getLogger().severe("----------------------------------------------------");
+            getPlugin().getLogger().severe("SOUND NAME " + soundName + " KHÔNG HỢP LỆ!");
+            getPlugin().getLogger().severe("Có thể do bạn nhập sai hoặc Sound đó không tồn tại ở phiên bản này");
+            getPlugin().getLogger().severe(">> Link Sounds <<");
+            getPlugin().getLogger().severe("https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html");
+            getPlugin().getLogger().severe("----------------------------------------------------");
+            return XSound.BLOCK_AMETHYST_CLUSTER_BREAK.parseSound();
+        });
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.cortezromeo.banghoi.api.server;
 
+import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
@@ -17,6 +18,8 @@ public abstract class VersionSupport {
     public abstract ItemStack createItemStack(String material, int amount, short data);
 
     public abstract ItemStack createItemStack(String material, int amount);
+
+    public abstract Sound playSound(String soundName);
 
     public abstract ItemStack getHeadItem(String headValue);
 

@@ -7,13 +7,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class InventoryFile {
+public class UpgradeFile {
 
     private static File file;
     private static FileConfiguration messageFile;
 
     public static void setup() {
-        file = new File(BangHoi.plugin.getDataFolder() + "/inventory.yml");
+        file = new File(BangHoi.plugin.getDataFolder() + "/upgrade.yml");
 
         if (!file.exists()) {
             try {
@@ -32,7 +32,7 @@ public class InventoryFile {
     public static void saveDefault() {
         try {
             if (!file.exists()) {
-                BangHoi.plugin.saveResource("inventory.yml", false);
+                BangHoi.plugin.saveResource("upgrade.yml", false);
             }
         } catch (Exception e) {
             e.printStackTrace();

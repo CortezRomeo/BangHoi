@@ -97,29 +97,6 @@ public class DiHoaManager {
         }
     }
 
-    public static String getVersion() {
-        try {
-            URL url = new URL("https://dihoastore-mc.tk/api/update.php?plugin=" + productName);
-            BufferedReader stream = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuilder sb = new StringBuilder();
-            String inputLine;
-            while ((inputLine = stream.readLine()) != null)
-                sb.append(inputLine);
-            stream.close();
-            String json = sb.toString();
-            if (json != null) {
-                JSONParser parser = new JSONParser();
-                JSONObject object = (JSONObject)parser.parse(json);
-                if (object.get("error") == "yes")
-                    return "error string";
-                return object.get("version").toString();
-            }
-            return "Json is null";
-        } catch (IOException|org.json.simple.parser.ParseException e) {
-            return "parser error";
-        }
-    }
-
     public static String getMd5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

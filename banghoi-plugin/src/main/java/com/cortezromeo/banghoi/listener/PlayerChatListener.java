@@ -47,15 +47,13 @@ public class PlayerChatListener implements Listener {
 									.replaceAll("%msg%", e.getMessage())));
 				}
 			}
-			for (Player player: Bukkit.getOnlinePlayers()) {
-				if (player.hasPermission("banghoi.chatspy")) {
-					player.sendMessage(
-							BangHoi.nms.addColor("&cBang hội chat (SPY) &e" + p.getName() + "&f: " + e.getMessage()));
-				}
-			}
 
+			String chatSpyMessage = "&cBang hội chat (SPY) &f[" + bangHoiData.getBangHoiName() + "] &e" + p.getName() + "&f: " + e.getMessage();
+			for (Player player: Bukkit.getOnlinePlayers())
+				if (player.hasPermission("banghoi.chatspy"))
+					player.sendMessage(BangHoi.nms.addColor(chatSpyMessage));
+			MessageUtil.log(chatSpyMessage);
 		}
-
 	}
 
 }
