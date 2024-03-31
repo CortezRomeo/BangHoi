@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.listener;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.manager.BangHoiManager;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
@@ -67,7 +68,7 @@ public class PlayerDeathListener implements Listener {
 			}
 
 			int bonusScore = 0;
-			if (DatabaseManager.getBangHoiData(killerData.getBangHoi()).getSkillLevel(2) > 0)
+			if (DatabaseManager.getBangHoiData(killerData.getBangHoi()).getSkillLevel(SkillType.boostScore) > 0)
 				bonusScore = 1;
 
 			BangHoiManager.bangHoiAlert(killerData.getBangHoi(), mse.getString("bangHoiWar.playerCongDiem")

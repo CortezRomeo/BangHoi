@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.util;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.file.UpgradeFile;
 import com.cortezromeo.banghoi.manager.BangHoiManager;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
@@ -88,18 +89,18 @@ public class InventoryUtil {
 
             if (replace.equals("upgrade")) {
 
-                FileConfiguration config = BangHoi.plugin.getConfig();
+                FileConfiguration upgradeFileCfg = UpgradeFile.get();
 
                 int slot = DatabaseManager.getBangHoiData(dataReplace).getSoLuongToiDa();
-                int requiredPoint = config
-                        .getInt("upgradeSlot.slot-xu." + (DatabaseManager.getBangHoiData(dataReplace).getSoLuongToiDa() + 1));
+                int requiredPoint = upgradeFileCfg
+                        .getInt("maxMemberSlot.playerPoints." + (DatabaseManager.getBangHoiData(dataReplace).getSoLuongToiDa() + 1));
                 if (requiredPoint == 0)
-                    requiredPoint = config.getInt("upgradeSlot.slot-xu.else");
+                    requiredPoint = upgradeFileCfg.getInt("maxMemberSlot.playerPoints.else");
 
-                int requiredWarPoint = config
-                        .getInt("upgradeSlot.slot-warpoint." + (DatabaseManager.getBangHoiData(dataReplace).getSoLuongToiDa() + 1));
+                int requiredWarPoint = upgradeFileCfg
+                        .getInt("maxMemberSlot.warPoint." + (DatabaseManager.getBangHoiData(dataReplace).getSoLuongToiDa() + 1));
                 if (requiredWarPoint == 0)
-                    requiredWarPoint = config.getInt("upgradeSlot.slot-warpoint.else");
+                    requiredWarPoint = upgradeFileCfg.getInt("maxMemberSlot.warPoint.else");
 
                 string = string.replace("%slot%", String.valueOf(slot));
                 string = string.replace("%xu%", String.valueOf(requiredPoint));

@@ -9,10 +9,7 @@ import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.file.UpgradeFile;
 import com.cortezromeo.banghoi.listener.*;
-import com.cortezromeo.banghoi.manager.DatabaseManager;
-import com.cortezromeo.banghoi.manager.DebugManager;
-import com.cortezromeo.banghoi.manager.DiHoaManager;
-import com.cortezromeo.banghoi.manager.WarManager;
+import com.cortezromeo.banghoi.manager.*;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiDataStorage;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerDataStorage;
 import com.cortezromeo.banghoi.support.version.cross.CrossVersionSupport;
@@ -20,7 +17,8 @@ import com.tchristofferson.configupdater.ConfigUpdater;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -29,7 +27,7 @@ import java.io.IOException;
 
 import static com.cortezromeo.banghoi.util.MessageUtil.log;
 
-public final class BangHoi extends JavaPlugin {
+public final class BangHoi extends JavaPlugin implements Listener {
     public static BangHoi plugin;
     private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
     public static VersionSupport nms;
@@ -120,6 +118,8 @@ public final class BangHoi extends JavaPlugin {
         initCommand();
         initListener();
         initSupport();
+        new SkillManager(this);
+        SkillManager.setupValue();
 
         WarManager.runTask(getConfig().getInt("bang-hoi-war.thoi-gian-su-kien"));
 
@@ -239,6 +239,11 @@ public final class BangHoi extends JavaPlugin {
         log("&f--------------------------------");
 
         DatabaseManager.saveAllDatabase();
+
+        if (!WarManager.bb.isEmpty())
+            for (Player player : WarManager.bb.keySet())
+                WarManager.bb.get(player).removeAll();
+
         //warManager.eventStarted = false;
 
     }

@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.inventory;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
@@ -37,7 +38,7 @@ public class WarPointShopInventory implements Listener {
 
 		BangHoiData bangHoiData = DatabaseManager.getBangHoiData(DatabaseManager.getPlayerData(p.getName()).getBangHoi());
 
-		if (bangHoiData.getSkillLevel(1) == 0)
+		if (bangHoiData.getSkillLevel(SkillType.critDamage) == 0)
 			ivng.setItem(guiFileCFG.getInt("gui.warPointShop.items.1CritDamage.slot"),
 					InventoryUtil.getItem(guiFileCFG.getString("gui.warPointShop.items.1CritDamage.type"),
 							guiFileCFG.getString("gui.warPointShop.items.1CritDamage.value"),
@@ -54,7 +55,7 @@ public class WarPointShopInventory implements Listener {
 							guiFileCFG.getStringList("gui.warPointShop.items.1CritDamage.lore.unlocked"), "warPointShop",
 							DatabaseManager.getPlayerData(p.getName()).getBangHoi(), 0));
 
-		if (bangHoiData.getSkillLevel(2) == 0)
+		if (bangHoiData.getSkillLevel(SkillType.boostScore) == 0)
 			ivng.setItem(guiFileCFG.getInt("gui.warPointShop.items.2BoostScore.slot"),
 					InventoryUtil.getItem(guiFileCFG.getString("gui.warPointShop.items.2BoostScore.type"),
 							guiFileCFG.getString("gui.warPointShop.items.2BoostScore.value"),
@@ -71,7 +72,7 @@ public class WarPointShopInventory implements Listener {
 							guiFileCFG.getStringList("gui.warPointShop.items.2BoostScore.lore.unlocked"), "warPointShop",
 							DatabaseManager.getPlayerData(p.getName()).getBangHoi(), 0));
 
-		if (bangHoiData.getSkillLevel(3) == 0)
+		if (bangHoiData.getSkillLevel(SkillType.dodge) == 0)
 			ivng.setItem(guiFileCFG.getInt("gui.warPointShop.items.3Dodge.slot"),
 					InventoryUtil.getItem(guiFileCFG.getString("gui.warPointShop.items.3Dodge.type"),
 							guiFileCFG.getString("gui.warPointShop.items.3Dodge.value"),
@@ -79,7 +80,7 @@ public class WarPointShopInventory implements Listener {
 							guiFileCFG.getString("gui.warPointShop.items.3Dodge.name"),
 							guiFileCFG.getStringList("gui.warPointShop.items.3Dodge.lore.level1.locked"), "warPointShop",
 							DatabaseManager.getPlayerData(p.getName()).getBangHoi(), 0));
-		else if (bangHoiData.getSkillLevel(3) == 1)
+		else if (bangHoiData.getSkillLevel(SkillType.dodge) == 1)
 			ivng.setItem(guiFileCFG.getInt("gui.warPointShop.items.3Dodge.slot"),
 					InventoryUtil.getItem(guiFileCFG.getString("gui.warPointShop.items.3Dodge.type"),
 							guiFileCFG.getString("gui.warPointShop.items.3Dodge.value"),
@@ -96,7 +97,7 @@ public class WarPointShopInventory implements Listener {
 							guiFileCFG.getStringList("gui.warPointShop.items.3Dodge.lore.level2.unlocked"), "warPointShop",
 							DatabaseManager.getPlayerData(p.getName()).getBangHoi(), 0));
 
-		if (bangHoiData.getSkillLevel(4) == 0)
+		if (bangHoiData.getSkillLevel(SkillType.vampire) == 0)
 			ivng.setItem(guiFileCFG.getInt("gui.warPointShop.items.4Vampire.slot"),
 					InventoryUtil.getItem(guiFileCFG.getString("gui.warPointShop.items.4Vampire.type"),
 							guiFileCFG.getString("gui.warPointShop.items.4Vampire.value"),

@@ -13,6 +13,7 @@
 # --- facebook: https://www.facebook.com/thuong.trinh.nguyen.321/
 
 # Sẽ trả về else nếu slot bang hội không có trong danh sách
+
 maxMemberSlot:
   playerPoints:
     1: 2
@@ -45,7 +46,7 @@ maxMemberSlot:
 skills:
   critDamage:
     warPoint: 80
-    damage: "%originalDamage% * 2"
+    damage: "%damage% * 2"
     # Tỉ lệ kích hoạt
     chance: 25
   boostScore:

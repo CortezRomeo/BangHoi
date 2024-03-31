@@ -245,7 +245,6 @@ public class WarManager {
 								else
 									b.setColor(BarColor.RED);
 							}
-
 						}
 					}
 				}

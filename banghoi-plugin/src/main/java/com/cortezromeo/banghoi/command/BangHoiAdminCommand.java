@@ -1,12 +1,10 @@
 package com.cortezromeo.banghoi.command;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
-import com.cortezromeo.banghoi.manager.BangHoiManager;
-import com.cortezromeo.banghoi.manager.DatabaseManager;
-import com.cortezromeo.banghoi.manager.DebugManager;
-import com.cortezromeo.banghoi.manager.WarManager;
+import com.cortezromeo.banghoi.manager.*;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import org.bukkit.command.Command;
@@ -56,6 +54,7 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 				BangHoi.plugin.reloadConfig();
 				InventoryFile.reload();
 				MessageFile.reload();
+				SkillManager.setupValue();
 				DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
 				sendMessage(sender, "&aReloaded BangHoi");
 				DebugManager.debug("RELOADING PLUGIN", "Plugin has been reloaded");
@@ -88,9 +87,12 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 					}
 					if (type.equalsIgnoreCase("warpoint"))
 						data.getValue().setBangHoiWarPoint(0);
-					if (type.equalsIgnoreCase("skill"))
-						for (int i = 1; i <= 4; i++)
-							data.getValue().setSkillLevel(i, 0);
+					if (type.equalsIgnoreCase("skill")) {
+						data.getValue().setSkillLevel(SkillType.critDamage, 0);
+						data.getValue().setSkillLevel(SkillType.boostScore, 0);
+						data.getValue().setSkillLevel(SkillType.dodge, 0);
+						data.getValue().setSkillLevel(SkillType.vampire, 0);
+					}
 					DatabaseManager.saveBangHoiData(data.getKey());
 				}
 				sendMessage(sender, "&aReset all &e" + type.toUpperCase() + " &athành công!");
@@ -183,9 +185,12 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 				}
 				if (type.equalsIgnoreCase("warpoint"))
 					bangHoiData.setBangHoiWarPoint(0);
-				if (type.equalsIgnoreCase("skill"))
-					for (int i = 1; i <= 4; i++)
-						bangHoiData.setSkillLevel(i, 0);
+				if (type.equalsIgnoreCase("skill")) {
+					bangHoiData.setSkillLevel(SkillType.critDamage, 0);
+					bangHoiData.setSkillLevel(SkillType.boostScore, 0);
+					bangHoiData.setSkillLevel(SkillType.dodge, 0);
+					bangHoiData.setSkillLevel(SkillType.vampire, 0);
+				}
 				DatabaseManager.saveBangHoiData(bangHoiName);
 
 				sendMessage(sender, "&aReset &e" + type.toUpperCase() + "&a của bang hội &e" + bangHoiName + "&a thành công!");
@@ -309,10 +314,16 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 
 				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(bangHoiName);
 				sendMessage(sender, "&aĐã set skill cho bang hội &e" + bangHoiName + " &athành:");
-				for (int i = 1; i <= 4; i++) {
-					sendMessage(sender, "&aSkill " + i + "&a: &e" + args[i + 2]);
-					bangHoiData.setSkillLevel(i, Integer.parseInt(args[i + 2]));
-				}
+				sendMessage(sender, "&aSkill 1 &b[Crit Damage]&a: &e" + args[3]);
+				sendMessage(sender, "&aSkill 2 &b[BoostScore]&a: &e" + args[4]);
+				sendMessage(sender, "&aSkill 3 &b[Dodge]&a: &e" + args[5]);
+				sendMessage(sender, "&aSkill 4 &b[Vampire]&a: &e" + args[6]);
+
+				bangHoiData.setSkillLevel(SkillType.critDamage, Integer.parseInt(args[3]));
+				bangHoiData.setSkillLevel(SkillType.boostScore, Integer.parseInt(args[4]));
+				bangHoiData.setSkillLevel(SkillType.dodge, Integer.parseInt(args[5]));
+				bangHoiData.setSkillLevel(SkillType.vampire, Integer.parseInt(args[6]));
+
 				DatabaseManager.saveBangHoiData(bangHoiName);
 				return false;
 			}

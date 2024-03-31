@@ -2,6 +2,7 @@ package com.cortezromeo.banghoi.manager;
 
 import com.cortezromeo.banghoi.BangHoi;
 import com.cortezromeo.banghoi.depend.VaultDepend;
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
@@ -639,10 +640,10 @@ public class BangHoiManager {
             str = str.replace("%ngaythanhlap%", strDate);
             str = str.replace("%sothanhvien%", String.valueOf(bangHoiData.getThanhVien().size()));
             str = str.replace("%thanhvientoida%", String.valueOf(bangHoiData.getSoLuongToiDa()));
-            str = str.replace("%skill1%", (bangHoiData.getSkillLevel(1) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
-            str = str.replace("%skill2%", (bangHoiData.getSkillLevel(2) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
-            str = str.replace("%skill3%", (bangHoiData.getSkillLevel(3) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
-            str = str.replace("%skill4%", (bangHoiData.getSkillLevel(4) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
+            str = str.replace("%skill1%", (bangHoiData.getSkillLevel(SkillType.critDamage) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
+            str = str.replace("%skill2%", (bangHoiData.getSkillLevel(SkillType.boostScore) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
+            str = str.replace("%skill3%", (bangHoiData.getSkillLevel(SkillType.dodge) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
+            str = str.replace("%skill4%", (bangHoiData.getSkillLevel(SkillType.vampire) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
 
 
             MessageUtil.sendMessage(p, str);
@@ -756,22 +757,21 @@ public class BangHoiManager {
     }
 
     public static int getWarPointCost(int skill, int level) {
-        FileConfiguration config = BangHoi.plugin.getConfig();
 
         if (skill == 1)
-            return config.getInt("skill.1CritDamage");
+            return SkillManager.getSkilLWarPoint(SkillType.critDamage);
 
         if (skill == 2)
-            return config.getInt("skill.2BoostScore");
+            return SkillManager.getSkilLWarPoint(SkillType.boostScore);
 
         if (skill == 3)
             if (level == 1)
-                return config.getInt("skill.3Dodge.1");
+                return SkillManager.getSkilLWarPoint(SkillType.dodge);
              else
-                return config.getInt("skill.3Dodge.2");
+                return SkillManager.getSkilLWarPoint(SkillType.dodge2);
 
         if (skill == 4)
-            return config.getInt("skill.4Vampire");
+            return SkillManager.getSkilLWarPoint(SkillType.vampire);
 
         return 0;
     }

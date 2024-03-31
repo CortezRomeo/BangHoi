@@ -1,9 +1,11 @@
 package com.cortezromeo.banghoi.listener;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.manager.BangHoiManager;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
+import com.cortezromeo.banghoi.manager.SkillManager;
 import com.cortezromeo.banghoi.manager.WarManager;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import org.bukkit.Bukkit;
@@ -55,8 +57,8 @@ public class EntityDeathListener implements Listener {
 					}
 
 					int bonusScore = 0;
-					if (DatabaseManager.getBangHoiData(killerData.getBangHoi()).getSkillLevel(2) > 0)
-						bonusScore = 1;
+					if (DatabaseManager.getBangHoiData(killerData.getBangHoi()).getSkillLevel(SkillType.boostScore) > 0)
+						bonusScore = Integer.parseInt(SkillManager.getSkillValue(SkillType.boostScore));
 
 					BangHoiManager.bangHoiAlert(killerData.getBangHoi(),
 							mse.getString("bangHoiWar.mobCongDiem")

@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.storage.banghoidata;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.util.FilenameUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -52,8 +53,10 @@ public class BangHoiFileStorage implements BangHoiStorage {
         else
             data.setBangHoiIcon(null);
 
-        for (int i = 1; i <= 4; i++)
-            data.setSkillLevel(i, storage.getInt("data.skill." + i));
+        data.setSkillLevel(SkillType.critDamage, storage.getInt("data.skill.1"));
+        data.setSkillLevel(SkillType.boostScore, storage.getInt("data.skill.2"));
+        data.setSkillLevel(SkillType.dodge, storage.getInt("data.skill.3"));
+        data.setSkillLevel(SkillType.vampire, storage.getInt("data.skill.4"));
 
         return data;
     }
@@ -78,8 +81,11 @@ public class BangHoiFileStorage implements BangHoiStorage {
         storage.set("data.warpoint", data.getBangHoiWarPoint());
         storage.set("data.banghoiicon", data.getBangHoiIcon());
 
-        for (int i = 1; i <= 4; i++)
-            storage.set("data.skill." + i, data.getSkillLevel(i));
+        storage.set("data.skill.1", data.getSkillLevel(SkillType.critDamage));
+        storage.set("data.skill.2", data.getSkillLevel(SkillType.boostScore));
+        storage.set("data.skill.3", data.getSkillLevel(SkillType.dodge));
+        storage.set("data.skill.4", data.getSkillLevel(SkillType.vampire));
+
         try {
             storage.save(file);
         } catch (IOException e) {

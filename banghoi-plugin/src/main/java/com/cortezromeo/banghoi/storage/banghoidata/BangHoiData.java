@@ -1,5 +1,6 @@
 package com.cortezromeo.banghoi.storage.banghoidata;
 
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
 
 import java.util.List;
@@ -240,61 +241,61 @@ public class BangHoiData {
         this.bangHoiWarn = bangHoiWarn;
     }
 
-    public int getSkillLevel(int skill) {
-        if (skill == 1)
+    public int getSkillLevel(SkillType skillType) {
+        if (skillType == SkillType.critDamage)
             return skill1;
 
-        if (skill == 2)
+        if (skillType == SkillType.boostScore)
             return skill2;
 
-        if (skill == 3)
+        if (skillType == SkillType.dodge)
             return skill3;
 
-        if (skill == 4)
+        if (skillType == SkillType.vampire)
             return skill4;
 
         return 0;
     }
 
-    public void addSkillLevel(int skill, int level) {
-        if (skill == 1)
+    public void addSkillLevel(SkillType skillType, int level) {
+        if (skillType == SkillType.critDamage)
             skill1 = skill1 + level;
 
-        if (skill == 2)
+        if (skillType == SkillType.boostScore)
             skill2 = skill2 + level;
 
-        if (skill == 3)
+        if (skillType == SkillType.dodge)
             skill3 = skill3 + level;
 
-        if (skill == 4)
+        if (skillType == SkillType.vampire)
             skill4 = skill4 + level;
     }
 
-    public void removeSkillLevel(int skill, int level) {
-        if (skill == 1)
+    public void removeSkillLevel(SkillType skillType, int level) {
+        if (skillType == SkillType.critDamage)
             skill1 = skill1 - level;
 
-        if (skill == 2)
+        if (skillType == SkillType.boostScore)
             skill2 = skill2 - level;
 
-        if (skill == 3)
+        if (skillType == SkillType.dodge)
             skill3 = skill3 - level;
 
-        if (skill == 4)
+        if (skillType == SkillType.vampire)
             skill4 = skill4 - level;
     }
 
-    public void setSkillLevel(int skill, int level) {
-        if (skill == 1)
+    public void setSkillLevel(SkillType skillType, int level) {
+        if (skillType == SkillType.critDamage)
             skill1 = level;
 
-        if (skill == 2)
+        if (skillType == SkillType.boostScore)
             skill2 = level;
 
-        if (skill == 3)
+        if (skillType == SkillType.dodge)
             skill3 = level;
 
-        if (skill == 4)
+        if (skillType == SkillType.vampire)
             skill4 = level;
     }
 

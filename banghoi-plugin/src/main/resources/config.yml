@@ -63,8 +63,11 @@ bang-hoi-war:
   world: banghoiwar
   # Thời gian diễn ra sự kiện (Tính bằng giây)
   thoi-gian-su-kien: 600
+  # Thời gian không cho xài lệnh trong thời gian bang hội war nếu người chơi đánh nhau
+  cooldown-xai-lenh: 15 # lấy theo giây
   # Khung giờ trong ngày
   khung-gio:
+    - #HH:mm:ss
     - '10:30:00'
     - '15:30:00'
     - '21:30:00'

@@ -1,8 +1,10 @@
 package com.cortezromeo.banghoi.listener;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
+import com.cortezromeo.banghoi.file.UpgradeFile;
 import com.cortezromeo.banghoi.inventory.*;
 import com.cortezromeo.banghoi.inventory.page.PagedPane;
 import com.cortezromeo.banghoi.manager.BangHoiManager;
@@ -104,13 +106,13 @@ public class InventoryClickListener implements Listener {
 				}
 
 				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(pData.getBangHoi());
-				FileConfiguration config = BangHoi.plugin.getConfig();
+				FileConfiguration upgradeFileCfg = UpgradeFile.get();
 				int point = BangHoi.ppAPI.look(p.getUniqueId());
 
-				int requiredPoint = config.getInt("upgradeSlot.slot-xu." + (bangHoiData.getSoLuongToiDa() + 1));
+				int requiredPoint = upgradeFileCfg.getInt("maxMemberSlot.playerPoints." + (bangHoiData.getSoLuongToiDa() + 1));
 
 				if (requiredPoint == 0)
-					requiredPoint = config.getInt("upgradeSlot.slot-xu.else");
+					requiredPoint = upgradeFileCfg.getInt("maxMemberSlot.playerPoints.else");
 
 				if (point < requiredPoint) {
 					MessageUtil.sendMessage(p, MessageFile.get().getString("thieuPoint").replace("%point%",
@@ -156,12 +158,12 @@ public class InventoryClickListener implements Listener {
 					}
 
 				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(pData.getBangHoi());
-				FileConfiguration config = BangHoi.plugin.getConfig();
+				FileConfiguration upgradeFileCfg = UpgradeFile.get();
 
-				int requiredWarpoint = config.getInt("upgradeSlot.slot-warpoint." + (bangHoiData.getSoLuongToiDa() + 1));
+				int requiredWarpoint = upgradeFileCfg.getInt("maxMemberSlot.warPoint." + (bangHoiData.getSoLuongToiDa() + 1));
 
 				if (requiredWarpoint == 0)
-					requiredWarpoint = config.getInt("upgradeSlot.slot-warpoint.else");
+					requiredWarpoint = upgradeFileCfg.getInt("maxMemberSlot.warPoint.");
 
 				if (bangHoiData.getBangHoiWarPoint() < requiredWarpoint) {
 					MessageUtil.sendMessage(p, MessageFile.get().getString("thieuWarpoint").replace("%warpoint%",
@@ -213,7 +215,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(pData.getBangHoi());
-				if (bangHoiData.getSkillLevel(1) == 1)
+				if (bangHoiData.getSkillLevel(SkillType.critDamage) == 1)
 					return;
 
 				if (pData.getChucVu() != null)
@@ -238,7 +240,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
-				bangHoiData.setSkillLevel(1, 1);
+				bangHoiData.setSkillLevel(SkillType.critDamage, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
 				BangHoiManager.bangHoiAlert(pData.getBangHoi(),
@@ -257,7 +259,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(pData.getBangHoi());
-				if (bangHoiData.getSkillLevel(2) == 1)
+				if (bangHoiData.getSkillLevel(SkillType.boostScore) == 1)
 					return;
 
 				if (pData.getChucVu() != null)
@@ -282,7 +284,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
-				bangHoiData.setSkillLevel(2, 1);
+				bangHoiData.setSkillLevel(SkillType.boostScore, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
 				BangHoiManager.bangHoiAlert(pData.getBangHoi(),
@@ -301,7 +303,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(pData.getBangHoi());
-				if (bangHoiData.getSkillLevel(3) == 2)
+				if (bangHoiData.getSkillLevel(SkillType.dodge) == 2)
 					return;
 
 				if (pData.getChucVu() != null)
@@ -311,7 +313,7 @@ public class InventoryClickListener implements Listener {
 						return;
 					}
 
-				int requiredWarpoint = BangHoiManager.getWarPointCost(3, bangHoiData.getSkillLevel(3) + 1);
+				int requiredWarpoint = BangHoiManager.getWarPointCost(3, bangHoiData.getSkillLevel(SkillType.dodge) + 1);
 
 				if (requiredWarpoint <= 0) {
 					p.closeInventory();
@@ -326,11 +328,11 @@ public class InventoryClickListener implements Listener {
 				}
 
 				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
-				bangHoiData.addSkillLevel(3, 1);
+				bangHoiData.setSkillLevel(SkillType.dodge, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
 				String message = "thongBaoRieng.nangCap-3Dodge-level";
-				message = message + bangHoiData.getSkillLevel(3);
+				message = message + bangHoiData.getSkillLevel(SkillType.dodge);
 
 				BangHoiManager.bangHoiAlert(pData.getBangHoi(),
 						MessageFile.get().getString(message));
@@ -349,7 +351,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				BangHoiData bangHoiData = DatabaseManager.getBangHoiData(pData.getBangHoi());
-				if (bangHoiData.getSkillLevel(4) == 1)
+				if (bangHoiData.getSkillLevel(SkillType.vampire) == 1)
 					return;
 
 				if (pData.getChucVu() != null)
@@ -374,7 +376,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
-				bangHoiData.setSkillLevel(4, 1);
+				bangHoiData.setSkillLevel(SkillType.vampire, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
 				BangHoiManager.bangHoiAlert(pData.getBangHoi(),
