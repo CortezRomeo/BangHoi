@@ -34,7 +34,7 @@ public final class BangHoi extends JavaPlugin implements Listener {
     public static PlayerPointsAPI ppAPI;
     private boolean serverSoftwareSupport = true;
     private static boolean papiSupport = false;
-    private boolean developerMode = true;
+    private boolean developerMode = false;
 
     @Override
     public void onLoad() {

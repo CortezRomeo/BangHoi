@@ -94,7 +94,7 @@ public class SkillManager implements Listener {
 
         String bangHoiName = DatabaseManager.getPlayerData(d.getName()).getBangHoi();
 
-        if (bangHoiName == null)
+        if (bangHoiName == null || DatabaseManager.getPlayerData(v.getName()).getBangHoi() == null)
             return;
 
         if (DatabaseManager.getBangHoiData(bangHoiName).getSkillLevel(SkillType.critDamage) == 0)
@@ -144,6 +144,9 @@ public class SkillManager implements Listener {
             return;
 
         PlayerData victimData = DatabaseManager.getPlayerData(victim.getName());
+
+        if (victimData.getBangHoi() == null || DatabaseManager.getPlayerData(damager.getName()).getBangHoi() == null)
+            return;
 
         int skill3Level = DatabaseManager.getBangHoiData(victimData.getBangHoi()).getSkillLevel(SkillType.dodge);
         if (skill3Level > 0) {
@@ -196,8 +199,11 @@ public class SkillManager implements Listener {
 
         PlayerData damagerData = DatabaseManager.getPlayerData(damager.getName());
 
+        if (damagerData.getBangHoi() == null || DatabaseManager.getPlayerData(victim.getName()).getBangHoi() == null)
+            return;
+
         if (DatabaseManager.getBangHoiData(damagerData.getBangHoi()).getSkillLevel(SkillType.vampire) > 0) {
-            if (new Random().nextDouble() < SkillManager.getSkillChance(SkillType.vampire)) {
+            if (new Random().nextDouble() < SkillManager.getSkillChance(SkillType.vampire) / 100) {
 
                 double pMaxHP = damager.getMaxHealth();
                 try {

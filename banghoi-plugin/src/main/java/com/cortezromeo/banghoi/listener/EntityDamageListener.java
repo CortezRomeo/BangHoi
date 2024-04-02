@@ -66,7 +66,7 @@ public class EntityDamageListener implements Listener {
 								public void run() {
 									DatabaseManager.playersWarProcess.remove(shooter.getName());
 								}
-							}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getInt("bang-hoi-war.cooldown-xai-lenh"));
+							}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getLong("bang-hoi-war.cooldown-xai-lenh"));
 						}
 						if (!DatabaseManager.playersWarProcess.contains(victim2.getName())) {
 							DatabaseManager.playersWarProcess.add(victim2.getName());
@@ -75,7 +75,7 @@ public class EntityDamageListener implements Listener {
 								public void run() {
 									DatabaseManager.playersWarProcess.remove(victim2.getName());
 								}
-							}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getInt("bang-hoi-war.cooldown-xai-lenh"));
+							}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getLong("bang-hoi-war.cooldown-xai-lenh"));
 						}
 					}
 				}
@@ -115,7 +115,7 @@ public class EntityDamageListener implements Listener {
 					public void run() {
 						DatabaseManager.playersWarProcess.remove(damager.getName());
 					}
-				}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getInt("bang-hoi-war.cooldown-xai-lenh"));
+				}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getLong("bang-hoi-war.cooldown-xai-lenh"));
 			}
 			if (!DatabaseManager.playersWarProcess.contains(victim.getName())) {
 				DatabaseManager.playersWarProcess.add(victim.getName());
@@ -124,7 +124,7 @@ public class EntityDamageListener implements Listener {
 					public void run() {
 						DatabaseManager.playersWarProcess.remove(victim.getName());
 					}
-				}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getInt("bang-hoi-war.cooldown-xai-lenh"));
+				}.runTaskLaterAsynchronously(BangHoi.plugin, 20L * plugin.getConfig().getLong("bang-hoi-war.cooldown-xai-lenh"));
 			}
 		}
 	}
