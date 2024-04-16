@@ -328,7 +328,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				bangHoiData.removeBangHoiWarPoint(requiredWarpoint);
-				bangHoiData.setSkillLevel(SkillType.dodge, 1);
+				bangHoiData.addSkillLevel(SkillType.dodge, 1);
 				DatabaseManager.saveBangHoiData(pData.getBangHoi());
 
 				String message = "thongBaoRieng.nangCap-3Dodge-level";

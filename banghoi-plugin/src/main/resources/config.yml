@@ -18,6 +18,10 @@ license-key: "XXXX-XXXX-XXXX-XXXX"
 # Dành cho việc fix lỗi, không cần bật nếu không cần đến
 debug: false
 
+# Bstats dùng để thống kê số liệu mấy chủ và số người chơi sử dụng plugin
+# Không ảnh hướng đến hiệu năng của máy chủ
+use-bstats: true
+
 # Tự động lưu dữ liệu
 auto-save:
   # Tính theo giây, nên để là 900 giây (15 phút)

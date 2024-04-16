@@ -27,7 +27,6 @@ public class SkillManager implements Listener {
     public SkillManager(BangHoi plugin) {
         this.plugin = plugin;
         Bukkit.getPluginManager().registerEvents(this, plugin);
-        Bukkit.getConsoleSender().sendMessage("adsadas");
     }
 
     private static FileConfiguration mse = MessageFile.get();

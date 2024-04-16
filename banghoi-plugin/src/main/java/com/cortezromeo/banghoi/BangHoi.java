@@ -132,6 +132,9 @@ public final class BangHoi extends JavaPlugin implements Listener {
                 }
             }.runTaskTimerAsynchronously(this, 20 * seconds, 20 * seconds);
         }
+
+        if (getConfig().getBoolean("use-bstats"))
+            new Metrics(this, 21611);
     }
 
     private void initFile() {
