@@ -82,7 +82,7 @@ public class InventoryUtil {
                 string = string.replace("%trangthai%",
                         (Bukkit.getPlayer(dataReplace) != null ? "&aONLINE" : "&cOFFLINE"));
                 if (data.getChucVu() != null)
-                    string = string.replace("%chucvu%", (data.getChucVu().equals("Leader") ? "&6Lãnh đạo" : "&aMember"));
+                    string = string.replace("%chucvu%", StringUtil.getRankFormat(data.getChucVu()));
                 string = string.replace("%ngaythamgia%", strDate);
 
             }

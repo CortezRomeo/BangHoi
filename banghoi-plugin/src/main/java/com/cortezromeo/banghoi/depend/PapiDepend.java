@@ -4,6 +4,7 @@ import com.cortezromeo.banghoi.BangHoi;
 import com.cortezromeo.banghoi.manager.BangHoiManager;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
+import com.cortezromeo.banghoi.util.StringUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -65,7 +66,11 @@ public class PapiDepend extends PlaceholderExpansion {
 			return BangHoi.nms.addColor(BangHoiManager.getBangHoiName(pData.getBangHoi()));
 
 		if (identifier.equals("chucvu"))
-			return BangHoi.nms.addColor(pData.getChucVu());
+			return BangHoi.nms.addColor(pData.getChucVu().toString());
+
+		if (identifier.equals("chucvuformat")) {
+			return StringUtil.getRankFormat(pData.getChucVu());
+		}
 
 		if (identifier.equals("ngaythamgia"))
 			return BangHoi.nms.addColor(String.valueOf(pData.getNgayThamGia()));

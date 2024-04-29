@@ -143,8 +143,6 @@ public class DatabaseManager {
                     // Fix old data
                     if (playerData.getBangHoi() != null && playerData.getBangHoi().equals("@null"))
                         playerData.setBangHoi(null);
-                    if (playerData.getChucVu() != null && playerData.getChucVu().equals("@null"))
-                        playerData.setChucVu(null);
 
                     // player bang hoi != null || bang hoi == null
                     if (!DatabaseManager.bangHoiDatabase.containsKey(playerData.getBangHoi())

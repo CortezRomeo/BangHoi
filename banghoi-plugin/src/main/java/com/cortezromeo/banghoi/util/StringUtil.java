@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.util;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.ClanRank;
 import com.cortezromeo.banghoi.file.MessageFile;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -66,6 +67,10 @@ public class StringUtil {
                 return a / b;
         }
         return 0;
+    }
+
+    public static String getRankFormat(ClanRank clanRank) {
+        return BangHoi.nms.addColor(BangHoi.plugin.getConfig().getString("bang-hoi-options.chuc-vu-format." + clanRank.toString()));
     }
 
     public static String timeFormat(long totalSeconds) {

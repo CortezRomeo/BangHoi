@@ -6,6 +6,7 @@ import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import com.cortezromeo.banghoi.util.MessageUtil;
+import com.cortezromeo.banghoi.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,8 +43,7 @@ public class PlayerChatListener implements Listener {
 				if (Bukkit.getPlayer(str) != null) {
 					Bukkit.getPlayer(str)
 							.sendMessage(BangHoi.nms.addColor(MessageFile.get().getString("chat").replaceAll("%player%",
-									(pData.getChucVu().equals("Leader") ? "&6(Lãnh đạo)&f " : "&a(Thành viên)&f ")
-											+ p.getName())
+									"&7(" + StringUtil.getRankFormat(pData.getChucVu()) + "&7)&f " + p.getName())
 									.replaceAll("%msg%", e.getMessage())));
 				}
 			}

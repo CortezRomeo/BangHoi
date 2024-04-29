@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.listener;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.ClanRank;
 import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
@@ -151,7 +152,7 @@ public class InventoryClickListener implements Listener {
 				}
 
 				if (pData.getChucVu() != null)
-					if (!pData.getChucVu().equals("Leader")) {
+					if (!pData.getChucVu().equals(ClanRank.LEADER)) {
 						p.closeInventory();
 						MessageUtil.sendMessage(p, MessageFile.get().getString("memberUseWarpoint"));
 						return;
@@ -219,7 +220,7 @@ public class InventoryClickListener implements Listener {
 					return;
 
 				if (pData.getChucVu() != null)
-					if (!pData.getChucVu().equals("Leader")) {
+					if (!pData.getChucVu().equals(ClanRank.LEADER)) {
 						p.closeInventory();
 						MessageUtil.sendMessage(p, MessageFile.get().getString("memberUseWarpoint"));
 						return;
@@ -263,7 +264,7 @@ public class InventoryClickListener implements Listener {
 					return;
 
 				if (pData.getChucVu() != null)
-					if (!pData.getChucVu().equals("Leader")) {
+					if (!pData.getChucVu().equals(ClanRank.LEADER)) {
 						p.closeInventory();
 						MessageUtil.sendMessage(p, MessageFile.get().getString("memberUseWarpoint"));
 						return;
@@ -307,7 +308,7 @@ public class InventoryClickListener implements Listener {
 					return;
 
 				if (pData.getChucVu() != null)
-					if (!pData.getChucVu().equals("Leader")) {
+					if (!pData.getChucVu().equals(ClanRank.LEADER)) {
 						p.closeInventory();
 						MessageUtil.sendMessage(p, MessageFile.get().getString("memberUseWarpoint"));
 						return;
@@ -355,7 +356,7 @@ public class InventoryClickListener implements Listener {
 					return;
 
 				if (pData.getChucVu() != null)
-					if (!pData.getChucVu().equals("Leader")) {
+					if (!pData.getChucVu().equals(ClanRank.LEADER)) {
 						p.closeInventory();
 						MessageUtil.sendMessage(p, MessageFile.get().getString("memberUseWarpoint"));
 						return;

@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.storage.playerdata;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.ClanRank;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public class PlayerFileStorage implements PlayerStorage {
             return data;
 
         data.setBangHoi(storage.getString("data.bang_hoi"));
-        data.setChucVu(storage.getString("data.chuc_vu"));
+        data.setChucVu(ClanRank.valueOf(storage.getString("data.chuc_vu").toUpperCase()));
         data.setNgayThamGia(storage.getLong("data.ngay_tham_gia"));
 
         return data;

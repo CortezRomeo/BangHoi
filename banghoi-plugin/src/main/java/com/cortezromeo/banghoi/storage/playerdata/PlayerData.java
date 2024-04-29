@@ -1,12 +1,14 @@
 package com.cortezromeo.banghoi.storage.playerdata;
 
+import com.cortezromeo.banghoi.enums.ClanRank;
+
 public class PlayerData {
 
     private String bangHoi;
-    private String rank;
+    private ClanRank rank;
     private long joinDate;
 
-    public PlayerData(String bangHoi, String rank, long joinDate) {
+    public PlayerData(String bangHoi, ClanRank rank, long joinDate) {
         this.bangHoi = bangHoi;
         this.rank = rank;
         this.joinDate = joinDate;
@@ -20,11 +22,11 @@ public class PlayerData {
         this.bangHoi = bangHoi;
     }
 
-    public String getChucVu() {
+    public ClanRank getChucVu() {
         return rank;
     }
 
-    public void setChucVu(String rank) {
+    public void setChucVu(ClanRank rank) {
         this.rank = rank;
     }
 

@@ -58,6 +58,11 @@ bang-hoi-options:
   so-ky-tu-toi-thieu: 3
   # Số ký tự tối đa có thể đặt cho tên tên bang hội (Không tính phần mã màu)
   so-ky-tu-toi-da: 20
+  # Các chức vụ nên được hiển thị như thế nào
+  chuc-vu-format:
+    LEADER: '&6Lãnh đạo'
+    MANAGER: '&bQuản lý'
+    MEMBER: '&aThành viên thường'
 
 # Tùy chỉnh các thông số của sự kiện bang hội war
 bang-hoi-war:

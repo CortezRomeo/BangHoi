@@ -2,6 +2,7 @@ package com.cortezromeo.banghoi.manager;
 
 import com.cortezromeo.banghoi.BangHoi;
 import com.cortezromeo.banghoi.depend.VaultDepend;
+import com.cortezromeo.banghoi.enums.ClanRank;
 import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
@@ -138,7 +139,7 @@ public class BangHoiManager {
         DatabaseManager.bangHoi_diem.put(bangHoiName, 0);
 
         playerData.setBangHoi(bangHoiName);
-        playerData.setChucVu("Leader");
+        playerData.setChucVu(ClanRank.LEADER);
         playerData.setNgayThamGia(dateLong);
 
         DatabaseManager.saveBangHoiData(bangHoiName);
@@ -202,7 +203,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (playerData.getChucVu().equals("Leader")) {
+            if (playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("leaderKhongTheRoi").replaceAll("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
@@ -234,7 +235,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals("Leader")) {
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("memberXoaBangHoi").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
@@ -289,7 +290,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals("Leader")) {
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("memberChinhIcon").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
@@ -380,7 +381,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals("Leader")) {
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("memberMoiThanhVien").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
@@ -461,7 +462,7 @@ public class BangHoiManager {
         long dateLong = d.getTime();
 
         playerData.setBangHoi(bangHoi);
-        playerData.setChucVu("Member");
+        playerData.setChucVu(ClanRank.MEMBER);
         playerData.setNgayThamGia(dateLong);
         BangHoiData.addThanhVien(p.getName());
 
@@ -531,7 +532,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals("Leader")) {
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("memberDuoi").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
@@ -587,7 +588,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals("Leader")) {
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("memberChuyenQuyen").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
@@ -598,9 +599,9 @@ public class BangHoiManager {
             return;
         }
 
-        playerData.setChucVu("Member");
+        playerData.setChucVu(ClanRank.MEMBER);
         DatabaseManager.getBangHoiData(playerData.getBangHoi()).setBangHoiFounder(target);
-        targetData.setChucVu("Leader");
+        targetData.setChucVu(ClanRank.LEADER);
 
         DatabaseManager.saveBangHoiData(playerData.getBangHoi());
         DatabaseManager.savePlayerData(p.getName());
@@ -687,7 +688,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals("Leader")) {
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("memberSetTenCustom").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;

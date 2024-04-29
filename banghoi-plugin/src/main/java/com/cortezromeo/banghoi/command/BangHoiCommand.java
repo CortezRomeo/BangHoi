@@ -1,6 +1,7 @@
 package com.cortezromeo.banghoi.command;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.enums.ClanRank;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.inventory.ListBangHoiInventory;
 import com.cortezromeo.banghoi.inventory.UpgradeInventory;
@@ -144,7 +145,7 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 		if (data.getBangHoi() == null)
 			for (String str : MessageFile.get().getStringList("lenhChinh.KhongCoBangHoi"))
 				p.sendMessage(BangHoi.nms.addColor(str));
-		else if (data.getChucVu().equals("Leader"))
+		else if (data.getChucVu().equals(ClanRank.LEADER))
 			for (String str : MessageFile.get().getStringList("lenhChinh.DangTrongBangHoiLeader"))
 				p.sendMessage(BangHoi.nms.addColor(str));
 		else
@@ -183,7 +184,7 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 				commands.add("deny");
 			}
 
-			if (playerData.getChucVu() != null && playerData.getChucVu().equals("Leader")) {
+			if (playerData.getChucVu() != null && playerData.getChucVu().equals(ClanRank.LEADER)) {
 				commands.add("invite");
 				commands.add("kick");
 				commands.add("setcustomname");
@@ -198,7 +199,7 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 				if (!DatabaseManager.bangHoiDatabase.isEmpty())
 					commands.addAll(DatabaseManager.bangHoiDatabase.keySet());
 
-			if (playerData.getChucVu() != null && playerData.getChucVu().equals("Leader")) {
+			if (playerData.getChucVu() != null && playerData.getChucVu().equals(ClanRank.LEADER)) {
 				if (args[0].equalsIgnoreCase("kick") || args[0].equalsIgnoreCase("setleader")) {
 					List<String> members = DatabaseManager.getBangHoiData(playerData.getBangHoi()).getThanhVien();
 					commands.addAll(members);
