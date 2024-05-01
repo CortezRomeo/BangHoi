@@ -45,7 +45,7 @@ public class PlayerFileStorage implements PlayerStorage {
         YamlConfiguration storage = YamlConfiguration.loadConfiguration(file);
 
         storage.set("data.bang_hoi", data.getBangHoi());
-        storage.set("data.chuc_vu", data.getChucVu());
+        storage.set("data.chuc_vu", String.valueOf(data.getChucVu()));
         storage.set("data.ngay_tham_gia", data.getNgayThamGia());
 
         try {

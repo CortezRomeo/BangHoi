@@ -351,7 +351,6 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-
 		List<String> completions = new ArrayList<>();
 		List<String> commands = new ArrayList<>();
 
@@ -374,8 +373,7 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 					|| args[0].equalsIgnoreCase("set")
 					|| args[0].equalsIgnoreCase("give")
 					|| args[0].equalsIgnoreCase("remove")
-					|| args[0].equalsIgnoreCase("reset")
-					|| args[0].equalsIgnoreCase("resetAll"))
+					|| args[0].equalsIgnoreCase("reset"))
 				if (!DatabaseManager.bangHoiDatabase.isEmpty())
 					commands.addAll(DatabaseManager.bangHoiDatabase.keySet());
 			if (args[0].equalsIgnoreCase("warnBangHoiByPlayerName")) {
@@ -383,11 +381,14 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 					commands.addAll(DatabaseManager.playerDatabase.keySet());
 				}
 			}
+			if (args[0].equalsIgnoreCase("resetAll"))
+				commands.addAll(types);
 			StringUtil.copyPartialMatches(args[1], commands, completions);
 		} else if (args.length == 3) {
 			if (args[0].equalsIgnoreCase("set")
 					|| args[0].equalsIgnoreCase("give")
-					|| args[0].equalsIgnoreCase("remove"))
+					|| args[0].equalsIgnoreCase("remove")
+					|| args[0].equalsIgnoreCase("reset"))
 				commands.addAll(types);
 			StringUtil.copyPartialMatches(args[2], commands, completions);
 		}

@@ -34,7 +34,8 @@ public final class BangHoi extends JavaPlugin implements Listener {
     public static PlayerPointsAPI ppAPI;
     private boolean serverSoftwareSupport = true;
     private static boolean papiSupport = false;
-    private boolean developerMode = false;
+    private static boolean mythicMobSupport = false;
+    private boolean developerMode = true;
 
     @Override
     public void onLoad() {
@@ -143,7 +144,7 @@ public final class BangHoi extends JavaPlugin implements Listener {
         saveDefaultConfig();
         File configFile = new File(getDataFolder(), "config.yml");
         try {
-            ConfigUpdater.update(this, "config.yml", configFile, "bang-hoi-war.cong-diem.mobs");
+            ConfigUpdater.update(this, "config.yml", configFile, "bang-hoi-war.cong-diem.mobs", "bang-hoi-war.cong-diem.mythicmobs");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -183,7 +184,7 @@ public final class BangHoi extends JavaPlugin implements Listener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        InventoryFile.reload();
+        UpgradeFile.reload();
     }
 
     private void initDatabase() {
@@ -217,10 +218,17 @@ public final class BangHoi extends JavaPlugin implements Listener {
 
         if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null)
             new PapiDepend().register();
+
+        if (Bukkit.getServer().getPluginManager().getPlugin("MythicMobs") != null)
+            mythicMobSupport = true;
     }
 
     public static boolean PAPISupport() {
         return papiSupport;
+    }
+
+    public static boolean MythicMSupport() {
+        return mythicMobSupport;
     }
 
     @Override

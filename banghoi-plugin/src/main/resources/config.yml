@@ -99,6 +99,10 @@ bang-hoi-war:
       WITHER_SKELETON: 1
       #SPIDER: 1
       # add được thêm mob
+
+    # Cần plugin mythicmobs để hoạt động (2.3 update)
+    mythicmobs:
+      SkeletalKnight: 2
     player: 3
 
 # placeholderapi hiện cho phần top điểm bang hội
