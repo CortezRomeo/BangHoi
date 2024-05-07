@@ -35,7 +35,7 @@ public final class BangHoi extends JavaPlugin implements Listener {
     private boolean serverSoftwareSupport = true;
     private static boolean papiSupport = false;
     private static boolean mythicMobSupport = false;
-    private boolean developerMode = true;
+    private boolean developerMode = false;
 
     @Override
     public void onLoad() {
