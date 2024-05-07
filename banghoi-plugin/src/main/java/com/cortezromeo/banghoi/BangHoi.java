@@ -5,7 +5,6 @@ import com.cortezromeo.banghoi.command.BangHoiAdminCommand;
 import com.cortezromeo.banghoi.command.BangHoiCommand;
 import com.cortezromeo.banghoi.depend.PapiDepend;
 import com.cortezromeo.banghoi.depend.VaultDepend;
-import com.cortezromeo.banghoi.enums.ClanRank;
 import com.cortezromeo.banghoi.file.InventoryFile;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.file.UpgradeFile;

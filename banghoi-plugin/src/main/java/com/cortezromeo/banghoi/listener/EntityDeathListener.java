@@ -8,8 +8,6 @@ import com.cortezromeo.banghoi.manager.DatabaseManager;
 import com.cortezromeo.banghoi.manager.SkillManager;
 import com.cortezromeo.banghoi.manager.WarManager;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
-import io.lumine.mythic.api.adapters.AbstractEntity;
-import io.lumine.mythic.api.mobs.MythicMob;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.ActiveMob;
 import org.bukkit.Bukkit;
