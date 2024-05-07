@@ -42,9 +42,9 @@ public class PlayerChatListener implements Listener {
 			for (String str : bangHoiData.getThanhVien()) {
 				if (Bukkit.getPlayer(str) != null) {
 					Bukkit.getPlayer(str)
-							.sendMessage(BangHoi.nms.addColor(MessageFile.get().getString("chat").replaceAll("%player%",
+							.sendMessage(BangHoi.nms.addColor(MessageFile.get().getString("chat").replace("%player%",
 									"&7(" + StringUtil.getRankFormat(pData.getChucVu()) + "&7)&f " + p.getName())
-									.replaceAll("%msg%", e.getMessage())));
+									.replace("%msg%", e.getMessage())));
 				}
 			}
 

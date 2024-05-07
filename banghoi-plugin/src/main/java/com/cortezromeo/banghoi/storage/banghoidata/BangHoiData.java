@@ -16,14 +16,15 @@ public class BangHoiData {
     private int bangHoiMaxMember;
     private long bangHoiCreatedDate;
     private String bangHoiIcon;
-    private List<String> bangHoiMember;
+    private List<String> members;
+    private List<String> managers;
     private int skill1;
     private int skill2;
     private int skill3;
     private int skill4;
 
     public BangHoiData(String bangHoiName, String bangHoiCustomName, String bangHoiFounder, int bangHoiScore, int bangHoiWarPoint, int bangHoiWarn,
-                       int bangHoiMaxMember, long bangHoiCreatedDate, List<String> bangHoiMember, String bangHoiIcon, int skill1, int skill2, int skill3, int skill4) {
+                       int bangHoiMaxMember, long bangHoiCreatedDate, List<String> bangHoiMember, List<String> managers, String bangHoiIcon, int skill1, int skill2, int skill3, int skill4) {
 
         this.bangHoiName = bangHoiName;
         this.bangHoiCustomName = bangHoiCustomName;
@@ -31,9 +32,10 @@ public class BangHoiData {
         this.bangHoiScore = bangHoiScore;
         this.bangHoiWarPoint = bangHoiWarPoint;
         this.bangHoiMaxMember = bangHoiMaxMember;
+        this.managers = managers;
         this.bangHoiWarn = bangHoiWarn;
         this.bangHoiCreatedDate = bangHoiCreatedDate;
-        this.bangHoiMember = bangHoiMember;
+        this.members = bangHoiMember;
         this.bangHoiIcon = bangHoiIcon;
 
         this.skill1 = skill1;
@@ -182,15 +184,32 @@ public class BangHoiData {
     }
 
     public List<String> getThanhVien() {
-        return bangHoiMember;
+        return members;
     }
 
     public void addThanhVien(String playerName) {
-        this.bangHoiMember.add(playerName);
+        this.members.add(playerName);
     }
 
     public void removeThanhVien(String playerName) {
-        this.bangHoiMember.remove(playerName);
+        this.members.remove(playerName);
+        this.managers.remove(playerName);
+    }
+
+    public List<String> getManagers() {
+        return managers;
+    }
+
+    public void addManager(String playerName) {
+        this.managers.add(playerName);
+    }
+
+    public void removeManager(String playerName) {
+        this.managers.remove(playerName);
+    }
+
+    public boolean isManager(String playerName) {
+        return this.managers.contains(playerName);
     }
 
     public long getNgayThanhLap() {

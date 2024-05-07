@@ -85,10 +85,10 @@ public class EntityDeathListener implements Listener {
 
 		BangHoiManager.bangHoiAlert(killerData.getBangHoi(),
 				mse.getString("bangHoiWar.mobCongDiem")
-						.replaceAll("%number%",
+						.replace("%number%",
 								String.valueOf(scoreAdded + bonusScore))
-						.replaceAll("%p1%", killer.getName())
-						.replaceAll("%entity%", e.getEntity().getName()));
+						.replace("%p1%", killer.getName())
+						.replace("%entity%", e.getEntity().getName()));
 		DatabaseManager.getBangHoiData(killerData.getBangHoi())
 				.addBangHoiScore(scoreAdded + bonusScore);
 

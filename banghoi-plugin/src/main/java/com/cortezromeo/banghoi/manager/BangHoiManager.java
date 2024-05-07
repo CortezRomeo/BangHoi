@@ -8,6 +8,7 @@ import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.storage.banghoidata.BangHoiData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import com.cortezromeo.banghoi.util.MessageUtil;
+import com.cortezromeo.banghoi.util.StringUtil;
 import com.cryptomorin.xseries.XMaterial;
 import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang.StringUtils;
@@ -133,8 +134,8 @@ public class BangHoiManager {
 
         BangHoiData bangHoiData = new BangHoiData(bangHoiName, null, p.getName()
                 , 0, 0, 0, BangHoi.plugin.getConfig().getInt("bang-hoi-options.max-thanh-vien-mac-dinh"),
-                dateLong, members, null
-        , 0, 0, 0, 0);
+                dateLong, members, null, null
+                , 0, 0, 0, 0);
         DatabaseManager.bangHoiDatabase.put(bangHoiName, bangHoiData);
         DatabaseManager.bangHoi_diem.put(bangHoiName, 0);
 
@@ -205,7 +206,7 @@ public class BangHoiManager {
         if (playerData.getChucVu() != null)
             if (playerData.getChucVu().equals(ClanRank.LEADER)) {
                 MessageUtil.sendMessage(p,
-                        mse.getString("leaderKhongTheRoi").replaceAll("%name%", getBangHoiName(playerData.getBangHoi())));
+                        mse.getString("leaderKhongTheRoi").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
             }
 
@@ -259,7 +260,7 @@ public class BangHoiManager {
 
             if (memberPlayer != null && !member.equals(p.getName()))
                 MessageUtil.sendMessage(memberPlayer, mse.getString("memberBangHoiGiaiTan")
-                        .replaceAll("%name%", getBangHoiName(bangHoiName)).replaceAll("%player%", p.getName()));
+                        .replace("%name%", getBangHoiName(bangHoiName)).replace("%player%", p.getName()));
 
         }
 
@@ -309,8 +310,8 @@ public class BangHoiManager {
             DatabaseManager.saveBangHoiData(bangHoiName);
             MessageUtil.sendMessage(p, mse.getString("chinhIcon").replace("%material%", material.toUpperCase()));
             BangHoiManager.bangHoiAlert(bangHoiName, mse.getString("thongBaoRieng.chinhIcon")
-                    .replaceAll("%material%", material.toUpperCase())
-                    .replaceAll("%leader%", p.getName()));
+                    .replace("%material%", material.toUpperCase())
+                    .replace("%leader%", p.getName()));
             return item;
         }).orElseGet(() -> {
             MessageUtil.sendMessage(p, mse.getString("iconKhongHopLe"));
@@ -381,7 +382,7 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
+            if (playerData.getChucVu().equals(ClanRank.MEMBER)) {
                 MessageUtil.sendMessage(p,
                         mse.getString("memberMoiThanhVien").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
@@ -401,12 +402,12 @@ public class BangHoiManager {
 
         int time = BangHoi.plugin.getConfig().getInt("bang-hoi-options.thoi-gian-moi");
 
-        MessageUtil.sendMessage(p, mse.getString("leaderMoi").replaceAll("%player%", target.getName()).replaceAll("%time%",
+        MessageUtil.sendMessage(p, mse.getString("leaderMoi").replace("%player%", target.getName()).replace("%time%",
                 String.valueOf(time)));
         MessageUtil.sendMessage(target,
-                mse.getString("targetMoi").replaceAll("%player%", p.getName())
-                        .replaceAll("%name%", getBangHoiName(playerData.getBangHoi()))
-                        .replaceAll("%time%", String.valueOf(time)));
+                mse.getString("targetMoi").replace("%player%", p.getName())
+                        .replace("%name%", getBangHoiName(playerData.getBangHoi()))
+                        .replace("%time%", String.valueOf(time)));
         DatabaseManager.bangHoiInvitingPlayers.put(target.getName(), p.getName());
 
         new BukkitRunnable() {
@@ -475,8 +476,8 @@ public class BangHoiManager {
         if (leader != null)
             MessageUtil.sendMessage(leader, mse.getString("leaderGiaNhapThanhCong").replace("%player%", p.getName()));
 
-        bangHoiAlert(bangHoi, mse.getString("thongBaoRieng.leaderMoiThanhVien")
-                .replaceAll("%leader%", BangHoiData.getBangHoiFounder()).replaceAll("%player%", p.getName()));
+        bangHoiAlert(bangHoi, mse.getString("thongBaoRieng.inviteMember")
+                .replace("%player%", DatabaseManager.bangHoiInvitingPlayers.get(p.getName())).replace("%member%", p.getName()));
         DatabaseManager.bangHoiInvitingPlayers.remove(p.getName());
 
         if (BangHoiData.getThanhVien().size() >= BangHoiData.getSoLuongToiDa()) {
@@ -493,22 +494,20 @@ public class BangHoiManager {
     }
 
     public static void denyBangHoi(Player p) {
-
         if (!DatabaseManager.bangHoiInvitingPlayers.containsKey(p.getName())) {
             MessageUtil.sendMessage(p, mse.getString("khongCoLoiMoi"));
             return;
         }
 
-        DatabaseManager.bangHoiInvitingPlayers.remove(p.getName());
         MessageUtil.sendMessage(p, mse.getString("memberHuyLoiMoi"));
 
         Player leader = Bukkit.getPlayer(DatabaseManager.bangHoiInvitingPlayers.get(p.getName()));
         if (leader != null)
             MessageUtil.sendMessage(leader, mse.getString("leaderHuyLoiMoi").replace("%player%", p.getName()));
+        DatabaseManager.bangHoiInvitingPlayers.remove(p.getName());
     }
 
     public static void kickBangHoi(Player p, String target) {
-
         PlayerData playerData = DatabaseManager.getPlayerData(p.getName());
         if (playerData.getBangHoi() == null) {
             MessageUtil.sendMessage(p, mse.getString("khongCoBangHoi"));
@@ -532,9 +531,9 @@ public class BangHoiManager {
         }
 
         if (playerData.getChucVu() != null)
-            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
+            if (playerData.getChucVu().equals(ClanRank.MEMBER)) {
                 MessageUtil.sendMessage(p,
-                        mse.getString("memberDuoi").replace("%name%", getBangHoiName(playerData.getBangHoi())));
+                        mse.getString("memberKick").replace("%name%", getBangHoiName(playerData.getBangHoi())));
                 return;
             }
 
@@ -542,6 +541,11 @@ public class BangHoiManager {
 
         if (!targetData.getBangHoi().equals(playerData.getBangHoi())) {
             MessageUtil.sendMessage(p, mse.getString("playerKhongTrongBangHoi").replace("%player%", target));
+            return;
+        }
+
+        if (playerData.getChucVu().equals(ClanRank.MANAGER) && targetData.getChucVu().equals(ClanRank.LEADER)) {
+            MessageUtil.sendMessage(p, mse.getString("managerKickLeader"));
             return;
         }
 
@@ -553,13 +557,13 @@ public class BangHoiManager {
         DatabaseManager.savePlayerData(target);
         DatabaseManager.saveBangHoiData(playerData.getBangHoi());
 
-        MessageUtil.sendMessage(p, mse.getString("leaderDuoi").replace("%player%", target));
-        bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.leaderDuoiThanhVien")
-                .replaceAll("%leader%", BangHoiData.getBangHoiFounder()).replaceAll("%player%", target));
+        MessageUtil.sendMessage(p, mse.getString("kickMember").replace("%player%", target));
+        bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.kickMember")
+                .replace("%player%", BangHoiData.getBangHoiFounder()).replace("%member%", target));
 
         if (Bukkit.getPlayer(target) != null)
             MessageUtil.sendMessage(Bukkit.getPlayer(target), mse.getString("memberBiDuoi")
-                    .replaceAll("%name%", getBangHoiName(playerData.getBangHoi())).replaceAll("%player%", p.getName()));
+                    .replace("%name%", getBangHoiName(playerData.getBangHoi())).replace("%player%", p.getName()));
 
     }
 
@@ -607,13 +611,13 @@ public class BangHoiManager {
         DatabaseManager.savePlayerData(p.getName());
         DatabaseManager.savePlayerData(target);
 
-        MessageUtil.sendMessage(p, mse.getString("leaderChuyenQuyen").replace("%player%", target));
+        MessageUtil.sendMessage(p, mse.getString("setLeader").replace("%player%", target));
         bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.leaderChuyenQuyen")
-                .replaceAll("%leader%", p.getName()).replaceAll("%player%", target));
+                .replace("%leader%", p.getName()).replace("%player%", target));
 
         if (Bukkit.getPlayer(target) != null)
             MessageUtil.sendMessage(Bukkit.getPlayer(target), mse.getString("memberDuocChuyenQuyen")
-                    .replaceAll("%name%", getBangHoiName(playerData.getBangHoi())).replaceAll("%player%", p.getName()));
+                    .replace("%name%", getBangHoiName(playerData.getBangHoi())).replace("%player%", p.getName()));
 
     }
 
@@ -630,7 +634,20 @@ public class BangHoiManager {
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         String strDate = dateFormat.format(currentDate);
 
-        for (String str : mse.getStringList("thongTinBangHoi")) {
+        String skillLocked = mse.getString("infoBangHoi-placeholders.skill-locked");
+        String skillUnlocked = mse.getString("infoBangHoi-placeholders.skill-unlocked");
+        String membersPlaceholder = mse.getString("infoBangHoi-placeholders.member") + "\n";
+        StringBuilder members = new StringBuilder();
+
+        for (String member : bangHoiData.getThanhVien()) {
+            String trangThai = (Bukkit.getPlayer(member) != null ?
+                    mse.getString("infoBangHoi-placeholders.trang-thai.online"):
+                    mse.getString("infoBangHoi-placeholders.trang-thai.offline"));
+            String rank = StringUtil.getRankFormat(DatabaseManager.getPlayerData(member).getChucVu());
+            members.append(membersPlaceholder.replace("%name%", member).replace("%rank%", rank).replace("%trangthai%", trangThai));
+        }
+
+        for (String str : mse.getStringList("infoBangHoi")) {
             str = str.replace("%ten%", bangHoiData.getBangHoiName());
             str = str.replace("%tencustom%",
                     (bangHoiData.getTenCustom() == null ? "&7Không có" : bangHoiData.getTenCustom()));
@@ -641,22 +658,13 @@ public class BangHoiManager {
             str = str.replace("%ngaythanhlap%", strDate);
             str = str.replace("%sothanhvien%", String.valueOf(bangHoiData.getThanhVien().size()));
             str = str.replace("%thanhvientoida%", String.valueOf(bangHoiData.getSoLuongToiDa()));
-            str = str.replace("%skill1%", (bangHoiData.getSkillLevel(SkillType.critDamage) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
-            str = str.replace("%skill2%", (bangHoiData.getSkillLevel(SkillType.boostScore) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
-            str = str.replace("%skill3%", (bangHoiData.getSkillLevel(SkillType.dodge) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
-            str = str.replace("%skill4%", (bangHoiData.getSkillLevel(SkillType.vampire) == 0 ? "&cCHƯA MỞ KHÓA" : "&aĐÃ MỞ KHÓA"));
-
-
+            str = str.replace("%skill1%", (bangHoiData.getSkillLevel(SkillType.critDamage) == 0 ? skillLocked : skillUnlocked));
+            str = str.replace("%skill2%", (bangHoiData.getSkillLevel(SkillType.boostScore) == 0 ? skillLocked : skillUnlocked));
+            str = str.replace("%skill3%", (bangHoiData.getSkillLevel(SkillType.dodge) == 0 ? skillLocked : skillUnlocked));
+            str = str.replace("%skill4%", (bangHoiData.getSkillLevel(SkillType.vampire) == 0 ? skillLocked : skillUnlocked));
+            str = str.replace("%members%", members);
             MessageUtil.sendMessage(p, str);
         }
-
-        for (String member : bangHoiData.getThanhVien())
-            MessageUtil.sendMessage(p,
-                    mse.getString("thongTinBangHoi-thanhVien").replaceAll("%ten%", member)
-                            .replaceAll("%trangthai%",
-                                    (Bukkit.getPlayer(member) != null ? " &aONLINE" : " &cOFFLINE"))
-                            .replaceAll("%lanhdao%", (bangHoiData.getBangHoiFounder().contains(member) ? " &6(Lãnh đạo)" : "")));
-
     }
 
     public static void toggleChat(Player p) {
@@ -753,8 +761,113 @@ public class BangHoiManager {
         DatabaseManager.saveBangHoiData(playerData.getBangHoi());
 
         MessageUtil.sendMessage(p, mse.getString("leaderSetTenCustom").replace("%name%", customName));
-        bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.leaderSetCustomName")
-                .replaceAll("%leader%", p.getName()).replaceAll("%name%", customName));
+        try {
+            bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.leaderSetCustomName")
+                    .replace("%leader%", p.getName()).replace("%name%", customName));
+        } catch (Exception exception) {
+            // ingored
+        }
+    }
+
+    public static void setManager(Player p, String target) {
+        PlayerData playerData = DatabaseManager.getPlayerData(p.getName());
+        if (playerData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("khongCoBangHoi"));
+            return;
+        }
+
+        if (p.getName().equalsIgnoreCase(target)) {
+            MessageUtil.sendMessage(p, mse.getString("leaderSetManagerLeader"));
+            return;
+        }
+
+        if (!DatabaseManager.playerDatabase.containsKey(target)) {
+            MessageUtil.sendMessage(p, mse.getString("duLieuKhongTonTai").replace("%player%", target));
+            return;
+        }
+
+        PlayerData targetData = DatabaseManager.getPlayerData(target);
+        if (targetData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("duLieuKhongTonTai").replace("%player%", target));
+            return;
+        }
+
+        if (playerData.getChucVu() != null)
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
+                MessageUtil.sendMessage(p, mse.getString("memberSetManager"));
+                return;
+            }
+
+        if (!targetData.getBangHoi().equals(playerData.getBangHoi())) {
+            MessageUtil.sendMessage(p, mse.getString("playerKhongTrongBangHoi").replace("%player%", target));
+            return;
+        }
+
+        if (targetData.getChucVu().equals(ClanRank.MANAGER)) {
+            MessageUtil.sendMessage(p, mse.getString("memberIsAlreadyManager").replace("%member%", target));
+            return;
+        }
+
+        BangHoiData bangHoiData = DatabaseManager.getBangHoiData(playerData.getBangHoi());
+        bangHoiData.addManager(target);
+        targetData.setChucVu(ClanRank.MANAGER);
+        DatabaseManager.saveBangHoiData(bangHoiData.getBangHoiName());
+        DatabaseManager.savePlayerData(target);
+        MessageUtil.sendMessage(p, mse.getString("leaderSetManagerMember").replace("%member%", target));
+
+        if (Bukkit.getPlayer(target) != null)
+            MessageUtil.sendMessage(p, mse.getString("memberGetPromotedToManager").replace("%leader%", p.getName()));
+
+        bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.setManager")
+                .replace("%leader%", p.getName()).replace("%member%", target));
+    }
+
+    public static void removeManager(Player p, String target) {
+        PlayerData playerData = DatabaseManager.getPlayerData(p.getName());
+        if (playerData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("khongCoBangHoi"));
+            return;
+        }
+
+        if (!DatabaseManager.playerDatabase.containsKey(target)) {
+            MessageUtil.sendMessage(p, mse.getString("duLieuKhongTonTai").replace("%player%", target));
+            return;
+        }
+
+        PlayerData targetData = DatabaseManager.getPlayerData(target);
+        if (targetData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("duLieuKhongTonTai").replace("%player%", target));
+            return;
+        }
+
+        if (playerData.getChucVu() != null)
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
+                MessageUtil.sendMessage(p, mse.getString("memberRemoveManager"));
+                return;
+            }
+
+        if (!targetData.getBangHoi().equals(playerData.getBangHoi())) {
+            MessageUtil.sendMessage(p, mse.getString("playerKhongTrongBangHoi").replace("%player%", target));
+            return;
+        }
+
+        if (!targetData.getChucVu().equals(ClanRank.MANAGER)) {
+            MessageUtil.sendMessage(p, mse.getString("memberIsNotManager"));
+            return;
+        }
+
+        BangHoiData bangHoiData = DatabaseManager.getBangHoiData(playerData.getBangHoi());
+        bangHoiData.removeManager(target);
+        targetData.setChucVu(ClanRank.MEMBER);
+        DatabaseManager.saveBangHoiData(playerData.getBangHoi());
+        DatabaseManager.savePlayerData(target);
+        MessageUtil.sendMessage(p, mse.getString("leaderRemoveManager").replace("%member%", target));
+
+        if (Bukkit.getPlayer(target) != null)
+            MessageUtil.sendMessage(p, mse.getString("managerGetRemoved").replace("%leader%", p.getName()));
+
+        bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.removeManager")
+                .replace("%leader%", p.getName()).replace("%member%", target));
     }
 
     public static int getWarPointCost(int skill, int level) {
@@ -768,7 +881,7 @@ public class BangHoiManager {
         if (skill == 3)
             if (level == 1)
                 return SkillManager.getSkilLWarPoint(SkillType.dodge);
-             else
+            else
                 return SkillManager.getSkilLWarPoint(SkillType.dodge2);
 
         if (skill == 4)

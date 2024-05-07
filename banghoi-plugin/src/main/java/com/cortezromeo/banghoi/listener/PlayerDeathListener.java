@@ -72,10 +72,10 @@ public class PlayerDeathListener implements Listener {
 				bonusScore = 1;
 
 			BangHoiManager.bangHoiAlert(killerData.getBangHoi(), mse.getString("bangHoiWar.playerCongDiem")
-					.replaceAll("%number%",
+					.replace("%number%",
 							String.valueOf(BangHoi.plugin.getConfig().getInt("bang-hoi-war.cong-diem.player") + bonusScore))
-					.replaceAll("%p1%", killer.getName()).replaceAll("%p2%", p.getName())
-					.replaceAll("%name%", BangHoiManager.getBangHoiName(pData.getBangHoi())));
+					.replace("%p1%", killer.getName()).replace("%p2%", p.getName())
+					.replace("%name%", BangHoiManager.getBangHoiName(pData.getBangHoi())));
 
 
 			DatabaseManager.getBangHoiData(killerData.getBangHoi())

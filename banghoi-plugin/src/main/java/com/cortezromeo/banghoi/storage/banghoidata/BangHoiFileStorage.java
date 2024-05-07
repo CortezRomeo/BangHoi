@@ -27,11 +27,12 @@ public class BangHoiFileStorage implements BangHoiStorage {
         YamlConfiguration storage = YamlConfiguration.loadConfiguration(file);
 
         List<String> members = new ArrayList<>();
+        List<String> managers = new ArrayList<>();
 
         BangHoiData data = new BangHoiData(FilenameUtil.removeExtension(file.getName()).toString()
                 , null
                 , null
-                , 0, 0, 0, 0, 0, members, null
+                , 0, 0, 0, 0, 0, members, managers, null
                 , 0, 0, 0, 0);
 
         if (!storage.contains("data"))
@@ -45,6 +46,10 @@ public class BangHoiFileStorage implements BangHoiStorage {
         data.setSoLuongToiDa(storage.getInt("data.thanh_vien_toi_da"));
         for (String key : storage.getStringList("data.thanh_vien"))
             data.addThanhVien(key);
+        if (storage.getString("data.managers") != null) {
+            for (String key : storage.getStringList("data.managers"))
+                data.addManager(key);
+        }
         data.setBangHoiWarn(storage.getInt("data.warn"));
         data.setBangHoiWarPoint(storage.getInt("data.warpoint"));
 
@@ -77,6 +82,7 @@ public class BangHoiFileStorage implements BangHoiStorage {
         storage.set("data.ngay_thanh_lap", data.getNgayThanhLap());
         storage.set("data.thanh_vien_toi_da", data.getSoLuongToiDa());
         storage.set("data.thanh_vien", data.getThanhVien());
+        storage.set("data.managers", data.getManagers());
         storage.set("data.warn", data.getBangHoiWarn());
         storage.set("data.warpoint", data.getBangHoiWarPoint());
         storage.set("data.banghoiicon", data.getBangHoiIcon());

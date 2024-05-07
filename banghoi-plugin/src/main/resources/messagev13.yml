@@ -72,10 +72,10 @@ memberHuyLoiMoi: '&aHủy lời mời thành công'
 leaderHuyLoiMoi: '&cNgười chơi &e%player%&c không chấp nhận lời mời'
 duoiBanThan: '&cKhông thể đuổi bản thân'
 duLieuKhongTonTai: '&cDữ liệu của &e%player%&c không tồn tại'
-memberDuoi: '&cBạn không phải lãnh đạo của bang hội &e%name%&c nên không thể đuổi
-  thành viên khác'
+memberKick: '&cBạn cần là quản lý hoặc lãnh đạo của bang hội &e%name%&c để có thể đuổi thành viên khác'
+managerKickLeader: '&cBạn không thể đuổi lãnh đạo bang hội ra khỏi bang hội'
 playerKhongTrongBangHoi: '&cNgười chơi &e%player%&c không có trong bang hội của bạn'
-leaderDuoi: '&aĐuổi thành viên &e%player%&a ra khỏi bang hội thành công'
+kickMember: '&aĐuổi thành viên &e%player%&a ra khỏi bang hội thành công'
 memberBiDuoi: '&4Bạn đã bị đuổi ra khỏi bang hội &e%name%&4 bởi &b%player%'
 chuyenQuyenSelf: '&cKhông thể chuyển quyền cho bản thân'
 memberChuyenQuyen: '&cBạn không phải lãnh đạo của bang hội &e%name%&c nên không thể
@@ -113,6 +113,15 @@ danhNguoiTrongBangHoi: '&cBạn không thể gây sát thương cho &e%player%&c
   hội!'
 tenCustomTrungTenBangHoi: '&cTên &r%name%&c bị trùng với tên bang hội khác, không
   thể đặt'
+leaderSetManagerLeader: '&cBạn không thể cho bản thân làm quản lý được!'
+memberSetManager: '&cBạn cần là lãnh đạo bang hội mới có thể cho ai đó làm quản lý!'
+memberRemoveManager: '&cBạn cần là lãnh đạo mới có thể tước quyền quản lý của ai đó!'
+memberIsNotManager: '&cNgười chơi này không phải quản lý bang hội.'
+memberIsAlreadyManager: '&e%member%&c đã là quản lý bang hội rồi.'
+leaderSetManagerMember: '&aBạn đã cho &e%member%&a trở thành quản lý!'
+memberGetPromotedToManager: '&aBạn đã trở thành quản lý của bang hội bởi &e%leader%'
+leaderRemoveManager: '&aBạn đã hủy bỏ chức vụ quản lý của &e%member%'
+managerGetRemoved: '&4Bạn đã hủy bỏ chức vụ quản lý bởi &e%leader%'
 skill:
   1CritDamage:
     damager: '&e[SKILL-1] &fBạn vừa gây sát thương chí mạng lên &b%player% &e(%dmg% DMG)'
@@ -129,14 +138,16 @@ thongBaoRieng:
   PREFIX: '&#02a7fa&lBANG HỘI &f[%name%&f] &7>&r '
   playerRoiBangHoi: '&e%player% &fvừa rời bang hội'
   chinhIcon: '&e%leader% &fđã chỉnh icon bang hội thành &b%material%'
-  leaderMoiThanhVien: '&e%leader% &fđã mời thành công người chơi &d%player%&f vào bang
+  inviteMember: '&e%player% &fđã mời thành công người chơi &d%member%&f vào bang
     hội'
-  leaderDuoiThanhVien: '&e%leader% &fđã đuổi thành viên &c%player%&f khỏi bang hội'
-  leaderChuyenQuyen: '&e%leader% &fđã chuyển quyền cho thành viên &a%player%&f lên làm
+  kickMember: '&e%player% &fđã đuổi thành viên &c%member%&f khỏi bang hội'
+  setLeader: '&e%leader% &fđã chuyển quyền cho thành viên &a%player%&f lên làm
     &6&lLÃNH ĐẠO'
   leaderSetCustomName: '&e%leader% &fđã đổi tên custom của bang hội thành: &r%name%'
   upSlot: '&e%player%&f đã nâng cấp slot thành viên của bang hội lên &b%slot%'
   congWarpoint: '&fBang hội của bạn đã nhận được &b%warpoint% Warpoint'
+  setManager: '&e%leader% &fđã cho &e%member%&f làm quản lý bang hội.'
+  removeManager: '&e%leader% &fđã hủy bỏ chức vụ quản lý bang hội của &e%member%'
   nangCap-1CritDamage: '&fĐã mở khóa kỹ năng sát thương chí mạng &7(Skill 1)&f, sử dụng
     lệnh &e/banghoi upgrade&f để biết thêm chi tiết'
   nangCap-2BoostScore: '&fĐã mở khóa cộng thêm điểm trong bang hội war&f, sử dụng lệnh
@@ -207,7 +218,7 @@ bangHoiWar:
     - ' '
     - '&eHệ thống đang tự động trao thưởng warpoint...'
 lenhChinh:
-  KhongCoBangHoi:
+  guest:
     - '    &#02a7fa&lBANG HỘI'
     - ' '
     - '&7Lệnh dành cho người không bang hội:'
@@ -215,26 +226,26 @@ lenhChinh:
     - '&#03c6fc/banghoi accept &fChấp nhận lời mời'
     - '&#03c6fc/banghoi deny &fTừ chối lời mời'
     - '&#03c6fc/banghoi info <Tên bang hội> &fXem thông tin bang hội khác'
-    - '&#03c6fc/banghoi war &fXem thông tin war &a[NEW]'
+    - '&#03c6fc/banghoi war &fXem thông tin war'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
-  DangTrongBangHoiMember:
+  member:
     - '    &#02a7fa&lBANG HỘI'
     - ' '
     - '&7Lệnh dành cho thành viên:'
     - '&#03c6fc/banghoi info &fXem thông tin bang hội của bạn'
     - '&#03c6fc/banghoi info <Tên bang hội> &fXem thông tin bang hội khác'
-    - '&#03c6fc/banghoi war &fXem thông tin war &a[NEW]'
+    - '&#03c6fc/banghoi war &fXem thông tin war'
     - '&#03c6fc/banghoi chat &fBật hoặc tắt chat bang hội'
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
     - '&#03c6fc/banghoi leave &fRời bang hội'
-  DangTrongBangHoiLeader:
+  leader:
     - '    &#02a7fa&lBANG HỘI'
     - ' '
     - '&7Lệnh dành cho thành viên:'
     - '&#03c6fc/banghoi info &fXem thông tin bang hội của bạn'
     - '&#03c6fc/banghoi info <Tên bang hội> &fXem thông tin bang hội khác'
-    - '&#03c6fc/banghoi war &fXem thông tin war &a[NEW]'
+    - '&#03c6fc/banghoi war &fXem thông tin war'
     - '&#03c6fc/banghoi chat &fBật hoặc tắt chat bang hội'
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
@@ -244,11 +255,28 @@ lenhChinh:
     - '&#fcc603/banghoi invite <Tên người chơi> &fMời vào bang hội'
     - '&#fcc603/banghoi kick <Tên thành viên> &fĐuổi một thành viên ra khỏi bang hội'
     - '&#fcc603/banghoi setcustomname <Tên custom> &fChỉnh tên custom cho bang hội'
-    - '&#fcc603/banghoi seticon <Material> &fChỉnh icon cho bang hội ở list bang hội &a[NEW]'
+    - '&#fcc603/banghoi seticon <Material> &fChỉnh icon cho bang hội ở list bang hội'
+    - '&#fcc603/banghoi setmanager <Tên thành viên> &fCho một thành viên lên làm quản lý'
+    - '&#fcc603/banghoi removemanager <Tên thành viên> &fLoại bỏ quyền quản lý của một thành viên'
     - '&#fcc603/banghoi setleader <Tên thành viên> &fChuyển quyền lãnh đạo cho một thành
     viên'
     - '&#fcc603/banghoi delete &fXoá bang hội'
-thongTinBangHoi:
+  manager:
+    - '    &#02a7fa&lBANG HỘI'
+    - ' '
+    - '&7Lệnh dành cho thành viên:'
+    - '&#03c6fc/banghoi info &fXem thông tin bang hội của bạn'
+    - '&#03c6fc/banghoi info <Tên bang hội> &fXem thông tin bang hội khác'
+    - '&#03c6fc/banghoi war &fXem thông tin war'
+    - '&#03c6fc/banghoi chat &fBật hoặc tắt chat bang hội'
+    - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
+    - '&#03c6fc/banghoi list &fXem danh sách bang hội'
+    - '&#03c6fc/banghoi leave &fRời bang hội'
+    - ' '
+    - '&7Lệnh dành cho quản lý:'
+    - '&#fcc603/banghoi invite <Tên người chơi> &fMời vào bang hội'
+    - '&#fcc603/banghoi kick <Tên thành viên> &fĐuổi một thành viên ra khỏi bang hội'
+infoBangHoi:
   - '  &#3ce8b7&lTHÔNG TIN BANG HỘI &7%ten%'
   - ' '
   - '&fTên custom: &r%tencustom%'
@@ -257,13 +285,20 @@ thongTinBangHoi:
   - '&fĐiểm: &e%diem%'
   - '&fWarpoint: &b%warpoint%'
   - '&fWarn: &c%warn%&7/&42'
-  - '&fSkill 1: %skill1%'
-  - '&fSkill 2: %skill2%'
-  - '&fSkill 3: %skill3%'
-  - '&fSkill 4: %skill4%'
+  - '&fSkill 1 (Crit): %skill1%'
+  - '&fSkill 2 (Boost): %skill2%'
+  - '&fSkill 3 (Dodge): %skill3%'
+  - '&fSkill 4 (Vampire): %skill4%'
   - '&fSố thành viên: &a%sothanhvien%&7/&2%thanhvientoida%'
   - '&fThành viên gồm có:'
-thongTinBangHoi-thanhVien: ' &b%ten%&r%trangthai%&r%lanhdao%'
+  - '%members%'
+infoBangHoi-placeholders:
+  skill-locked: '&cChưa mở khóa'
+  skill-unlocked: '&aĐã mở khóa'
+  member: '&b%name%&r %trangthai%&r &7(%rank%&7)'
+  trang-thai:
+    online: '&a[ONLINE]'
+    offline: '&c[OFFLINE]'
 noPermission: '&cBạn không có quyền để sử dụng lệnh này'
 # Phần thời gian hiển thị
 time-format:

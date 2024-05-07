@@ -46,9 +46,9 @@ public class PapiDepend extends PlaceholderExpansion {
 
 					if (amount == top)
 						return BangHoi.nms.addColor(BangHoi.plugin.getConfig().getString("placeholderAPI.top")
-								.replaceAll("%number%", String.valueOf(top))
-								.replaceAll("%name%", BangHoiManager.getBangHoiName(en.getKey()))
-								.replaceAll("%value%", String.valueOf(en.getValue())));
+								.replace("%number%", String.valueOf(top))
+								.replace("%name%", BangHoiManager.getBangHoiName(en.getKey()))
+								.replace("%value%", String.valueOf(en.getValue())));
 				}
 			}
 		}

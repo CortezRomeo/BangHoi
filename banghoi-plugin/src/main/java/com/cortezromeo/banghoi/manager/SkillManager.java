@@ -46,8 +46,8 @@ public class SkillManager implements Listener {
 
         skillValue.put(SkillType.boostScore, upgradeFileCfg.getString("skills.boostScore.bonus"));
         try {
-            skillValue.put(SkillType.critDamage, upgradeFileCfg.getString("skills.critDamage.damage").replaceAll("\\s+", ""));
-            skillValue.put(SkillType.vampire, upgradeFileCfg.getString("skills.vampire.heal").replaceAll("\\s+", ""));
+            skillValue.put(SkillType.critDamage, upgradeFileCfg.getString("skills.critDamage.damage").replace("\\s+", ""));
+            skillValue.put(SkillType.vampire, upgradeFileCfg.getString("skills.vampire.heal").replace("\\s+", ""));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,8 +111,8 @@ public class SkillManager implements Listener {
                 victimLocation.getWorld().playSound(victimLocation, Sound.ENTITY_BLAZE_HURT, 1, 2);
 
                 damager.sendMessage(BangHoi.nms.addColor(mse.getString("skill.1CritDamage.damager")
-                        .replaceAll("%player%", victim.getName())
-                        .replaceAll("%dmg%", String.valueOf(formatDamage))));
+                        .replace("%player%", victim.getName())
+                        .replace("%dmg%", String.valueOf(formatDamage))));
                 victim.sendMessage(BangHoi.nms.addColor(mse.getString("skill.1CritDamage.victim")
                         .replace("%player%", damager.getName())));
             } catch (Exception ex) {
@@ -160,14 +160,14 @@ public class SkillManager implements Listener {
                     damager.damage(event.getDamage());
 
                     damager.sendMessage(BangHoi.nms.addColor(mse.getString("skill.3Dodge.lv2.damager")
-                            .replaceAll("%player%", victim.getName())
-                            .replaceAll("%dmg%", String.valueOf(Math.round(event.getDamage())))));
+                            .replace("%player%", victim.getName())
+                            .replace("%dmg%", String.valueOf(Math.round(event.getDamage())))));
                     victim.sendMessage(BangHoi.nms.addColor(mse.getString("skill.3Dodge.lv2.victim")
-                            .replaceAll("%player%", damager.getName())
-                            .replaceAll("%dmg%", String.valueOf(Math.round(event.getDamage())))));
+                            .replace("%player%", damager.getName())
+                            .replace("%dmg%", String.valueOf(Math.round(event.getDamage())))));
                 } else {
                     damager.sendMessage(BangHoi.nms.addColor(mse.getString("skill.3Dodge.lv1.damager")
-                            .replaceAll("%player%", victim.getName())));
+                            .replace("%player%", victim.getName())));
                     victim.sendMessage(BangHoi.nms.addColor(mse.getString("skill.3Dodge.lv1.victim")
                             .replace("%player%", damager.getName())));
                 }
@@ -206,7 +206,7 @@ public class SkillManager implements Listener {
 
                 double pMaxHP = damager.getMaxHealth();
                 try {
-                    double revivingHP = StringUtil.evaluate(SkillManager.getSkillValue(SkillType.vampire).replaceAll("%playerMaxHealth%", String.valueOf(pMaxHP)).replaceAll("%playerplayerHealth%", String.valueOf(damager.getHealth())));
+                    double revivingHP = StringUtil.evaluate(SkillManager.getSkillValue(SkillType.vampire).replace("%playerMaxHealth%", String.valueOf(pMaxHP)).replaceAll("%playerplayerHealth%", String.valueOf(damager.getHealth())));
                     if (damager.getHealth() + revivingHP > pMaxHP)
                         damager.setHealth(pMaxHP);
                     else

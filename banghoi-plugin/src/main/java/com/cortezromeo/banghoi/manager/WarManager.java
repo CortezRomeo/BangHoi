@@ -154,8 +154,8 @@ public class WarManager {
 
 		if (eventStarted) {
 
-			eventBoardCast(mse.getString("bangHoiWar.thayDoiThoiGian").replaceAll("%player%", sender.getName())
-					.replaceAll("%timeformat%", StringUtil.timeFormat(eventTime)));
+			eventBoardCast(mse.getString("bangHoiWar.thayDoiThoiGian").replace("%player%", sender.getName())
+					.replace("%timeformat%", StringUtil.timeFormat(eventTime)));
 
 			return;
 		} else {

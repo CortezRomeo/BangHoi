@@ -138,20 +138,28 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 			}  else if (args[0].equalsIgnoreCase("seticon")) {
 				BangHoiManager.setBangHoiIcon(p, args[1]);
 				return false;
+			} else if (args[0].equalsIgnoreCase("setmanager")) {
+				BangHoiManager.setManager(p, args[1]);
+				return false;
+			} else if (args[0].equalsIgnoreCase("removemanager")) {
+				BangHoiManager.removeManager(p, args[1]);
+				return false;
 			}
 		}
 
 		PlayerData data = DatabaseManager.getPlayerData(p.getName());
 		if (data.getBangHoi() == null)
-			for (String str : MessageFile.get().getStringList("lenhChinh.KhongCoBangHoi"))
+			for (String str : MessageFile.get().getStringList("lenhChinh.guest"))
 				p.sendMessage(BangHoi.nms.addColor(str));
 		else if (data.getChucVu().equals(ClanRank.LEADER))
-			for (String str : MessageFile.get().getStringList("lenhChinh.DangTrongBangHoiLeader"))
+			for (String str : MessageFile.get().getStringList("lenhChinh.leader"))
+				p.sendMessage(BangHoi.nms.addColor(str));
+		else if (data.getChucVu().equals(ClanRank.MANAGER))
+			for (String str : MessageFile.get().getStringList("lenhChinh.manager"))
 				p.sendMessage(BangHoi.nms.addColor(str));
 		else
-			for (String str : MessageFile.get().getStringList("lenhChinh.DangTrongBangHoiMember"))
+			for (String str : MessageFile.get().getStringList("lenhChinh.member"))
 				p.sendMessage(BangHoi.nms.addColor(str));
-
 		return false;
 	}
 
@@ -184,13 +192,17 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 				commands.add("deny");
 			}
 
-			if (playerData.getChucVu() != null && playerData.getChucVu().equals(ClanRank.LEADER)) {
+			if (playerData.getChucVu() != null && !playerData.getChucVu().equals(ClanRank.MEMBER)) {
 				commands.add("invite");
 				commands.add("kick");
-				commands.add("setcustomname");
-				commands.add("setleader");
-				commands.add("delete");
-				commands.add("seticon");
+				if (playerData.getChucVu().equals(ClanRank.LEADER)) {
+					commands.add("setcustomname");
+					commands.add("setleader");
+					commands.add("delete");
+					commands.add("seticon");
+					commands.add("setmanager");
+					commands.add("removemanager");
+				}
 			}
 
 			StringUtil.copyPartialMatches(args[0], commands, completions);
@@ -199,8 +211,8 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 				if (!DatabaseManager.bangHoiDatabase.isEmpty())
 					commands.addAll(DatabaseManager.bangHoiDatabase.keySet());
 
-			if (playerData.getChucVu() != null && playerData.getChucVu().equals(ClanRank.LEADER)) {
-				if (args[0].equalsIgnoreCase("kick") || args[0].equalsIgnoreCase("setleader")) {
+			if (playerData.getChucVu() != null && !playerData.getChucVu().equals(ClanRank.MEMBER)) {
+				if (args[0].equalsIgnoreCase("kick")) {
 					List<String> members = DatabaseManager.getBangHoiData(playerData.getBangHoi()).getThanhVien();
 					commands.addAll(members);
 				}
@@ -209,13 +221,18 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 					for (Player player : Bukkit.getOnlinePlayers())
 						commands.add(player.getName());
 
-				if (args[0].equalsIgnoreCase("seticon")) {
-					for (Material material : Material.values()) {
-						commands.add(material.toString());
+				if (playerData.getChucVu().equals(ClanRank.LEADER)) {
+					if (args[0].equalsIgnoreCase("seticon")) {
+						for (Material material : Material.values()) {
+							commands.add(material.toString());
+						}
+					}
+					if (args[0].equalsIgnoreCase("setleader") || args[0].equalsIgnoreCase("removemanager") || args[0].equalsIgnoreCase("setmanager")) {
+						List<String> managers = DatabaseManager.getBangHoiData(playerData.getBangHoi()).getManagers();
+						commands.addAll(managers);
 					}
 				}
 			}
-
 			StringUtil.copyPartialMatches(args[1], commands, completions);
 		}
 

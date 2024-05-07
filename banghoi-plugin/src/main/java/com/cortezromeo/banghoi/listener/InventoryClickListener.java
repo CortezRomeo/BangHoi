@@ -131,11 +131,11 @@ public class InventoryClickListener implements Listener {
 				int newSlot = bangHoiData.getSoLuongToiDa();
 
 				MessageUtil.sendMessage(p,
-						MessageFile.get().getString("nangCap").replaceAll("%oldslot%", String.valueOf(oldSlot))
-								.replaceAll("%newslot%", String.valueOf(newSlot)));
+						MessageFile.get().getString("nangCap").replace("%oldslot%", String.valueOf(oldSlot))
+								.replace("%newslot%", String.valueOf(newSlot)));
 				BangHoiManager.bangHoiAlert(pData.getBangHoi(),
-						MessageFile.get().getString("thongBaoRieng.upSlot").replaceAll("%player%", p.getName())
-								.replaceAll("%slot%", String.valueOf(bangHoiData.getSoLuongToiDa())));
+						MessageFile.get().getString("thongBaoRieng.upSlot").replace("%player%", p.getName())
+								.replace("%slot%", String.valueOf(bangHoiData.getSoLuongToiDa())));
 
 				p.closeInventory();
 
@@ -181,11 +181,11 @@ public class InventoryClickListener implements Listener {
 				int newSlot = bangHoiData.getSoLuongToiDa();
 
 				MessageUtil.sendMessage(p,
-						MessageFile.get().getString("nangCap").replaceAll("%oldslot%", String.valueOf(oldSlot))
-								.replaceAll("%newslot%", String.valueOf(newSlot)));
+						MessageFile.get().getString("nangCap").replace("%oldslot%", String.valueOf(oldSlot))
+								.replace("%newslot%", String.valueOf(newSlot)));
 				BangHoiManager.bangHoiAlert(pData.getBangHoi(),
-						MessageFile.get().getString("thongBaoRieng.upSlot").replaceAll("%player%", p.getName())
-								.replaceAll("%slot%", String.valueOf(bangHoiData.getSoLuongToiDa())));
+						MessageFile.get().getString("thongBaoRieng.upSlot").replace("%player%", p.getName())
+								.replace("%slot%", String.valueOf(bangHoiData.getSoLuongToiDa())));
 
 				p.closeInventory();
 

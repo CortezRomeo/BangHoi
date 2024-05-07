@@ -29,7 +29,11 @@ public class PlayerFileStorage implements PlayerStorage {
             return data;
 
         data.setBangHoi(storage.getString("data.bang_hoi"));
-        data.setChucVu(ClanRank.valueOf(storage.getString("data.chuc_vu").toUpperCase()));
+        try {
+            data.setChucVu(ClanRank.valueOf(storage.getString("data.chuc_vu").toUpperCase()));
+        } catch (NullPointerException | IllegalArgumentException exception) {
+            data.setChucVu(null);
+        }
         data.setNgayThamGia(storage.getLong("data.ngay_tham_gia"));
 
         return data;
