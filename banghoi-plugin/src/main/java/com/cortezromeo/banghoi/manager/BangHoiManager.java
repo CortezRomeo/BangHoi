@@ -74,10 +74,14 @@ public class BangHoiManager {
             return;
         }
 
-        if (VaultDepend.econ.getBalance(p) < config.getInt("bang-hoi-options.tao-bang-hoi")) {
-            MessageUtil.sendMessage(p, mse.getString("khongDuTien").replace("%money%",
-                    String.valueOf(config.getInt("bang-hoi-options.tao-bang-hoi"))));
-            return;
+        if (VaultDepend.econ != null) {
+            if (VaultDepend.econ.getBalance(p) < config.getInt("bang-hoi-options.tao-bang-hoi")) {
+                MessageUtil.sendMessage(p, mse.getString("khongDuTien").replace("%money%",
+                        String.valueOf(config.getInt("bang-hoi-options.tao-bang-hoi"))));
+                return;
+            }
+        } else {
+            VaultDepend.setup();
         }
 
         if (DatabaseManager.bangHoiDatabase.containsKey(bangHoiName)) {
@@ -146,7 +150,11 @@ public class BangHoiManager {
         DatabaseManager.saveBangHoiData(bangHoiName);
         DatabaseManager.savePlayerData(p.getName());
 
-        VaultDepend.econ.withdrawPlayer(p, config.getInt("bang-hoi-options.tao-bang-hoi"));
+        if (VaultDepend.econ != null) {
+            VaultDepend.econ.withdrawPlayer(p, config.getInt("bang-hoi-options.tao-bang-hoi"));
+        } else {
+            VaultDepend.setup();
+        }
         MessageUtil.sendMessage(p, mse.getString("taoBangHoi").replace("%name%", bangHoiName));
 
         DatabaseManager.bangHoiInvitingPlayers.remove(p.getName());

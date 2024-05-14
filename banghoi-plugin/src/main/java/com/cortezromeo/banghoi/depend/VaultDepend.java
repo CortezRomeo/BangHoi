@@ -9,12 +9,9 @@ public class VaultDepend {
 
     public static Economy econ = null;
 
-    public static boolean check() {
+    private static boolean check() {
         Plugin plugin = BangHoi.plugin.getServer().getPluginManager().getPlugin("Vault");
-        if(plugin!=null) {
-            return true;
-        }
-        return false;
+        return plugin != null;
     }
 
     public static boolean setup() {
