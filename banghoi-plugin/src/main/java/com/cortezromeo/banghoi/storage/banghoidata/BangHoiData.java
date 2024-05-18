@@ -2,6 +2,7 @@ package com.cortezromeo.banghoi.storage.banghoidata;
 
 import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.manager.DatabaseManager;
+import org.bukkit.Location;
 
 import java.util.List;
 
@@ -18,13 +19,14 @@ public class BangHoiData {
     private String bangHoiIcon;
     private List<String> members;
     private List<String> managers;
+    private Location bangHoiSpawn;
     private int skill1;
     private int skill2;
     private int skill3;
     private int skill4;
 
     public BangHoiData(String bangHoiName, String bangHoiCustomName, String bangHoiFounder, int bangHoiScore, int bangHoiWarPoint, int bangHoiWarn,
-                       int bangHoiMaxMember, long bangHoiCreatedDate, List<String> bangHoiMember, List<String> managers, String bangHoiIcon, int skill1, int skill2, int skill3, int skill4) {
+                       int bangHoiMaxMember, long bangHoiCreatedDate, List<String> bangHoiMember, List<String> managers, String bangHoiIcon, Location bangHoiSpawn, int skill1, int skill2, int skill3, int skill4) {
 
         this.bangHoiName = bangHoiName;
         this.bangHoiCustomName = bangHoiCustomName;
@@ -37,6 +39,7 @@ public class BangHoiData {
         this.bangHoiCreatedDate = bangHoiCreatedDate;
         this.members = bangHoiMember;
         this.bangHoiIcon = bangHoiIcon;
+        this.bangHoiSpawn = bangHoiSpawn;
 
         this.skill1 = skill1;
         this.skill2 = skill2;
@@ -51,6 +54,14 @@ public class BangHoiData {
 
     public void setBangHoiName(String bangHoiName) {
         this.bangHoiName = bangHoiName;
+    }
+
+    public Location getBangHoiSpawn() {
+        return bangHoiSpawn;
+    }
+
+    public void setBangHoiSpawn(Location bangHoiSpawn) {
+        this.bangHoiSpawn = bangHoiSpawn;
     }
 
     public String getTenCustom() {

@@ -101,6 +101,12 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 
 				p.openInventory(UpgradeInventory.inventory(p));
 				return false;
+			} else if (args[0].equalsIgnoreCase("spawn")) {
+				BangHoiManager.teleportToSpawn(p);
+				return false;
+			} else if (args[0].equalsIgnoreCase("setspawn")) {
+				BangHoiManager.setSpawn(p);
+				return false;
 			}
 		}
 
@@ -186,6 +192,7 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 				commands.add("chat");
 				commands.add("upgrade");
 				commands.add("leave");
+				commands.add("spawn");
 			} else {
 				commands.add("create");
 				commands.add("accept");
@@ -202,6 +209,7 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 					commands.add("seticon");
 					commands.add("setmanager");
 					commands.add("removemanager");
+					commands.add("setspawn");
 				}
 			}
 

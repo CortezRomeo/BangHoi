@@ -122,6 +122,11 @@ leaderSetManagerMember: '&aBạn đã cho &e%member%&a trở thành quản lý!'
 memberGetPromotedToManager: '&aBạn đã trở thành quản lý của bang hội bởi &e%leader%'
 leaderRemoveManager: '&aBạn đã hủy bỏ chức vụ quản lý của &e%member%'
 managerGetRemoved: '&4Bạn đã hủy bỏ chức vụ quản lý bởi &e%leader%'
+noSpawn: '&cBang hội chưa có spawn!'
+spawnIsInvalid: '&cSpawn của bang hội đã bị lỗi!'
+teleportToSpawn: '&aDịch chuyển đến spawn của bang hội...'
+memberSetSpawn: '&cBạn cần là lãnh đạo để set spawn cho bang hội!'
+leaderSetSpawn: '&aSet spawn cho bang hội tại vị trí hiện tại thành công! &e(World: %world% | X: %x% | Y: %y% | Z: %z%)'
 skill:
   1CritDamage:
     damager: '&e[SKILL-1] &fBạn vừa gây sát thương chí mạng lên &b%player% &e(%dmg% DMG)'
@@ -147,6 +152,7 @@ thongBaoRieng:
   upSlot: '&e%player%&f đã nâng cấp slot thành viên của bang hội lên &b%slot%'
   congWarpoint: '&fBang hội của bạn đã nhận được &b%warpoint% Warpoint'
   setManager: '&e%leader% &fđã cho &e%member%&f làm quản lý bang hội.'
+  setSpawn: '&e%leader% &fĐã set spawn cho bang hội tại thế giới &e%world%&f, X: %x%, Y: %y%, Z: %z%.'
   removeManager: '&e%leader% &fđã hủy bỏ chức vụ quản lý bang hội của &e%member%'
   nangCap-1CritDamage: '&fĐã mở khóa kỹ năng sát thương chí mạng &7(Skill 1)&f, sử dụng
     lệnh &e/banghoi upgrade&f để biết thêm chi tiết'
@@ -238,6 +244,7 @@ lenhChinh:
     - '&#03c6fc/banghoi chat &fBật hoặc tắt chat bang hội'
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
+    - '&#03c6fc/banghoi spawn &fDịch chuyển về spawn bang hội'
     - '&#03c6fc/banghoi leave &fRời bang hội'
   leader:
     - '    &#02a7fa&lBANG HỘI'
@@ -249,6 +256,7 @@ lenhChinh:
     - '&#03c6fc/banghoi chat &fBật hoặc tắt chat bang hội'
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
+    - '&#03c6fc/banghoi spawn &fDịch chuyển về spawn bang hội'
     - '&#03c6fc/banghoi leave &fRời bang hội'
     - ' '
     - '&7Lệnh dành cho chủ bang hội:'
@@ -258,6 +266,7 @@ lenhChinh:
     - '&#fcc603/banghoi seticon <Material> &fChỉnh icon cho bang hội ở list bang hội'
     - '&#fcc603/banghoi setmanager <Tên thành viên> &fCho một thành viên lên làm quản lý'
     - '&#fcc603/banghoi removemanager <Tên thành viên> &fLoại bỏ quyền quản lý của một thành viên'
+    - '&#fcc603/banghoi setspawn &fSet spawn cho bang hội'
     - '&#fcc603/banghoi setleader <Tên thành viên> &fChuyển quyền lãnh đạo cho một thành
     viên'
     - '&#fcc603/banghoi delete &fXoá bang hội'
@@ -271,6 +280,7 @@ lenhChinh:
     - '&#03c6fc/banghoi chat &fBật hoặc tắt chat bang hội'
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
+    - '&#03c6fc/banghoi spawn &fDịch chuyển về spawn bang hội'
     - '&#03c6fc/banghoi leave &fRời bang hội'
     - ' '
     - '&7Lệnh dành cho quản lý:'

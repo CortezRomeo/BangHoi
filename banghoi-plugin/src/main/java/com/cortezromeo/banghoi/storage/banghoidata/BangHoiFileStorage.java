@@ -3,6 +3,8 @@ package com.cortezromeo.banghoi.storage.banghoidata;
 import com.cortezromeo.banghoi.BangHoi;
 import com.cortezromeo.banghoi.enums.SkillType;
 import com.cortezromeo.banghoi.util.FilenameUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -33,7 +35,7 @@ public class BangHoiFileStorage implements BangHoiStorage {
                 , null
                 , null
                 , 0, 0, 0, 0, 0, members, managers, null
-                , 0, 0, 0, 0);
+                , null, 0, 0, 0, 0);
 
         if (!storage.contains("data"))
             return data;
@@ -57,6 +59,12 @@ public class BangHoiFileStorage implements BangHoiStorage {
             data.setBangHoiIcon(storage.getString("data.banghoiicon"));
         else
             data.setBangHoiIcon(null);
+
+        String spawnWorld = storage.getString("data.spawn.world");
+        if (spawnWorld != null) {
+            Location location = new Location(Bukkit.getWorld(spawnWorld), storage.getDouble("data.spawn.x"), storage.getDouble("data.spawn.y"), storage.getDouble("data.spawn.z"));
+            data.setBangHoiSpawn(location);
+        }
 
         data.setSkillLevel(SkillType.critDamage, storage.getInt("data.skill.1"));
         data.setSkillLevel(SkillType.boostScore, storage.getInt("data.skill.2"));
@@ -86,6 +94,12 @@ public class BangHoiFileStorage implements BangHoiStorage {
         storage.set("data.warn", data.getBangHoiWarn());
         storage.set("data.warpoint", data.getBangHoiWarPoint());
         storage.set("data.banghoiicon", data.getBangHoiIcon());
+        if (data.getBangHoiSpawn() != null) {
+            storage.set("data.spawn.world", data.getBangHoiSpawn().getWorld().getName());
+            storage.set("data.spawn.x", data.getBangHoiSpawn().getX());
+            storage.set("data.spawn.y", data.getBangHoiSpawn().getY());
+            storage.set("data.spawn.z", data.getBangHoiSpawn().getZ());
+        }
 
         storage.set("data.skill.1", data.getSkillLevel(SkillType.critDamage));
         storage.set("data.skill.2", data.getSkillLevel(SkillType.boostScore));

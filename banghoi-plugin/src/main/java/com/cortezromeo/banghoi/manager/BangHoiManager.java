@@ -139,7 +139,7 @@ public class BangHoiManager {
         BangHoiData bangHoiData = new BangHoiData(bangHoiName, null, p.getName()
                 , 0, 0, 0, BangHoi.plugin.getConfig().getInt("bang-hoi-options.max-thanh-vien-mac-dinh"),
                 dateLong, members, null, null
-                , 0, 0, 0, 0);
+                , null, 0, 0, 0, 0);
         DatabaseManager.bangHoiDatabase.put(bangHoiName, bangHoiData);
         DatabaseManager.bangHoi_diem.put(bangHoiName, 0);
 
@@ -876,6 +876,64 @@ public class BangHoiManager {
 
         bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.removeManager")
                 .replace("%leader%", p.getName()).replace("%member%", target));
+    }
+
+    public static void setSpawn(Player p) {
+        PlayerData playerData = DatabaseManager.getPlayerData(p.getName());
+        if (playerData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("khongCoBangHoi"));
+            return;
+        }
+
+        if (playerData.getChucVu() != null)
+            if (!playerData.getChucVu().equals(ClanRank.LEADER)) {
+                MessageUtil.sendMessage(p, mse.getString("memberSetSpawn"));
+                return;
+            }
+
+        BangHoiData bangHoiData = DatabaseManager.getBangHoiData(playerData.getBangHoi());
+        bangHoiData.setBangHoiSpawn(p.getLocation());
+        DatabaseManager.saveBangHoiData(bangHoiData.getBangHoiName());
+
+        String worldName = p.getLocation().getWorld().getName();
+        double X = p.getLocation().getX();
+        double Y = p.getLocation().getY();
+        double Z = p.getLocation().getZ();
+
+        MessageUtil.sendMessage(p, mse.getString("leaderSetSpawn")
+                .replace("%world%", worldName)
+                .replace("%x%", String.valueOf(X))
+                .replace("%y%", String.valueOf(Y))
+                .replace("%z%", String.valueOf(Z)));
+
+        bangHoiAlert(playerData.getBangHoi(), mse.getString("thongBaoRieng.setSpawn")
+                .replace("%leader%", p.getName())
+                .replace("%world%", worldName)
+                .replace("%x%", String.valueOf(X))
+                .replace("%y%", String.valueOf(Y))
+                .replace("%z%", String.valueOf(Z)));
+    }
+
+    public static void teleportToSpawn(Player p) {
+        PlayerData playerData = DatabaseManager.getPlayerData(p.getName());
+        if (playerData.getBangHoi() == null) {
+            MessageUtil.sendMessage(p, mse.getString("khongCoBangHoi"));
+            return;
+        }
+
+        BangHoiData bangHoiData = DatabaseManager.getBangHoiData(playerData.getBangHoi());
+
+        if (bangHoiData.getBangHoiSpawn() == null) {
+            MessageUtil.sendMessage(p, mse.getString("noSpawn"));
+            return;
+        }
+
+        try {
+            p.teleport(bangHoiData.getBangHoiSpawn());
+            MessageUtil.sendMessage(p, mse.getString("teleportToSpawn"));
+        } catch (Exception exception) {
+            MessageUtil.sendMessage(p, mse.getString("spawnIsInvalid"));
+        }
     }
 
     public static int getWarPointCost(int skill, int level) {
