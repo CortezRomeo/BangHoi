@@ -43,7 +43,7 @@ public class BangHoiAdminCommand implements CommandExecutor, TabExecutor {
 			Player p = (Player) sender;
 
 			if (!p.hasPermission("banghoi.admin")) {
-				sendMessage(p, MessageFile.get().getString("noPermission"));
+				sendMessage(p, MessageFile.get().getString("no-Permission").replace("%permission%", "banghoi.admin"));
 				return false;
 			}
 		}

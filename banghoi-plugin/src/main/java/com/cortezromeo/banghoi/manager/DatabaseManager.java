@@ -6,6 +6,7 @@ import com.cortezromeo.banghoi.storage.banghoidata.BangHoiDataStorage;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerData;
 import com.cortezromeo.banghoi.storage.playerdata.PlayerDataStorage;
 import com.cortezromeo.banghoi.util.FilenameUtil;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.*;
@@ -18,6 +19,7 @@ public class DatabaseManager {
     public static Map<String, String> bangHoi_customName = new HashMap<>();
     public static List<String> bangHoiChattingPlayers = new ArrayList<>();
     public static List<String> playersWarProcess = new ArrayList<>();
+    public static List<Player> PvPPlayers = new ArrayList<>();
 
     // Data được lưu
     public static Map<String, PlayerData> playerDatabase = new HashMap<>();

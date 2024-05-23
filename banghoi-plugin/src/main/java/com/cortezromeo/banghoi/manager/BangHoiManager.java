@@ -711,13 +711,13 @@ public class BangHoiManager {
             }
 
         if (!p.hasPermission("banghoi.setcustomname")) {
-            MessageUtil.sendMessage(p, mse.getString("khongCoQuyen-tenCustom"));
+            MessageUtil.sendMessage(p, mse.getString("no-Permission").replace("%permission%", "banghoi.setcustomname"));
             return;
         }
 
         if (!p.hasPermission("banghoi.setcustomname.color"))
             if (customName.contains("&")) {
-                MessageUtil.sendMessage(p, mse.getString("khongCoQuyen-tenCustom-Color"));
+                MessageUtil.sendMessage(p, mse.getString("no-Permission").replace("%permission%", "banghoi.setcustomname.color"));;
                 return;
             }
 
@@ -736,7 +736,7 @@ public class BangHoiManager {
                 return;
             }
 
-        List<String> blacklist_name = BangHoi.plugin.getConfig().getStringList("ten_cam");
+        List<String> blacklist_name = BangHoi.plugin.getConfig().getStringList("bang-hoi-options.ten_cam");
         for (String bn : blacklist_name) {
             if (StringUtils.containsIgnoreCase(customName, bn)) {
                 MessageUtil.sendMessage(p, mse.getString("tenKhongHopLe"));
@@ -891,6 +891,11 @@ public class BangHoiManager {
                 return;
             }
 
+        if (!p.hasPermission("banghoi.setspawn")) {
+            MessageUtil.sendMessage(p, mse.getString("no-Permission").replace("%permission%", "banghoi.setspawn"));;
+            return;
+        }
+
         BangHoiData bangHoiData = DatabaseManager.getBangHoiData(playerData.getBangHoi());
         bangHoiData.setBangHoiSpawn(p.getLocation());
         DatabaseManager.saveBangHoiData(bangHoiData.getBangHoiName());
@@ -934,6 +939,14 @@ public class BangHoiManager {
         } catch (Exception exception) {
             MessageUtil.sendMessage(p, mse.getString("spawnIsInvalid"));
         }
+    }
+
+    public static boolean PvPPlayer(Player player) {
+        if (DatabaseManager.PvPPlayers.contains(player)) {
+            DatabaseManager.PvPPlayers.add(player);
+            return true;
+        } else DatabaseManager.PvPPlayers.remove(player);
+        return false;
     }
 
     public static int getWarPointCost(int skill, int level) {

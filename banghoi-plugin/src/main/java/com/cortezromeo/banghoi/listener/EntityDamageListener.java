@@ -49,11 +49,18 @@ public class EntityDamageListener implements Listener {
 						return;
 
 					if (victim2Data.getBangHoi().equals(shooterData.getBangHoi())) {
-						e.setCancelled(true);
-						MessageUtil.sendMessage(shooter, MessageFile.get().getString("danhNguoiTrongBangHoi")
-								.replace("%player%", victim2.getName()));
+						if (!DatabaseManager.PvPPlayers.contains(victim2)) {
+							MessageUtil.sendMessage(shooter, MessageFile.get().getString("victimPvPOff")
+									.replace("%player%", victim2.getName()));
+							e.setCancelled(true);
+							return;
+						}
+						if (!DatabaseManager.PvPPlayers.contains(shooter)) {
+							MessageUtil.sendMessage(shooter, MessageFile.get().getString("damagerPvPOff"));
+							e.setCancelled(true);
+							return;
+						}
 					} else {
-
 						if (!WarManager.eventStarted)
 							return;
 
@@ -98,9 +105,16 @@ public class EntityDamageListener implements Listener {
 			return;
 
 		if (victimData.getBangHoi().equals(damagerData.getBangHoi())) {
-			e.setCancelled(true);
-			MessageUtil.sendMessage(damager,
-					MessageFile.get().getString("danhNguoiTrongBangHoi").replace("%player%", victim.getName()));
+			if (!DatabaseManager.PvPPlayers.contains(victim)) {
+				MessageUtil.sendMessage(damager, MessageFile.get().getString("victimPvPOff")
+						.replace("%player%", victim.getName()));
+				e.setCancelled(true);
+				return;
+			}
+			if (!DatabaseManager.PvPPlayers.contains(damager)) {
+				MessageUtil.sendMessage(damager, MessageFile.get().getString("damagerPvPOff"));
+				e.setCancelled(true);
+			}
 		} else {
 
 			if (!WarManager.eventStarted)

@@ -97,9 +97,6 @@ tenCoKyTuKhongHopLe:
 tenQuaNgan: '&cTên bang hội quá ngắn! Cần nhiều hơn &e%number% Ký tự'
 tenQuaDai: '&cTên bang hội quá dài! Cần ít hơn &e%number% Ký tự'
 tenCustomDaTonTai: '&cTên custom &e%name%&c đã tồn tại!'
-khongCoQuyen-tenCustom: '&cBạn cần có rank &eVIP&c để đặt tên custom cho bang hội'
-khongCoQuyen-tenCustom-Color: '&cBạn cần có rank &bMVP&c để đặt tên custom có màu
-  cho bang hội'
 batChat: '&aBật&f chat bang hội thành công &7&oSử dụng &e&o/banghoi chat&7&o một lần
   nữa để tắt'
 tatChat: '&cTắt&f chat bang hội thành công &7&oSử dụng &e&o/banghoi chat&7&o một lần
@@ -111,6 +108,10 @@ thieuWarpoint: '&cBang hội cần có đủ hoặc hơn &b%warpoint% Warpoint'
 nangCap: '&bNâng cấp thành công số lượng tối đa [%oldslot% -> %newslot%]'
 danhNguoiTrongBangHoi: '&cBạn không thể gây sát thương cho &e%player%&c vì cùng bang
   hội!'
+victimPvPOff: '&cBạn không thể gây sát thương cho &e%player%&c vì người này đang tắt PvP người cùng bang.'
+damagerPvPOff: '&cBạn hiện không thể gây sát thương cho người cùng bang hội (Sử dụng /banghoi pvp để bật PvP người cùng bang).'
+turnOnPvP: '&aBật PvP người cùng bang thành công.'
+turnOffPvP: '&4Tắt PvP người cùng bang thành công.'
 tenCustomTrungTenBangHoi: '&cTên &r%name%&c bị trùng với tên bang hội khác, không
   thể đặt'
 leaderSetManagerLeader: '&cBạn không thể cho bản thân làm quản lý được!'
@@ -245,6 +246,7 @@ lenhChinh:
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
     - '&#03c6fc/banghoi spawn &fDịch chuyển về spawn bang hội'
+    - '&#03c6fc/banghoi pvp &fBật hoặc tắt PvP với người chơi cùng bang'
     - '&#03c6fc/banghoi leave &fRời bang hội'
   leader:
     - '    &#02a7fa&lBANG HỘI'
@@ -257,6 +259,7 @@ lenhChinh:
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
     - '&#03c6fc/banghoi spawn &fDịch chuyển về spawn bang hội'
+    - '&#03c6fc/banghoi pvp &fBật hoặc tắt PvP với người chơi cùng bang'
     - '&#03c6fc/banghoi leave &fRời bang hội'
     - ' '
     - '&7Lệnh dành cho chủ bang hội:'
@@ -281,6 +284,7 @@ lenhChinh:
     - '&#03c6fc/banghoi upgrade &fNâng cấp cho bang hội'
     - '&#03c6fc/banghoi list &fXem danh sách bang hội'
     - '&#03c6fc/banghoi spawn &fDịch chuyển về spawn bang hội'
+    - '&#03c6fc/banghoi pvp &fBật hoặc tắt PvP với người chơi cùng bang'
     - '&#03c6fc/banghoi leave &fRời bang hội'
     - ' '
     - '&7Lệnh dành cho quản lý:'
@@ -309,7 +313,7 @@ infoBangHoi-placeholders:
   trang-thai:
     online: '&a[ONLINE]'
     offline: '&c[OFFLINE]'
-noPermission: '&cBạn không có quyền để sử dụng lệnh này'
+no-Permission: '&cBạn không có quyền để sử dụng lệnh này &e(%permission%)'
 # Phần thời gian hiển thị
 time-format:
   wwddhhmmss: '&a%w% &ftuần &a%d% &fngày &a%h% &fgiờ &a%m% &fphút &a%s% &fgiây'
