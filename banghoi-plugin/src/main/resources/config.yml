@@ -104,6 +104,16 @@ bang-hoi-war:
     mythicmobs:
       SkeletalKnight: 2
     player: 3
+  # Có 3 loại đối tượng chạy command:
+  # ● player: chạy dưới quyền có sẵn của người chơi đó
+  # ● op: vẫn chạy dưới dạng người chơi nhưng có quyền của op
+  # ● console: chạy command trên console
+  # Sử dụng placeholder {player} để lấy tên người chơi
+  # example:
+  # - 'console:tell {player} Bang hoi war bat dau roi kia!'
+  commands:
+    - 'none'
+
 
 # placeholderapi hiện cho phần top điểm bang hội
 # %banghoi_top_<number>%

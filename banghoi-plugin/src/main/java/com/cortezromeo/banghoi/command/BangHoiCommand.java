@@ -242,9 +242,15 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 							commands.add(material.toString());
 						}
 					}
-					if (args[0].equalsIgnoreCase("setleader") || args[0].equalsIgnoreCase("removemanager") || args[0].equalsIgnoreCase("setmanager")) {
-						List<String> managers = DatabaseManager.getBangHoiData(playerData.getBangHoi()).getManagers();
-						commands.addAll(managers);
+					if (args[0].equalsIgnoreCase("setleader")) {
+						List<String> members = DatabaseManager.getBangHoiData(playerData.getBangHoi()).getThanhVien();
+						commands.addAll(members);
+					}
+					if (args[0].equalsIgnoreCase("removemanager") || args[0].equalsIgnoreCase("setmanager")) {
+						if (!DatabaseManager.getBangHoiData(playerData.getBangHoi()).getManagers().isEmpty()) {
+							List<String> managers = DatabaseManager.getBangHoiData(playerData.getBangHoi()).getManagers();
+							commands.addAll(managers);
+						}
 					}
 				}
 			}

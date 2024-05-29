@@ -32,28 +32,20 @@ public final class BangHoi extends JavaPlugin implements Listener {
     private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
     public static VersionSupport nms;
     public static PlayerPointsAPI ppAPI;
-    private boolean serverSoftwareSupport = true;
     private static boolean papiSupport = false;
     private static boolean mythicMobSupport = false;
     private boolean developerMode = false;
 
     @Override
     public void onLoad() {
-
         plugin = this;
         nms = new CrossVersionSupport(plugin);
-
     }
 
     @Override
     public void onEnable() {
-
-        if (!serverSoftwareSupport) {
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        }
-
         initFile();
+        DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
 
         log("&f--------------------------------");
         log("");
@@ -69,10 +61,12 @@ public final class BangHoi extends JavaPlugin implements Listener {
         log("&fĐang xác minh license key...");
         log("");
         log("&f--------------------------------");
+        DebugManager.debug("ENABLING PLUGIN", "Getting license key...");
 
         if (!developerMode) {
             if (DiHoaManager.KeyStatus(plugin.getConfig().getString("license-key"))) {
                 if (DiHoaManager.action(plugin.getConfig().getString("license-key"), "enable")) {
+                    DebugManager.debug("ENABLING PLUGIN", "License key is valid!");
                     log("&f--------------------------------");
                     log("");
                     log("&2  _                         _           _ ");
@@ -91,6 +85,7 @@ public final class BangHoi extends JavaPlugin implements Listener {
                     log("&2Cảm ơn bạn đã ủng hộ mua plugin!");
                 }
             } else {
+                DebugManager.debug("ENABLING PLUGIN", "License key is not valid!");
                 log("&f--------------------------------");
                 log("");
                 log("&4  _                         _           _ ");
@@ -112,8 +107,6 @@ public final class BangHoi extends JavaPlugin implements Listener {
             }
         } else
             log("&a&lBANG HOI DEVELOPER MODE IS ON! ENABLING PLUGIN");
-
-        DebugManager.setDebug(BangHoi.plugin.getConfig().getBoolean("debug"));
 
         initDatabase();
         initCommand();

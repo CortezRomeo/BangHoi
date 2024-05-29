@@ -20,7 +20,7 @@ public final class CrossVersionSupport extends VersionSupport {
 
     private static final Pattern HEX_PATTERN = Pattern.compile("&#([A-Fa-f0-9]{6})");
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)&[0-9A-FK-OR]");
-    private static final String NBT_KEY = "UpgradeItem";
+    private static final String NBT_KEY = "BangHoi";
 
     public CrossVersionSupport(Plugin plugin) {
         super(plugin);

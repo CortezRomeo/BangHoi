@@ -153,27 +153,24 @@ public class WarManager {
 		FileConfiguration config = BangHoi.plugin.getConfig();
 
 		if (eventStarted) {
-
 			eventBoardCast(mse.getString("bangHoiWar.thayDoiThoiGian").replace("%player%", sender.getName())
 					.replace("%timeformat%", StringUtil.timeFormat(eventTime)));
-
 			return;
 		} else {
 			eventStarted = true;
 
 			for (String str : mse.getStringList("bangHoiWar.suKienBatDau")) {
-
 				str = str.replace("%timeformat%", StringUtil.timeFormat(eventTime));
 				eventBoardCast(str);
-
 			}
 
-			for (Player players : Bukkit.getOnlinePlayers()) {
-				players.playSound(players.getLocation(), Sound.valueOf(config.getString("bang-hoi-war.sound.name")),
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				player.playSound(player.getLocation(), Sound.valueOf(config.getString("bang-hoi-war.sound.name")),
 						config.getInt("bang-hoi-war.sound.volume"), 1);
-				createBossBar(players);
+				createBossBar(player);
+				for (String command : config.getStringList("bang-hoi-war.commands"))
+					dispatchCommand(player, command);
 			}
-
 		}
 
 		new BukkitRunnable() {
@@ -324,6 +321,36 @@ public class WarManager {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			p.sendMessage(BangHoi.nms.addColor(MessageFile.get().getString("bangHoiWar.PREFIX") + message));
 		}
+	}
+
+	public static void dispatchCommand(Player player, String command) {
+		String MATCH = "(?ium)^(player:|op:|console:|)(.*)$";
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				final String type = command.replaceAll(MATCH, "$1").replace(":","").toLowerCase();
+				final String cmd = command.replaceAll(MATCH, "$2").replaceAll("(?ium)([{]Player[}])", player.getName());
+				switch (type){
+					case "op":
+						if(player.isOp()){
+							player.performCommand(cmd);
+						} else {
+							player.setOp(true);
+							player.performCommand(cmd);
+							player.setOp(false);
+						}
+						break;
+					case "":
+					case "player":
+						player.performCommand(cmd);
+						break;
+					case "console":
+					default:
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+						break;
+				}
+			}
+		}.runTask(BangHoi.plugin);
 	}
 
 }
