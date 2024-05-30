@@ -57,7 +57,7 @@ public class PapiDepend extends PlaceholderExpansion {
 
 		PlayerData pData = DatabaseManager.getPlayerData(player.getName());
 		if (pData.getBangHoi() == null)
-			return "";
+			return BangHoi.plugin.getConfig().getString("placeholderAPI.nonBangHoiMember");
 
 		if (identifier.equals("originalname"))
 			return BangHoi.nms.addColor(pData.getBangHoi());

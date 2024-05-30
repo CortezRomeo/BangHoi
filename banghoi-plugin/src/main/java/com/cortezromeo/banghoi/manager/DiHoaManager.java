@@ -1,5 +1,6 @@
 package com.cortezromeo.banghoi.manager;
 
+import com.cortezromeo.banghoi.util.MessageUtil;
 import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -55,7 +56,7 @@ public class DiHoaManager {
             Bukkit.getConsoleSender().sendMessage("§e[BangHoi] §fLooks like the product key is working. Please visit our website and go to purchased plugin then click to reset key then reload this plugin!");
             return false;
         } catch (IOException|org.json.simple.parser.ParseException e) {
-            Bukkit.getConsoleSender().sendMessage("§e[BangHoi] §fLooks like the product key is working. Please visit our website and go to purchased plugin then click to reset key then reload this plugin!");
+            MessageUtil.log("&e[DI HOA STORE]&f License key đã hoạt dộng, nhưng có vẻ như nó đang được sử dụng trong một máy chủ khác. Nếu bạn đã mua và sử dụng plugin bang hội trên nhiều máy chủ, vui lòng liên hệ discord &bcortez_romeo&f để mình đưa bản custom xài được trên đa máy chủ. Nếu bạn sử dụng plugin cho rieng một máy chủ duy nhất, vui lòng vào &bhttps://dihoastore.net/account/index.php&f và nhấn vào nút &bRESET KEY&f để lấy key mới, sau đó để vào lại config.yml");
             return false;
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +93,7 @@ public class DiHoaManager {
             }
             return false;
         } catch (IOException|org.json.simple.parser.ParseException e) {
-            Bukkit.getConsoleSender().sendMessage("§e[BangHoi] §fLooks like the product key is working. Please visit our website and go to purchased plugin then click §a§lONLINE §fbutton to reset key then reload this plugin!");
+            MessageUtil.log("&e[DI HOA STORE]&f License key đã hoạt dộng, nhưng có vẻ như nó đang được sử dụng trong một máy chủ khác. Nếu bạn đã mua và sử dụng plugin bang hội trên nhiều máy chủ, vui lòng liên hệ discord &bcortez_romeo&f để mình đưa bản custom xài được trên đa máy chủ. Nếu bạn sử dụng plugin cho rieng một máy chủ duy nhất, vui lòng vào &bhttps://dihoastore.net/account/index.php&f và nhấn vào nút &bRESET KEY&f để lấy key mới, sau đó để vào lại config.yml");
             return false;
         }
     }

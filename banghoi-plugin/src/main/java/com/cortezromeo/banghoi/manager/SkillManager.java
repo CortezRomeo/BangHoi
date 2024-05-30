@@ -206,7 +206,7 @@ public class SkillManager implements Listener {
 
                 double pMaxHP = damager.getMaxHealth();
                 try {
-                    double revivingHP = StringUtil.evaluate(SkillManager.getSkillValue(SkillType.vampire).replace("%playerMaxHealth%", String.valueOf(pMaxHP)).replaceAll("%playerplayerHealth%", String.valueOf(damager.getHealth())));
+                    double revivingHP = StringUtil.evaluate(SkillManager.getSkillValue(SkillType.vampire).replace("%playerMaxHealth%", String.valueOf(pMaxHP)).replaceAll("%playerHealth%", String.valueOf(damager.getHealth())));
                     if (damager.getHealth() + revivingHP > pMaxHP)
                         damager.setHealth(pMaxHP);
                     else

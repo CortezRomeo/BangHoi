@@ -118,4 +118,5 @@ bang-hoi-war:
 # placeholderapi hiện cho phần top điểm bang hội
 # %banghoi_top_<number>%
 placeholderAPI:
+  nonBangHoiMember: '&c<Không có bang  hội>'
   top: '&#d1d1d1#%number% &r%name% &e&l━ &#f25eff%value% Điểm'
