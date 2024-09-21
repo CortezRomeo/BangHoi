@@ -49,6 +49,14 @@ public class EntityDeathListener implements Listener {
 		if (killerData.getBangHoi() == null)
 			return;
 
+		FileConfiguration mse = MessageFile.get();
+
+		if (!killer.getWorld().getName()
+				.equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world"))) {
+			killer.sendMessage(BangHoi.nms.addColor(mse.getString("bangHoiWar.PREFIX") + mse.getString("bangHoiWar.saiTheGioi")));
+			return;
+		}
+
 		boolean isMythicMob = false;
 		int scoreAdded = 0;
 
@@ -67,14 +75,6 @@ public class EntityDeathListener implements Listener {
 			scoreAdded = BangHoi.plugin.getConfig().getInt("bang-hoi-war.cong-diem.mobs." + entity.getType().toString());
 			if (scoreAdded == 0)
 				return;
-		}
-
-		FileConfiguration mse = MessageFile.get();
-
-		if (!killer.getWorld().getName()
-				.equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world"))) {
-			killer.sendMessage(BangHoi.nms.addColor(mse.getString("bangHoiWar.PREFIX") + mse.getString("bangHoiWar.saiTheGioi")));
-			return;
 		}
 
 		int bonusScore = 0;

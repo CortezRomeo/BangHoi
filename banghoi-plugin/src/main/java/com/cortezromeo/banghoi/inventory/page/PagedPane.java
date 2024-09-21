@@ -299,7 +299,7 @@ public class PagedPane implements InventoryHolder {
         ItemStack material = new ItemStack(Material.BEDROCK);
 
         if (type.equalsIgnoreCase("customhead"))
-            material = BangHoi.nms.getHeadItem(value);
+            material = BangHoi.nms.getHeadItemFromBase64(value);
 
         if (type.equalsIgnoreCase("material"))
             material = new ItemStack(Material.valueOf(value));

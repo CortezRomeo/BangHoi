@@ -23,12 +23,12 @@ public class InventoryUtil {
 
     public static ItemStack getItem(String type, String value, short itemData, String name, List<String> lore, String replace,
                                     String dataReplace, int dataReplace2) {
-
         AtomicReference<ItemStack> material = new AtomicReference<>(new ItemStack(Material.BEDROCK));
 
-        if (type.equalsIgnoreCase("customhead") || type.equalsIgnoreCase("playerhead"))
-            material.set(BangHoi.nms.getHeadItem(value));
-
+        if (type.equalsIgnoreCase("customhead"))
+            material.set(BangHoi.nms.getHeadItemFromBase64(value));
+        if (type.equalsIgnoreCase("playerhead"))
+            material.set(BangHoi.nms.getHeadItemFromPlayerName(value));
         if (type.equalsIgnoreCase("material"))
             material.set(BangHoi.nms.createItemStack(value, 1, itemData));
 

@@ -40,6 +40,9 @@ public class PlayerDeathListener implements Listener {
 		if (!DatabaseManager.playerDatabase.containsKey(p.getName()))
 			return;
 
+		if (DatabaseManager.playersWarProcess.contains(p.getName()))
+			DatabaseManager.playersWarProcess.remove(p.getName());
+
 		FileConfiguration mse = MessageFile.get();
 		String prefix = mse.getString("PREFIX");
 

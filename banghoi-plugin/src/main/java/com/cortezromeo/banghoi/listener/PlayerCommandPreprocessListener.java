@@ -26,9 +26,8 @@ public class PlayerCommandPreprocessListener implements Listener {
 
 		Player p = e.getPlayer();
 
-		if (!DatabaseManager.playersWarProcess.contains(p.getName())) {
+		if (!DatabaseManager.playersWarProcess.contains(p.getName()) || !p.getWorld().getName().equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world")))
 			return;
-		}
 
 		String command = e.getMessage().toLowerCase();
 		if (command.startsWith("/")) {
