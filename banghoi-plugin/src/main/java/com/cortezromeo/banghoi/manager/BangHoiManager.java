@@ -943,9 +943,9 @@ public class BangHoiManager {
 
     public static boolean PvPPlayer(Player player) {
         if (DatabaseManager.PvPPlayers.contains(player)) {
-            DatabaseManager.PvPPlayers.add(player);
+            DatabaseManager.PvPPlayers.remove(player);
             return true;
-        } else DatabaseManager.PvPPlayers.remove(player);
+        } else DatabaseManager.PvPPlayers.add(player);
         return false;
     }
 

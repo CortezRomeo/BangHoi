@@ -110,8 +110,8 @@ danhNguoiTrongBangHoi: '&cBạn không thể gây sát thương cho &e%player%&c
   hội!'
 victimPvPOff: '&cBạn không thể gây sát thương cho &e%player%&c vì người này đang tắt PvP người cùng bang.'
 damagerPvPOff: '&cBạn hiện không thể gây sát thương cho người cùng bang hội (Sử dụng /banghoi pvp để bật PvP người cùng bang).'
-turnOnPvP: '&aBật PvP người cùng bang thành công.'
-turnOffPvP: '&4Tắt PvP người cùng bang thành công.'
+turnOnPvP: '&aBật PvP người cùng bang thành công. Bây giờ bạn có thể đánh người trong cùng bang hội.'
+turnOffPvP: '&4Tắt PvP người cùng bang thành công. Bây giờ bạn không thể đánh người trong cùng bang hội.'
 tenCustomTrungTenBangHoi: '&cTên &r%name%&c bị trùng với tên bang hội khác, không
   thể đặt'
 leaderSetManagerLeader: '&cBạn không thể cho bản thân làm quản lý được!'

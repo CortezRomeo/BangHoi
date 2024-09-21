@@ -109,9 +109,9 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 				return false;
 			} else if (args[0].equalsIgnoreCase("pvp")) {
 				if (BangHoiManager.PvPPlayer(p)) {
-					MessageUtil.sendMessage(p, MessageFile.get().getString("turnOnPvP"));
-				} else {
 					MessageUtil.sendMessage(p, MessageFile.get().getString("turnOffPvP"));
+				} else {
+					MessageUtil.sendMessage(p, MessageFile.get().getString("turnOnPvP"));
 				}
 				return false;
 			}
