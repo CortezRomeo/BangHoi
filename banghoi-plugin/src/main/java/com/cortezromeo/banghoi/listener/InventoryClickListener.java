@@ -34,7 +34,6 @@ public class InventoryClickListener implements Listener {
 
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
-
 		String title = e.getView().getTitle();
 		Player p = (Player) e.getWhoClicked();
 
@@ -164,7 +163,7 @@ public class InventoryClickListener implements Listener {
 				int requiredWarpoint = upgradeFileCfg.getInt("maxMemberSlot.warPoint." + (bangHoiData.getSoLuongToiDa() + 1));
 
 				if (requiredWarpoint == 0)
-					requiredWarpoint = upgradeFileCfg.getInt("maxMemberSlot.warPoint.");
+					requiredWarpoint = upgradeFileCfg.getInt("maxMemberSlot.warPoint.else");
 
 				if (bangHoiData.getBangHoiWarPoint() < requiredWarpoint) {
 					MessageUtil.sendMessage(p, MessageFile.get().getString("thieuWarpoint").replace("%warpoint%",
