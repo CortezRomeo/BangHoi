@@ -60,6 +60,10 @@
                                     <pattern>io.github.bananapuncher714.nbteditor</pattern>
                                     <shadedPattern>com.cortezromeo.banghoi.lib.nbteditor</shadedPattern>
                                 </relocation>
+                                <relocation>
+                                    <pattern>com.tchristofferson.configupdater</pattern>
+                                    <shadedPattern>com.cortezromeo.banghoi.lib.configupdater</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>

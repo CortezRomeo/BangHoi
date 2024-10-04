@@ -1,6 +1,8 @@
 package com.cortezromeo.banghoi.manager;
 
 import com.cortezromeo.banghoi.BangHoi;
+import com.cortezromeo.banghoi.api.event.WarEndEvent;
+import com.cortezromeo.banghoi.api.event.WarStartEvent;
 import com.cortezromeo.banghoi.file.MessageFile;
 import com.cortezromeo.banghoi.util.StringUtil;
 import com.cryptomorin.xseries.XSound;
@@ -100,7 +102,6 @@ public class WarManager {
 	}
 
 	public static void runTask(int eventTime) {
-
 		WarManager.eventTime = eventTime;
 
 		if (!runTask) {
@@ -134,7 +135,8 @@ public class WarManager {
 
 								runSK(Bukkit.getConsoleSender(), eventTime);
 								WarManager.runTask(eventTime);
-
+								WarStartEvent event = new WarStartEvent(eventTime);
+								Bukkit.getServer().getPluginManager().callEvent(event);
 								return;
 							}
 						}
@@ -190,6 +192,9 @@ public class WarManager {
 						}
 						eventBoardCast(str);
 					}
+
+					WarEndEvent event = new WarEndEvent(top, playerKills, playerDmgs, playerDies);
+					Bukkit.getServer().getPluginManager().callEvent(event);
 
 					for (int i = 0; i < 10; i++) {
 						String bangHoi = WarManager.getTopBangHoiName(i);
@@ -251,8 +256,15 @@ public class WarManager {
 
 	}
 
-	public static String getTopBangHoiName(int top) {
+	public static boolean inWarWorld(Player player) {
+		if (player.getWorld().getName().equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world")))
+			return true;
+		for (String worldName : BangHoi.plugin.getConfig().getStringList("bang-hoi-war.multiple-worlds"))
+			player.getWorld().getName().equals(worldName);
+		return false;
+	}
 
+	public static String getTopBangHoiName(int top) {
 		String NA = "<không có>";
 
 		if (!eventStarted)

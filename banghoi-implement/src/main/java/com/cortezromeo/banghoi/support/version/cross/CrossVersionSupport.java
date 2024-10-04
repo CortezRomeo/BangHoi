@@ -23,8 +23,7 @@ import static org.bukkit.ChatColor.COLOR_CHAR;
 
 public final class CrossVersionSupport extends VersionSupport {
 
-    private static final Pattern HEX_PATTERN = Pattern.compile("&#([A-Fa-f0-9]{6})");
-    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)&[0-9A-FK-OR]");
+    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("&#([A-Fa-f0-9]{6})");
     private static final String NBT_KEY = "BangHoi";
 
     public CrossVersionSupport(Plugin plugin) {
@@ -115,6 +114,7 @@ public final class CrossVersionSupport extends VersionSupport {
         if (textToTranslate == null)
             return "NULL";
 
+        Pattern HEX_PATTERN = Pattern.compile("&#([A-Fa-f0-9]{6})");
         Matcher matcher = HEX_PATTERN.matcher(textToTranslate);
         StringBuilder buffer = new StringBuilder(textToTranslate.length() + 4 * 8);
         while (matcher.find()) {
@@ -132,6 +132,6 @@ public final class CrossVersionSupport extends VersionSupport {
 
     @Override
     public String stripColor(String textToStrip) {
-        return textToStrip == null ? null : STRIP_COLOR_PATTERN.matcher(textToStrip).replaceAll("");
+        return textToStrip ==  null ? null : textToStrip.replaceAll("&#([A-Fa-f0-9]{6})", "");
     }
 }

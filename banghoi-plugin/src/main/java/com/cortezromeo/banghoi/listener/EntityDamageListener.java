@@ -61,7 +61,7 @@ public class EntityDamageListener implements Listener {
 							return;
 						}
 					} else {
-						if (!WarManager.eventStarted || e.isCancelled() || !shooter.getWorld().getName().equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world")))
+						if (!WarManager.eventStarted || e.isCancelled() || !WarManager.inWarWorld(shooter))
 							return;
 
 						WarManager.playerDmgs.put(shooter.getName(), (WarManager.playerDmgs.getOrDefault(shooter.getName(), 0D) + e.getDamage()));
@@ -117,7 +117,7 @@ public class EntityDamageListener implements Listener {
 			}
 		} else {
 
-			if (!WarManager.eventStarted || e.isCancelled() || !damager.getWorld().getName().equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world")))
+			if (!WarManager.eventStarted || e.isCancelled() || !WarManager.inWarWorld(damager))
 				return;
 
 			WarManager.playerDmgs.put(damager.getName(), (WarManager.playerDmgs.getOrDefault(damager.getName(), 0D) + e.getDamage()));

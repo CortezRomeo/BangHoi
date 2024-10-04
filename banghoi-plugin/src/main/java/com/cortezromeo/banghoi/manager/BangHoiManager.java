@@ -695,7 +695,6 @@ public class BangHoiManager {
     }
 
     public static void setCustomName(Player p, String customName) {
-
         PlayerData playerData = DatabaseManager.getPlayerData(p.getName());
 
         if (playerData.getBangHoi() == null) {

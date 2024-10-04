@@ -119,7 +119,6 @@ public class BangHoiCommand implements CommandExecutor, TabExecutor {
 
 		if (args.length >= 2) {
 			if (args[0].equalsIgnoreCase("setcustomname")) {
-
 				StringBuilder builder = new StringBuilder();
 				for (int i = 1; i < args.length; i++)
 					builder.append(args[i]).append(" ");

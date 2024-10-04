@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -33,7 +34,7 @@ public class EntityDeathListener implements Listener {
 			return;
 
 		Entity entity = e.getEntity();
-		Entity killer = e.getEntity().getKiller();
+		Player killer = e.getEntity().getKiller();
 
 		if (killer == null || entity == null)
 			return;
@@ -51,8 +52,7 @@ public class EntityDeathListener implements Listener {
 
 		FileConfiguration mse = MessageFile.get();
 
-		if (!killer.getWorld().getName()
-				.equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world"))) {
+		if (!WarManager.inWarWorld(killer)) {
 			killer.sendMessage(BangHoi.nms.addColor(mse.getString("bangHoiWar.PREFIX") + mse.getString("bangHoiWar.saiTheGioi")));
 			return;
 		}

@@ -70,6 +70,9 @@ bang-hoi-war:
   join-notification: true
   # Người chơi cần trong world này để áp dụng cộng điểm
   world: banghoiwar
+  # Thêm worlds
+  multiple-worlds:
+    - banghoiwar2
   # Thời gian diễn ra sự kiện (Tính bằng giây)
   thoi-gian-su-kien: 600
   # Thời gian không cho xài lệnh trong thời gian bang hội war nếu người chơi đánh nhau

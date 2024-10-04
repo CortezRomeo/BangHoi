@@ -59,7 +59,7 @@ public class PlayerDeathListener implements Listener {
 				return;
 			}
 
-			if (!killer.getWorld().getName().equals(BangHoi.plugin.getConfig().getString("bang-hoi-war.world"))) {
+			if (!WarManager.inWarWorld(killer)) {
 				killer.sendMessage(
 						BangHoi.nms.addColor(mse.getString("bangHoiWar.PREFIX") + mse.getString("bangHoiWar.saiTheGioi")));
 				return;
