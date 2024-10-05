@@ -142,7 +142,7 @@ public class WarManager {
 						}
 					}
 				}
-			}.runTaskTimerAsynchronously(BangHoi.plugin, 0, 20);
+			}.runTaskTimer(BangHoi.plugin, 0, 20);
 		}
 	}
 
@@ -252,8 +252,7 @@ public class WarManager {
 				}
 
 			}
-		}.runTaskTimerAsynchronously(BangHoi.plugin, 0, 20);
-
+		}.runTaskTimer(BangHoi.plugin, 0, 20);
 	}
 
 	public static boolean inWarWorld(Player player) {
