@@ -6,13 +6,18 @@
     <parent>
         <artifactId>BangHoi</artifactId>
         <groupId>com.cortezromeo.banghoi</groupId>
-        <version>3.1</version>
+        <version>3.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>banghoi-implement</artifactId>
 
     <repositories>
+        <!-- Spigot -->
+        <repository>
+            <id>spigotmc-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
         <repository>
             <id>minecraft-libraries</id>
             <name>Minecraft Libraries</name>
@@ -30,7 +35,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -42,7 +47,7 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>11.2.1</version>
+            <version>11.3.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.bananapuncher714</groupId>
@@ -55,6 +60,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.2</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>

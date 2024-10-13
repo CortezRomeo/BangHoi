@@ -117,7 +117,6 @@ bang-hoi-war:
   commands:
     - 'none'
 
-
 # placeholderapi hiện cho phần top điểm bang hội
 # %banghoi_top_<number>%
 placeholderAPI:

@@ -137,7 +137,9 @@ public final class BangHoi extends JavaPlugin implements Listener {
         saveDefaultConfig();
         File configFile = new File(getDataFolder(), "config.yml");
         try {
-            ConfigUpdater.update(this, "config.yml", configFile, "bang-hoi-war.cong-diem.mobs", "bang-hoi-war.cong-diem.mythicmobs");
+            ConfigUpdater.update(this, "config.yml"
+                    , configFile, "bang-hoi-war.cong-diem.mobs"
+                    , "bang-hoi-war.cong-diem.mythicmobs");
         } catch (IOException e) {
             e.printStackTrace();
         }
